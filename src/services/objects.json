@@ -1,0 +1,996 @@
+{
+    "page_size": 50,
+    "page_number": 1,
+    "page_results_count": 50,
+    "total_results_count": 50,
+    "objects": [
+      {
+        "id": "domain-name--0826b20f-dbd0-5f2b-9430-e4f6e476f51b",
+        "spec_version": "2.1",
+        "type": "domain-name",
+        "value": "courses.There"
+      },
+      {
+        "id": "domain-name--152e7a1f-b319-5830-a031-e31a46fde49a",
+        "spec_version": "2.1",
+        "type": "domain-name",
+        "value": "globe.After"
+      },
+      {
+        "id": "domain-name--2c640b40-9b19-533c-9f4c-d347019527c5",
+        "spec_version": "2.1",
+        "type": "domain-name",
+        "value": "tab.sessiondaysforfilter"
+      },
+      {
+        "id": "domain-name--3df60f48-ff4b-56ad-9c3b-72acbecfeddf",
+        "spec_version": "2.1",
+        "type": "domain-name",
+        "value": "A.Elevate"
+      },
+      {
+        "id": "domain-name--6566f2de-7e57-552b-b446-171bf8474618",
+        "spec_version": "2.1",
+        "type": "domain-name",
+        "value": "time.Join"
+      },
+      {
+        "id": "domain-name--6ed3bb50-2c26-5924-be1a-66eaa42a20c3",
+        "spec_version": "2.1",
+        "type": "domain-name",
+        "value": "Zaitsev.Our"
+      },
+      {
+        "id": "domain-name--a135cc51-5b0f-502a-ba1d-050100ff6d06",
+        "spec_version": "2.1",
+        "type": "domain-name",
+        "value": "Fal.Con"
+      },
+      {
+        "id": "domain-name--a2fd501a-4bec-50d7-9e61-e9ea83d350b1",
+        "spec_version": "2.1",
+        "type": "domain-name",
+        "value": "cyberattacks.The"
+      },
+      {
+        "id": "domain-name--a423fba3-e367-5b88-8ed7-a20e4b3e543d",
+        "spec_version": "2.1",
+        "type": "domain-name",
+        "value": "protection.Learn"
+      },
+      {
+        "id": "domain-name--b80d7dd6-63aa-5727-a4a2-e8b84173f54f",
+        "spec_version": "2.1",
+        "type": "domain-name",
+        "value": "world.While"
+      },
+      {
+        "id": "domain-name--bbdb5df3-8b7b-59b1-9ad0-d46e470470b4",
+        "spec_version": "2.1",
+        "type": "domain-name",
+        "value": "together.Below"
+      },
+      {
+        "id": "domain-name--d34b06e6-60a3-5dd6-a413-5025f294260e",
+        "spec_version": "2.1",
+        "type": "domain-name",
+        "value": "before.Engage"
+      },
+      {
+        "id": "domain-name--e52e1505-a74c-5308-b7c1-bc75cb4ceb58",
+        "spec_version": "2.1",
+        "type": "domain-name",
+        "value": "experience.Sign"
+      },
+      {
+        "id": "domain-name--e700714c-133c-5f95-846c-4965799673d2",
+        "spec_version": "2.1",
+        "type": "domain-name",
+        "value": "www.crowdstrike.com"
+      },
+      {
+        "id": "domain-name--ffd2a9eb-491a-5899-9404-fbe731332972",
+        "spec_version": "2.1",
+        "type": "domain-name",
+        "value": "measures.This"
+      },
+      {
+        "contact_information": "https://www.dogesec.com/contact/",
+        "created": "2020-01-01T00:00:00.000Z",
+        "created_by_ref": "identity--9779a2db-f98c-5f4b-8d08-8ee04e02dbb5",
+        "description": "https://github.com/muchdogsec/obstracts",
+        "id": "identity--a1f2e3ed-6241-5f05-ac2e-3394213b8e08",
+        "identity_class": "system",
+        "modified": "2020-01-01T00:00:00.000Z",
+        "name": "obstracts",
+        "object_marking_refs": [
+          "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+          "marking-definition--97ba4e8b-04f6-57e8-8f6e-3a0f0a7dc0fb"
+        ],
+        "sectors": [
+          "technology"
+        ],
+        "spec_version": "2.1",
+        "type": "identity"
+      },
+      {
+        "created": "2024-10-15T15:50:59.594386Z",
+        "created_by_ref": "identity--a1f2e3ed-6241-5f05-ac2e-3394213b8e08",
+        "external_references": [
+          {
+            "source_name": "txt2stix job ID",
+            "description": "report--0c0ad548-4bb8-59cc-ab71-3e479dcc0329"
+          },
+          {
+            "source_name": "txt2stix extraction ID",
+            "description": "pattern_domain_name_subdomain_1.0.0"
+          }
+        ],
+        "id": "indicator--1e85e991-8d97-51e7-b21f-b5dc8fcb71de",
+        "indicator_types": [
+          "unknown"
+        ],
+        "modified": "2024-10-15T15:53:04.8859Z",
+        "name": "Domain: www.crowdstrike.com",
+        "object_marking_refs": [
+          "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+          "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+        ],
+        "pattern": "[ domain-name:value = 'www.crowdstrike.com' ]",
+        "pattern_type": "stix",
+        "pattern_version": "2.1",
+        "spec_version": "2.1",
+        "type": "indicator",
+        "valid_from": "2024-10-15T15:50:59.594386Z"
+      },
+      {
+        "created": "2024-10-15T15:50:59.594386Z",
+        "created_by_ref": "identity--a1f2e3ed-6241-5f05-ac2e-3394213b8e08",
+        "external_references": [
+          {
+            "source_name": "txt2stix job ID",
+            "description": "report--0c0ad548-4bb8-59cc-ab71-3e479dcc0329"
+          },
+          {
+            "source_name": "txt2stix extraction ID",
+            "description": "pattern_host_name_1.0.0"
+          }
+        ],
+        "id": "indicator--279e60e7-11e7-533a-a9e9-c8d2b801a01f",
+        "indicator_types": [
+          "unknown"
+        ],
+        "modified": "2024-10-15T15:53:04.8859Z",
+        "name": "Domain: globe.After",
+        "object_marking_refs": [
+          "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+          "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+        ],
+        "pattern": "[ domain-name:value = 'globe.After' ]",
+        "pattern_type": "stix",
+        "pattern_version": "2.1",
+        "spec_version": "2.1",
+        "type": "indicator",
+        "valid_from": "2024-10-15T15:50:59.594386Z"
+      },
+      {
+        "created": "2024-10-15T15:50:59.594386Z",
+        "created_by_ref": "identity--a1f2e3ed-6241-5f05-ac2e-3394213b8e08",
+        "external_references": [
+          {
+            "source_name": "txt2stix job ID",
+            "description": "report--0c0ad548-4bb8-59cc-ab71-3e479dcc0329"
+          },
+          {
+            "source_name": "txt2stix extraction ID",
+            "description": "pattern_host_name_1.0.0"
+          }
+        ],
+        "id": "indicator--3416482c-362a-5ac7-ae59-929df32383b1",
+        "indicator_types": [
+          "unknown"
+        ],
+        "modified": "2024-10-15T15:53:04.8859Z",
+        "name": "Domain: protection.Learn",
+        "object_marking_refs": [
+          "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+          "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+        ],
+        "pattern": "[ domain-name:value = 'protection.Learn' ]",
+        "pattern_type": "stix",
+        "pattern_version": "2.1",
+        "spec_version": "2.1",
+        "type": "indicator",
+        "valid_from": "2024-10-15T15:50:59.594386Z"
+      },
+      {
+        "created": "2024-10-15T15:50:59.594386Z",
+        "created_by_ref": "identity--a1f2e3ed-6241-5f05-ac2e-3394213b8e08",
+        "external_references": [
+          {
+            "source_name": "txt2stix job ID",
+            "description": "report--0c0ad548-4bb8-59cc-ab71-3e479dcc0329"
+          },
+          {
+            "source_name": "txt2stix extraction ID",
+            "description": "pattern_host_name_1.0.0"
+          }
+        ],
+        "id": "indicator--5336c6ba-b254-564d-b6db-a71bc88d4a88",
+        "indicator_types": [
+          "unknown"
+        ],
+        "modified": "2024-10-15T15:53:04.8859Z",
+        "name": "Domain: courses.There",
+        "object_marking_refs": [
+          "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+          "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+        ],
+        "pattern": "[ domain-name:value = 'courses.There' ]",
+        "pattern_type": "stix",
+        "pattern_version": "2.1",
+        "spec_version": "2.1",
+        "type": "indicator",
+        "valid_from": "2024-10-15T15:50:59.594386Z"
+      },
+      {
+        "created": "2024-10-15T15:50:59.594386Z",
+        "created_by_ref": "identity--a1f2e3ed-6241-5f05-ac2e-3394213b8e08",
+        "external_references": [
+          {
+            "source_name": "txt2stix job ID",
+            "description": "report--0c0ad548-4bb8-59cc-ab71-3e479dcc0329"
+          },
+          {
+            "source_name": "txt2stix extraction ID",
+            "description": "pattern_host_name_1.0.0"
+          }
+        ],
+        "id": "indicator--542b63f4-1a1b-5719-b02a-ae56862cef5d",
+        "indicator_types": [
+          "unknown"
+        ],
+        "modified": "2024-10-15T15:53:04.8859Z",
+        "name": "Domain: time.Join",
+        "object_marking_refs": [
+          "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+          "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+        ],
+        "pattern": "[ domain-name:value = 'time.Join' ]",
+        "pattern_type": "stix",
+        "pattern_version": "2.1",
+        "spec_version": "2.1",
+        "type": "indicator",
+        "valid_from": "2024-10-15T15:50:59.594386Z"
+      },
+      {
+        "created": "2024-10-15T15:50:59.594386Z",
+        "created_by_ref": "identity--a1f2e3ed-6241-5f05-ac2e-3394213b8e08",
+        "external_references": [
+          {
+            "source_name": "txt2stix job ID",
+            "description": "report--0c0ad548-4bb8-59cc-ab71-3e479dcc0329"
+          },
+          {
+            "source_name": "txt2stix extraction ID",
+            "description": "pattern_host_name_1.0.0"
+          }
+        ],
+        "id": "indicator--66d5c5da-00d9-5cc1-bdfb-a090ba227d05",
+        "indicator_types": [
+          "unknown"
+        ],
+        "modified": "2024-10-15T15:53:04.8859Z",
+        "name": "Domain: Zaitsev.Our",
+        "object_marking_refs": [
+          "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+          "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+        ],
+        "pattern": "[ domain-name:value = 'Zaitsev.Our' ]",
+        "pattern_type": "stix",
+        "pattern_version": "2.1",
+        "spec_version": "2.1",
+        "type": "indicator",
+        "valid_from": "2024-10-15T15:50:59.594386Z"
+      },
+      {
+        "created": "2024-10-15T15:50:59.594386Z",
+        "created_by_ref": "identity--a1f2e3ed-6241-5f05-ac2e-3394213b8e08",
+        "external_references": [
+          {
+            "source_name": "txt2stix job ID",
+            "description": "report--0c0ad548-4bb8-59cc-ab71-3e479dcc0329"
+          },
+          {
+            "source_name": "txt2stix extraction ID",
+            "description": "pattern_host_name_1.0.0"
+          }
+        ],
+        "id": "indicator--8db2dc2e-a2d1-54c2-af8e-f65589da397f",
+        "indicator_types": [
+          "unknown"
+        ],
+        "modified": "2024-10-15T15:53:04.8859Z",
+        "name": "Domain: experience.Sign",
+        "object_marking_refs": [
+          "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+          "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+        ],
+        "pattern": "[ domain-name:value = 'experience.Sign' ]",
+        "pattern_type": "stix",
+        "pattern_version": "2.1",
+        "spec_version": "2.1",
+        "type": "indicator",
+        "valid_from": "2024-10-15T15:50:59.594386Z"
+      },
+      {
+        "created": "2024-10-15T15:50:59.594386Z",
+        "created_by_ref": "identity--a1f2e3ed-6241-5f05-ac2e-3394213b8e08",
+        "external_references": [
+          {
+            "source_name": "txt2stix job ID",
+            "description": "report--0c0ad548-4bb8-59cc-ab71-3e479dcc0329"
+          },
+          {
+            "source_name": "txt2stix extraction ID",
+            "description": "pattern_host_name_1.0.0"
+          }
+        ],
+        "id": "indicator--98db624a-c4d5-58e7-93c5-6bae8b292d5b",
+        "indicator_types": [
+          "unknown"
+        ],
+        "modified": "2024-10-15T15:53:04.8859Z",
+        "name": "Domain: together.Below",
+        "object_marking_refs": [
+          "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+          "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+        ],
+        "pattern": "[ domain-name:value = 'together.Below' ]",
+        "pattern_type": "stix",
+        "pattern_version": "2.1",
+        "spec_version": "2.1",
+        "type": "indicator",
+        "valid_from": "2024-10-15T15:50:59.594386Z"
+      },
+      {
+        "created": "2024-10-15T15:50:59.594386Z",
+        "created_by_ref": "identity--a1f2e3ed-6241-5f05-ac2e-3394213b8e08",
+        "external_references": [
+          {
+            "source_name": "txt2stix job ID",
+            "description": "report--0c0ad548-4bb8-59cc-ab71-3e479dcc0329"
+          },
+          {
+            "source_name": "txt2stix extraction ID",
+            "description": "pattern_host_name_1.0.0"
+          }
+        ],
+        "id": "indicator--ae58d35b-9293-5fdc-b427-72a1775b53f6",
+        "indicator_types": [
+          "unknown"
+        ],
+        "modified": "2024-10-15T15:53:04.8859Z",
+        "name": "Domain: before.Engage",
+        "object_marking_refs": [
+          "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+          "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+        ],
+        "pattern": "[ domain-name:value = 'before.Engage' ]",
+        "pattern_type": "stix",
+        "pattern_version": "2.1",
+        "spec_version": "2.1",
+        "type": "indicator",
+        "valid_from": "2024-10-15T15:50:59.594386Z"
+      },
+      {
+        "created": "2024-10-15T15:50:59.594386Z",
+        "created_by_ref": "identity--a1f2e3ed-6241-5f05-ac2e-3394213b8e08",
+        "external_references": [
+          {
+            "source_name": "txt2stix job ID",
+            "description": "report--0c0ad548-4bb8-59cc-ab71-3e479dcc0329"
+          },
+          {
+            "source_name": "txt2stix extraction ID",
+            "description": "pattern_host_name_1.0.0"
+          }
+        ],
+        "id": "indicator--bd435849-bbfb-5fd0-b65b-4f34eda55276",
+        "indicator_types": [
+          "unknown"
+        ],
+        "modified": "2024-10-15T15:53:04.8859Z",
+        "name": "Domain: A.Elevate",
+        "object_marking_refs": [
+          "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+          "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+        ],
+        "pattern": "[ domain-name:value = 'A.Elevate' ]",
+        "pattern_type": "stix",
+        "pattern_version": "2.1",
+        "spec_version": "2.1",
+        "type": "indicator",
+        "valid_from": "2024-10-15T15:50:59.594386Z"
+      },
+      {
+        "created": "2024-10-15T15:50:59.594386Z",
+        "created_by_ref": "identity--a1f2e3ed-6241-5f05-ac2e-3394213b8e08",
+        "external_references": [
+          {
+            "source_name": "txt2stix job ID",
+            "description": "report--0c0ad548-4bb8-59cc-ab71-3e479dcc0329"
+          },
+          {
+            "source_name": "txt2stix extraction ID",
+            "description": "pattern_host_name_1.0.0"
+          }
+        ],
+        "id": "indicator--c93b8526-b3a4-543d-873b-ef7c79259007",
+        "indicator_types": [
+          "unknown"
+        ],
+        "modified": "2024-10-15T15:53:04.8859Z",
+        "name": "Domain: Fal.Con",
+        "object_marking_refs": [
+          "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+          "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+        ],
+        "pattern": "[ domain-name:value = 'Fal.Con' ]",
+        "pattern_type": "stix",
+        "pattern_version": "2.1",
+        "spec_version": "2.1",
+        "type": "indicator",
+        "valid_from": "2024-10-15T15:50:59.594386Z"
+      },
+      {
+        "created": "2024-10-15T15:50:59.594386Z",
+        "created_by_ref": "identity--a1f2e3ed-6241-5f05-ac2e-3394213b8e08",
+        "external_references": [
+          {
+            "source_name": "txt2stix job ID",
+            "description": "report--0c0ad548-4bb8-59cc-ab71-3e479dcc0329"
+          },
+          {
+            "source_name": "txt2stix extraction ID",
+            "description": "pattern_host_name_1.0.0"
+          }
+        ],
+        "id": "indicator--cfa7f134-1855-5f23-9a3e-840022169b7e",
+        "indicator_types": [
+          "unknown"
+        ],
+        "modified": "2024-10-15T15:53:04.8859Z",
+        "name": "Domain: cyberattacks.The",
+        "object_marking_refs": [
+          "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+          "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+        ],
+        "pattern": "[ domain-name:value = 'cyberattacks.The' ]",
+        "pattern_type": "stix",
+        "pattern_version": "2.1",
+        "spec_version": "2.1",
+        "type": "indicator",
+        "valid_from": "2024-10-15T15:50:59.594386Z"
+      },
+      {
+        "created": "2024-10-15T15:50:59.594386Z",
+        "created_by_ref": "identity--a1f2e3ed-6241-5f05-ac2e-3394213b8e08",
+        "external_references": [
+          {
+            "source_name": "txt2stix job ID",
+            "description": "report--0c0ad548-4bb8-59cc-ab71-3e479dcc0329"
+          },
+          {
+            "source_name": "txt2stix extraction ID",
+            "description": "pattern_host_name_1.0.0"
+          }
+        ],
+        "id": "indicator--e710b0df-5225-51b2-bee2-78e6677e9204",
+        "indicator_types": [
+          "unknown"
+        ],
+        "modified": "2024-10-15T15:53:04.8859Z",
+        "name": "Domain: tab.sessiondaysforfilter",
+        "object_marking_refs": [
+          "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+          "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+        ],
+        "pattern": "[ domain-name:value = 'tab.sessiondaysforfilter' ]",
+        "pattern_type": "stix",
+        "pattern_version": "2.1",
+        "spec_version": "2.1",
+        "type": "indicator",
+        "valid_from": "2024-10-15T15:50:59.594386Z"
+      },
+      {
+        "created": "2024-10-15T15:50:59.594386Z",
+        "created_by_ref": "identity--a1f2e3ed-6241-5f05-ac2e-3394213b8e08",
+        "external_references": [
+          {
+            "source_name": "txt2stix job ID",
+            "description": "report--0c0ad548-4bb8-59cc-ab71-3e479dcc0329"
+          },
+          {
+            "source_name": "txt2stix extraction ID",
+            "description": "pattern_host_name_1.0.0"
+          }
+        ],
+        "id": "indicator--eff5f9e0-ecd0-5e8f-a57d-352be65fa608",
+        "indicator_types": [
+          "unknown"
+        ],
+        "modified": "2024-10-15T15:53:04.8859Z",
+        "name": "Domain: measures.This",
+        "object_marking_refs": [
+          "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+          "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+        ],
+        "pattern": "[ domain-name:value = 'measures.This' ]",
+        "pattern_type": "stix",
+        "pattern_version": "2.1",
+        "spec_version": "2.1",
+        "type": "indicator",
+        "valid_from": "2024-10-15T15:50:59.594386Z"
+      },
+      {
+        "created": "2024-10-15T15:50:59.594386Z",
+        "created_by_ref": "identity--a1f2e3ed-6241-5f05-ac2e-3394213b8e08",
+        "external_references": [
+          {
+            "source_name": "txt2stix job ID",
+            "description": "report--0c0ad548-4bb8-59cc-ab71-3e479dcc0329"
+          },
+          {
+            "source_name": "txt2stix extraction ID",
+            "description": "pattern_host_name_1.0.0"
+          }
+        ],
+        "id": "indicator--fe286ad4-834d-5b30-b920-4bbd0c20ecbe",
+        "indicator_types": [
+          "unknown"
+        ],
+        "modified": "2024-10-15T15:53:04.8859Z",
+        "name": "Domain: world.While",
+        "object_marking_refs": [
+          "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+          "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+        ],
+        "pattern": "[ domain-name:value = 'world.While' ]",
+        "pattern_type": "stix",
+        "pattern_version": "2.1",
+        "spec_version": "2.1",
+        "type": "indicator",
+        "valid_from": "2024-10-15T15:50:59.594386Z"
+      },
+      {
+        "created": "2022-10-01T00:00:00.000Z",
+        "definition_type": "TLP:CLEAR",
+        "extensions": {
+          "extension-definition--60a3c5c5-0d10-413e-aab3-9e08dde9e88d": {
+            "extension_type": "property-extension",
+            "tlp_2_0": "clear"
+          }
+        },
+        "id": "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+        "spec_version": "2.1",
+        "type": "marking-definition"
+      },
+      {
+        "created": "2022-10-01T00:00:00.000Z",
+        "definition_type": "TLP:RED",
+        "extensions": {
+          "extension-definition--60a3c5c5-0d10-413e-aab3-9e08dde9e88d": {
+            "extension_type": "property-extension",
+            "tlp_2_0": "red"
+          }
+        },
+        "id": "marking-definition--e828b379-4e03-4974-9ac4-e53a884c97c1",
+        "spec_version": "2.1",
+        "type": "marking-definition"
+      },
+      {
+        "created": "2020-01-01T00:00:00.000Z",
+        "created_by_ref": "identity--9779a2db-f98c-5f4b-8d08-8ee04e02dbb5",
+        "definition": {
+          "statement": "This object was created using: https://github.com/muchdogesec/txt2stix"
+        },
+        "definition_type": "statement",
+        "id": "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5",
+        "object_marking_refs": [
+          "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+          "marking-definition--97ba4e8b-04f6-57e8-8f6e-3a0f0a7dc0fb"
+        ],
+        "spec_version": "2.1",
+        "type": "marking-definition"
+      },
+      {
+        "created": "2024-10-15T15:50:59.594386Z",
+        "created_by_ref": "identity--a1f2e3ed-6241-5f05-ac2e-3394213b8e08",
+        "external_references": [
+          {
+            "source_name": "txt2stix job ID",
+            "external_id": "report--0c0ad548-4bb8-59cc-ab71-3e479dcc0329"
+          }
+        ],
+        "id": "relationship--09483c13-f3f3-5480-9edc-5e73b927a9c9",
+        "modified": "2024-10-15T15:53:04.8859Z",
+        "object_marking_refs": [
+          "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+          "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+        ],
+        "relationship_type": "related-to",
+        "source_ref": "domain-name--a423fba3-e367-5b88-8ed7-a20e4b3e543d",
+        "spec_version": "2.1",
+        "target_ref": "indicator--3416482c-362a-5ac7-ae59-929df32383b1",
+        "type": "relationship"
+      },
+      {
+        "created": "2024-10-15T15:50:59.594386Z",
+        "created_by_ref": "identity--a1f2e3ed-6241-5f05-ac2e-3394213b8e08",
+        "external_references": [
+          {
+            "source_name": "txt2stix job ID",
+            "external_id": "report--0c0ad548-4bb8-59cc-ab71-3e479dcc0329"
+          }
+        ],
+        "id": "relationship--22d1ded4-3bd2-58b6-98e2-ee45e351727f",
+        "modified": "2024-10-15T15:53:04.8859Z",
+        "object_marking_refs": [
+          "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+          "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+        ],
+        "relationship_type": "related-to",
+        "source_ref": "domain-name--e700714c-133c-5f95-846c-4965799673d2",
+        "spec_version": "2.1",
+        "target_ref": "indicator--1e85e991-8d97-51e7-b21f-b5dc8fcb71de",
+        "type": "relationship"
+      },
+      {
+        "created": "2024-10-15T15:50:59.594386Z",
+        "created_by_ref": "identity--a1f2e3ed-6241-5f05-ac2e-3394213b8e08",
+        "external_references": [
+          {
+            "source_name": "txt2stix job ID",
+            "external_id": "report--0c0ad548-4bb8-59cc-ab71-3e479dcc0329"
+          }
+        ],
+        "id": "relationship--28785bf5-24fa-5b38-84a1-201a08f69a38",
+        "modified": "2024-10-15T15:53:04.8859Z",
+        "object_marking_refs": [
+          "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+          "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+        ],
+        "relationship_type": "related-to",
+        "source_ref": "domain-name--0826b20f-dbd0-5f2b-9430-e4f6e476f51b",
+        "spec_version": "2.1",
+        "target_ref": "indicator--5336c6ba-b254-564d-b6db-a71bc88d4a88",
+        "type": "relationship"
+      },
+      {
+        "created": "2024-10-15T15:50:59.594386Z",
+        "created_by_ref": "identity--a1f2e3ed-6241-5f05-ac2e-3394213b8e08",
+        "external_references": [
+          {
+            "source_name": "txt2stix job ID",
+            "external_id": "report--0c0ad548-4bb8-59cc-ab71-3e479dcc0329"
+          }
+        ],
+        "id": "relationship--48062e14-c699-5ad2-bf7f-9317e71b4b46",
+        "modified": "2024-10-15T15:53:04.8859Z",
+        "object_marking_refs": [
+          "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+          "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+        ],
+        "relationship_type": "related-to",
+        "source_ref": "domain-name--b80d7dd6-63aa-5727-a4a2-e8b84173f54f",
+        "spec_version": "2.1",
+        "target_ref": "indicator--fe286ad4-834d-5b30-b920-4bbd0c20ecbe",
+        "type": "relationship"
+      },
+      {
+        "created": "2024-10-15T15:50:59.594386Z",
+        "created_by_ref": "identity--a1f2e3ed-6241-5f05-ac2e-3394213b8e08",
+        "external_references": [
+          {
+            "source_name": "txt2stix job ID",
+            "external_id": "report--0c0ad548-4bb8-59cc-ab71-3e479dcc0329"
+          }
+        ],
+        "id": "relationship--597ecd8c-1710-531a-931b-c7b82d2e8d53",
+        "modified": "2024-10-15T15:53:04.8859Z",
+        "object_marking_refs": [
+          "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+          "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+        ],
+        "relationship_type": "related-to",
+        "source_ref": "domain-name--2c640b40-9b19-533c-9f4c-d347019527c5",
+        "spec_version": "2.1",
+        "target_ref": "indicator--e710b0df-5225-51b2-bee2-78e6677e9204",
+        "type": "relationship"
+      },
+      {
+        "created": "2024-10-15T15:50:59.594386Z",
+        "created_by_ref": "identity--a1f2e3ed-6241-5f05-ac2e-3394213b8e08",
+        "external_references": [
+          {
+            "source_name": "txt2stix job ID",
+            "external_id": "report--0c0ad548-4bb8-59cc-ab71-3e479dcc0329"
+          }
+        ],
+        "id": "relationship--7caf5f55-1bae-59d2-9d53-4fb9ceec4b08",
+        "modified": "2024-10-15T15:53:04.8859Z",
+        "object_marking_refs": [
+          "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+          "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+        ],
+        "relationship_type": "related-to",
+        "source_ref": "domain-name--a135cc51-5b0f-502a-ba1d-050100ff6d06",
+        "spec_version": "2.1",
+        "target_ref": "indicator--c93b8526-b3a4-543d-873b-ef7c79259007",
+        "type": "relationship"
+      },
+      {
+        "created": "2024-10-15T15:50:59.594386Z",
+        "created_by_ref": "identity--a1f2e3ed-6241-5f05-ac2e-3394213b8e08",
+        "external_references": [
+          {
+            "source_name": "txt2stix job ID",
+            "external_id": "report--0c0ad548-4bb8-59cc-ab71-3e479dcc0329"
+          }
+        ],
+        "id": "relationship--9328ad2c-3464-5a5a-9261-fb0c1242c831",
+        "modified": "2024-10-15T15:53:04.8859Z",
+        "object_marking_refs": [
+          "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+          "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+        ],
+        "relationship_type": "related-to",
+        "source_ref": "domain-name--3df60f48-ff4b-56ad-9c3b-72acbecfeddf",
+        "spec_version": "2.1",
+        "target_ref": "indicator--bd435849-bbfb-5fd0-b65b-4f34eda55276",
+        "type": "relationship"
+      },
+      {
+        "created": "2024-10-15T15:50:59.594386Z",
+        "created_by_ref": "identity--a1f2e3ed-6241-5f05-ac2e-3394213b8e08",
+        "external_references": [
+          {
+            "source_name": "txt2stix job ID",
+            "external_id": "report--0c0ad548-4bb8-59cc-ab71-3e479dcc0329"
+          }
+        ],
+        "id": "relationship--950029ad-8275-59a1-9cce-e3cea739639a",
+        "modified": "2024-10-15T15:53:04.8859Z",
+        "object_marking_refs": [
+          "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+          "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+        ],
+        "relationship_type": "related-to",
+        "source_ref": "domain-name--d34b06e6-60a3-5dd6-a413-5025f294260e",
+        "spec_version": "2.1",
+        "target_ref": "indicator--ae58d35b-9293-5fdc-b427-72a1775b53f6",
+        "type": "relationship"
+      },
+      {
+        "created": "2024-10-15T15:50:59.594386Z",
+        "created_by_ref": "identity--a1f2e3ed-6241-5f05-ac2e-3394213b8e08",
+        "external_references": [
+          {
+            "source_name": "txt2stix job ID",
+            "external_id": "report--0c0ad548-4bb8-59cc-ab71-3e479dcc0329"
+          }
+        ],
+        "id": "relationship--9b565135-aba4-56f0-b37a-e046351408e0",
+        "modified": "2024-10-15T15:53:04.8859Z",
+        "object_marking_refs": [
+          "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+          "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+        ],
+        "relationship_type": "related-to",
+        "source_ref": "domain-name--a2fd501a-4bec-50d7-9e61-e9ea83d350b1",
+        "spec_version": "2.1",
+        "target_ref": "indicator--cfa7f134-1855-5f23-9a3e-840022169b7e",
+        "type": "relationship"
+      },
+      {
+        "created": "2024-10-15T15:50:59.594386Z",
+        "created_by_ref": "identity--a1f2e3ed-6241-5f05-ac2e-3394213b8e08",
+        "external_references": [
+          {
+            "source_name": "txt2stix job ID",
+            "external_id": "report--0c0ad548-4bb8-59cc-ab71-3e479dcc0329"
+          }
+        ],
+        "id": "relationship--bc02ab25-2715-5be6-a9fb-c34639633ce4",
+        "modified": "2024-10-15T15:53:04.8859Z",
+        "object_marking_refs": [
+          "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+          "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+        ],
+        "relationship_type": "related-to",
+        "source_ref": "domain-name--ffd2a9eb-491a-5899-9404-fbe731332972",
+        "spec_version": "2.1",
+        "target_ref": "indicator--eff5f9e0-ecd0-5e8f-a57d-352be65fa608",
+        "type": "relationship"
+      },
+      {
+        "created": "2024-10-15T15:50:59.594386Z",
+        "created_by_ref": "identity--a1f2e3ed-6241-5f05-ac2e-3394213b8e08",
+        "external_references": [
+          {
+            "source_name": "txt2stix job ID",
+            "external_id": "report--0c0ad548-4bb8-59cc-ab71-3e479dcc0329"
+          }
+        ],
+        "id": "relationship--c7d8a744-0a3b-5ffb-afaf-1756e3a7880e",
+        "modified": "2024-10-15T15:53:04.8859Z",
+        "object_marking_refs": [
+          "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+          "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+        ],
+        "relationship_type": "related-to",
+        "source_ref": "domain-name--152e7a1f-b319-5830-a031-e31a46fde49a",
+        "spec_version": "2.1",
+        "target_ref": "indicator--279e60e7-11e7-533a-a9e9-c8d2b801a01f",
+        "type": "relationship"
+      },
+      {
+        "created": "2024-10-15T15:50:59.594386Z",
+        "created_by_ref": "identity--a1f2e3ed-6241-5f05-ac2e-3394213b8e08",
+        "external_references": [
+          {
+            "source_name": "txt2stix job ID",
+            "external_id": "report--0c0ad548-4bb8-59cc-ab71-3e479dcc0329"
+          }
+        ],
+        "id": "relationship--e4dcb504-2236-54c4-ae69-7d116949b784",
+        "modified": "2024-10-15T15:53:04.8859Z",
+        "object_marking_refs": [
+          "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+          "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+        ],
+        "relationship_type": "related-to",
+        "source_ref": "domain-name--6ed3bb50-2c26-5924-be1a-66eaa42a20c3",
+        "spec_version": "2.1",
+        "target_ref": "indicator--66d5c5da-00d9-5cc1-bdfb-a090ba227d05",
+        "type": "relationship"
+      },
+      {
+        "created": "2024-10-15T15:50:59.594386Z",
+        "created_by_ref": "identity--a1f2e3ed-6241-5f05-ac2e-3394213b8e08",
+        "external_references": [
+          {
+            "source_name": "txt2stix job ID",
+            "external_id": "report--0c0ad548-4bb8-59cc-ab71-3e479dcc0329"
+          }
+        ],
+        "id": "relationship--e55b4385-b244-54bd-a249-4365f13e3dae",
+        "modified": "2024-10-15T15:53:04.8859Z",
+        "object_marking_refs": [
+          "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+          "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+        ],
+        "relationship_type": "related-to",
+        "source_ref": "domain-name--e52e1505-a74c-5308-b7c1-bc75cb4ceb58",
+        "spec_version": "2.1",
+        "target_ref": "indicator--8db2dc2e-a2d1-54c2-af8e-f65589da397f",
+        "type": "relationship"
+      },
+      {
+        "created": "2024-10-15T15:50:59.594386Z",
+        "created_by_ref": "identity--a1f2e3ed-6241-5f05-ac2e-3394213b8e08",
+        "external_references": [
+          {
+            "source_name": "txt2stix job ID",
+            "external_id": "report--0c0ad548-4bb8-59cc-ab71-3e479dcc0329"
+          }
+        ],
+        "id": "relationship--f1f7ecee-6128-5719-a391-f3cb13956595",
+        "modified": "2024-10-15T15:53:04.8859Z",
+        "object_marking_refs": [
+          "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+          "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+        ],
+        "relationship_type": "related-to",
+        "source_ref": "domain-name--6566f2de-7e57-552b-b446-171bf8474618",
+        "spec_version": "2.1",
+        "target_ref": "indicator--542b63f4-1a1b-5719-b02a-ae56862cef5d",
+        "type": "relationship"
+      },
+      {
+        "created": "2024-10-15T15:50:59.594386Z",
+        "created_by_ref": "identity--a1f2e3ed-6241-5f05-ac2e-3394213b8e08",
+        "external_references": [
+          {
+            "source_name": "txt2stix job ID",
+            "external_id": "report--0c0ad548-4bb8-59cc-ab71-3e479dcc0329"
+          }
+        ],
+        "id": "relationship--f6e7a9ec-92a6-5b74-80d7-24cd908e0744",
+        "modified": "2024-10-15T15:53:04.8859Z",
+        "object_marking_refs": [
+          "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+          "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+        ],
+        "relationship_type": "related-to",
+        "source_ref": "domain-name--bbdb5df3-8b7b-59b1-9ad0-d46e470470b4",
+        "spec_version": "2.1",
+        "target_ref": "indicator--98db624a-c4d5-58e7-93c5-6bae8b292d5b",
+        "type": "relationship"
+      },
+      {
+        "confidence": 0,
+        "created": "2024-10-15T15:50:59.594386Z",
+        "created_by_ref": "identity--a1f2e3ed-6241-5f05-ac2e-3394213b8e08",
+        "description": "[comment]:<> (===START PAGE 1===)\n\n\n\n\n\n\n CrowdStrike’s annual Fal.Con cybersecurity conference presents an invaluable opportunity for cybersecurity leaders and practitioners to come together, share best practices, learn the latest threats to their organizations and discover how to best defend against them. \n\n\n\n Since its inception, Fal.Con has taken place solely in the United States, attracting participants from around the globe.After many successful years of growth, we decided it was time to expand the global presence of our flagship event:We are excited to announce the first\\-ever Fal.Con Europe, which will take place November 6\\-7, 2024, in Amsterdam. \n\n\n\n As a global cybersecurity leader, CrowdStrike takes pride in defending businesses around the world.While all global businesses share similar technology concerns — the rapid proliferation of cloud technology, expansion of remote work and evolution of cyber threats — some issues are unique to geographic regions.In Europe, we know the Network and Information Security Directive (NIS2\\) and the Digital Operational Resilience Act (DORA) — both of which require organizations to be compliant — are top of mind among our customers. \n\n\n\n Fal.Con Europe has a jam\\-packed agenda that includes keynotes from CrowdStrike CEO George Kurtz, President Mike Sentonas and CTO Elia Zaitsev.Our leaders will highlight our Resilience by Design principle, demonstrate some recently announced innovations and share the latest on adversary activity with new and compelling insights from our threat intelligence team. \n\n\n\n Attendees will hear CrowdStrike customers share their cybersecurity stories and learn how CrowdStrike helps them defend their organizations, customers and employees from cyberattacks.The Fal.Con Europe agenda will also feature detailed technical talks on our recent innovations in cloud security, AI, next\\-gen SIEM and identity protection, and product and technical breakout sessions exploring the functionality of CrowdStrike’s product lineup. \n\n\n\n Whether you’re a threat hunter, security analyst, SOC manager or part of a cybersecurity or IT team, there will be plenty of opportunities to sharpen your security skills with training sessions, technical workshops and CrowdStrike University courses.There will also be hands\\-on opportunities to hone your breach defense skills and compete against your cybersecurity colleagues with capture\\-the\\-flag simulations. \n\n\nCustomize Your Fal.Con Europe Agenda\n------------------------------------\n\n\n\n We’re excited to share the agenda our experts have put together.Below are some of the sessions we’re excited to share at Fal.Con Europe 2024: \n\n\n### Falcon Next\\-Gen SIEM:Innovations and Roadmap\n\n\n\n Discover how the latest release of Falcon Next\\-Gen SIEM revolutionizes security operations as product experts unveil features that are a major leap forward from anything seen before.Engage with our product leaders, explore the latest capabilities of Falcon Next\\-Gen SIEM and dive into an interactive Q\\&A.Elevate your SOC strategy and stay ahead of the curve. \n\n\n### Hands\\-on Workshop:Stopping Modern Attacks with Unified Identity Protection\n\n\n\n In this workshop, you'll learn how CrowdStrike Falcon Identity Protection gives you actionable visibility into your identity landscape, whether it is on\\-premises, in the cloud or in a hybrid environment.You'll run an attack to experience how the Falcon platform detects all forms of identity\\-based threats and gives you flexible protection to stop breaches in real time.Join us to experience unified identity protection that stops modern attacks with Falcon Identity Protection. \n\n\n### Demystifying Cloud Detection and Response\n\n\n\n This session unravels cloud detection and response (CDR), showing how it integrates into security frameworks for comprehensive cloud protection.Learn about key CDR components, including incident detection, response strategies and real\\-time threat intelligence.Discover how CDR identifies and neutralizes threats before they escalate, enhancing your security posture in the evolving digital landscape. \n\n\n### Intelligence\\-Led Cross\\-Domain Threat Hunting\n\n\n\n Insider threats and cross\\-domain attacks pose significant risks to organizations, often evading traditional security measures.This session explores how leveraging threat intelligence and proactive threat hunting can uncover and mitigate these threats and how CrowdStrike threat hunters provide integrated visibility across cloud, identity and endpoint domains, reducing complexity and accelerating response times to stop breaches. \n\n\n\n The full agenda is\n [here](https://www.crowdstrike.com/events/fal-con/europe/agenda/?tab.sessiondaysforfilter=1690408937691001ewFR#/) \n.You can customize your own agenda to match your needs and interests so you can maximize the benefits from your Fal.Con Europe experience.Sign up for your preferred sessions to build and save your own agenda. \n\n\n\n Come join us as we bring the power of the crowd to Europe. \n\n\n\n\n\n\n\n\n\n[comment]:<> (===END PAGE 1===)\n",
+        "external_references": [
+          {
+            "source_name": "txt2stix job ID",
+            "description": "report--0c0ad548-4bb8-59cc-ab71-3e479dcc0329"
+          },
+          {
+            "source_name": "txt2stix Report MD5",
+            "external_id": "2e94a5509963ab2022835ee1f139a07f"
+          }
+        ],
+        "id": "report--0c0ad548-4bb8-59cc-ab71-3e479dcc0329",
+        "modified": "2024-10-15T15:53:04.8859Z",
+        "name": "Fal.Con Europe: Bringing the Power of the Crowd to Amsterdam",
+        "object_marking_refs": [
+          "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+          "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+        ],
+        "object_refs": [
+          "indicator--1e85e991-8d97-51e7-b21f-b5dc8fcb71de",
+          "domain-name--e700714c-133c-5f95-846c-4965799673d2",
+          "relationship--22d1ded4-3bd2-58b6-98e2-ee45e351727f",
+          "indicator--c93b8526-b3a4-543d-873b-ef7c79259007",
+          "domain-name--a135cc51-5b0f-502a-ba1d-050100ff6d06",
+          "relationship--7caf5f55-1bae-59d2-9d53-4fb9ceec4b08",
+          "indicator--279e60e7-11e7-533a-a9e9-c8d2b801a01f",
+          "domain-name--152e7a1f-b319-5830-a031-e31a46fde49a",
+          "relationship--c7d8a744-0a3b-5ffb-afaf-1756e3a7880e",
+          "indicator--fe286ad4-834d-5b30-b920-4bbd0c20ecbe",
+          "domain-name--b80d7dd6-63aa-5727-a4a2-e8b84173f54f",
+          "relationship--48062e14-c699-5ad2-bf7f-9317e71b4b46",
+          "indicator--66d5c5da-00d9-5cc1-bdfb-a090ba227d05",
+          "domain-name--6ed3bb50-2c26-5924-be1a-66eaa42a20c3",
+          "relationship--e4dcb504-2236-54c4-ae69-7d116949b784",
+          "indicator--cfa7f134-1855-5f23-9a3e-840022169b7e",
+          "domain-name--a2fd501a-4bec-50d7-9e61-e9ea83d350b1",
+          "relationship--9b565135-aba4-56f0-b37a-e046351408e0",
+          "indicator--5336c6ba-b254-564d-b6db-a71bc88d4a88",
+          "domain-name--0826b20f-dbd0-5f2b-9430-e4f6e476f51b",
+          "relationship--28785bf5-24fa-5b38-84a1-201a08f69a38",
+          "indicator--98db624a-c4d5-58e7-93c5-6bae8b292d5b",
+          "domain-name--bbdb5df3-8b7b-59b1-9ad0-d46e470470b4",
+          "relationship--f6e7a9ec-92a6-5b74-80d7-24cd908e0744",
+          "indicator--ae58d35b-9293-5fdc-b427-72a1775b53f6",
+          "domain-name--d34b06e6-60a3-5dd6-a413-5025f294260e",
+          "relationship--950029ad-8275-59a1-9cce-e3cea739639a",
+          "indicator--bd435849-bbfb-5fd0-b65b-4f34eda55276",
+          "domain-name--3df60f48-ff4b-56ad-9c3b-72acbecfeddf",
+          "relationship--9328ad2c-3464-5a5a-9261-fb0c1242c831",
+          "indicator--542b63f4-1a1b-5719-b02a-ae56862cef5d",
+          "domain-name--6566f2de-7e57-552b-b446-171bf8474618",
+          "relationship--f1f7ecee-6128-5719-a391-f3cb13956595",
+          "indicator--3416482c-362a-5ac7-ae59-929df32383b1",
+          "domain-name--a423fba3-e367-5b88-8ed7-a20e4b3e543d",
+          "relationship--09483c13-f3f3-5480-9edc-5e73b927a9c9",
+          "indicator--eff5f9e0-ecd0-5e8f-a57d-352be65fa608",
+          "domain-name--ffd2a9eb-491a-5899-9404-fbe731332972",
+          "relationship--bc02ab25-2715-5be6-a9fb-c34639633ce4",
+          "indicator--e710b0df-5225-51b2-bee2-78e6677e9204",
+          "domain-name--2c640b40-9b19-533c-9f4c-d347019527c5",
+          "relationship--597ecd8c-1710-531a-931b-c7b82d2e8d53",
+          "indicator--8db2dc2e-a2d1-54c2-af8e-f65589da397f",
+          "domain-name--e52e1505-a74c-5308-b7c1-bc75cb4ceb58",
+          "relationship--e55b4385-b244-54bd-a249-4365f13e3dae"
+        ],
+        "published": "2024-10-15T15:53:04.885858Z",
+        "spec_version": "2.1",
+        "type": "report"
+      }
+    ]
+  }

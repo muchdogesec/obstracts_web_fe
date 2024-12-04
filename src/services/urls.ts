@@ -1,0 +1,25 @@
+export const URLS = {
+    profile: () => '/user/account',
+    addTeam: () => '/teams/add',
+
+    staffUserList: () => '/staff/manage-users',
+    staffUserListWithEmailQuery: (userEmail: string) => `/staff/manage-users?email=${userEmail}`,
+    staffTeamList: () => '/staff/manage-teams',
+    staffObstractProfiles: () => '/staff/extraction-profiles',
+    staffObstractFeeds: () => '/staff/manage-feeds',
+    staffObstractFeed: (feedId: string) => `/staff/feeds/${feedId}`,
+    staffObstractPost: (feedId: string, postId: string) => `/staff/feeds/${feedId}/posts/${postId}`,
+    staffObstractJobs: (feedId: string) => `/staff/feeds/${feedId}/jobs`,
+    staffObstractJob: (feedId: string, jobId: string) => `/staff/feeds/${feedId}/jobs/${jobId}`,
+    staffObservationSearch: (type: string, value: string) => `/staff/observables/search?type=${type}&value=${value}`,
+    staffObservablePosts: (objectId: string, type: string, value: string) => `/staff/observables/${objectId}??type=${type}&value=${value}`,
+    staffAddSkeletonFeed: () => `/staff/feeds/add-skeleton-feed`,
+
+    teamManagement: (team_id) => `/teams/${team_id}`,
+    teamFeeds: (teamId) => `/feeds?team_id=${teamId}`,
+    teamFeed: (teamId, feedId) => `/feeds/${feedId}?team_id=${teamId}`,
+    teamFeedPost: (teamId, feedId, postId) => `/feeds/${feedId}/posts/${postId}?team_id=${teamId}`,
+    teamObservationSearch: (teamId, type: string, value: string) => `/observables/search?type=${type}&value=${value}&team_id=${teamId}`,
+    teamObservationSearchWithoutParams: (teamId: string) => `/observables/search?team_id=${teamId}`,
+    teamObservablePosts: (objectId: string, type: string, value: string) => `/observables/${objectId}?type=${type}&value=${value}`,
+}

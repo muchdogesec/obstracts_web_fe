@@ -1,0 +1,77 @@
+name: Create and publish Docker images for Obstracts Web
+
+description: This workflow builds and pushes Docker images for staging and production environments when changes are pushed to respective branches.
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  REGISTRY: ghcr.io
+
+jobs:
+  build-and-push-image:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+    strategy:
+      matrix:
+        environment:
+          - name: staging
+            branch: refs/heads/main
+            environment: obstracts_web_staging
+            image_suffix: _web_staging
+            react_app_auth0_domain: 'auth.signalscorps.com'
+            react_app_auth0_client_id: staging-client-id
+            react_app_obstracts_api_swagger_url: 'https://api.obstracts.staging.signalscorps.com/schema/swagger-ui/'
+            react_app_admin_url: 'https://management.obstracts.staging.signalscorps.com/admin/'
+          - name: production
+            branch: refs/heads/main
+            environment: obstracts_web_production
+            image_suffix: _web_production
+            react_app_auth0_domain: 'auth.dogesec.com'
+            react_app_auth0_client_id: production-client-id
+            react_app_api_base_url: 'https://management.obstracts.com/'
+            react_app_obstracts_api_swagger_url: 'https://api.obstracts.com/schema/swagger-ui/'
+            react_app_admin_url: 'https://management.obstracts.com/admin/'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ github.repository }}${{ matrix.environment.image_suffix }}
+      - name: Build and push Docker image
+        id: push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          visibility: private
+          build-args: |
+            REACT_APP_SUGGEST_NEW_FEED_FORM_URL='https://docs.google.com/forms/d/e/1FAIpQLSdhciTuIePZCuVsw7D-QiamlET3YLCbxYGusxA_I6K6O0JVBw/viewform'
+            REACT_APP_AUTH0_DOMAIN=${{ matrix.environment.react_app_auth0_domain }}
+            REACT_APP_AUTH0_CLIENT_ID=${{ matrix.environment.react_app_auth0_client_id }}
+            REACT_APP_API_BASE_URL=${{ matrix.environment.react_app_api_base_url }}
+            REACT_APP_OBSTRACTS_API_SWAGGER_URL=${{ matrix.environment.react_app_obstracts_api_swagger_url }}
+            REACT_APP_ADMIN_URL=${{ matrix.environment.react_app_admin_url }}
+      - name: Generate artifact attestation
+        uses: actions/attest-build-provenance@v1
+        with:
+          subject-name: ${{ env.REGISTRY }}/${{ github.repository }}${{ matrix.environment.image_suffix }}
+          subject-digest: ${{ steps.push.outputs.digest }}
+          push-to-registry: true
