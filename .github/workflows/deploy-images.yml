@@ -24,17 +24,17 @@ jobs:
           - name: staging
             branch: refs/heads/main
             environment: obstracts_web_staging
-            image_suffix: _web_staging
+            image_suffix: _obstracts_web_staging
             react_app_auth0_domain: 'auth.signalscorps.com'
-            react_app_auth0_client_id: staging-client-id
+            react_app_auth0_client_id: 'gPWdgbZHOoMjaCJ6YQuYieTDs90iIgp1'
             react_app_obstracts_api_swagger_url: 'https://api.obstracts.staging.signalscorps.com/schema/swagger-ui/'
             react_app_admin_url: 'https://management.obstracts.staging.signalscorps.com/admin/'
           - name: production
             branch: refs/heads/main
             environment: obstracts_web_production
-            image_suffix: _web_production
+            image_suffix: _obstracts_web_production
             react_app_auth0_domain: 'auth.dogesec.com'
-            react_app_auth0_client_id: production-client-id
+            react_app_auth0_client_id: 'eUCQ8h0EBuGRae8o1JU5179y9KpNDVTc'
             react_app_api_base_url: 'https://management.obstracts.com/'
             react_app_obstracts_api_swagger_url: 'https://api.obstracts.com/schema/swagger-ui/'
             react_app_admin_url: 'https://management.obstracts.com/admin/'
