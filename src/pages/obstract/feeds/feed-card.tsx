@@ -1,8 +1,7 @@
 import React from 'react';
-import { Card, CardContent, Typography, IconButton, Box, Button } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { Card, CardContent, Typography, Box, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { deleteObstractFeed, Feed } from '../../../services/obstract.ts';
+import { Feed } from '../../../services/obstract.ts';
 import { URLS } from '../../../services/urls.ts';
 
 interface FeedCardProps {

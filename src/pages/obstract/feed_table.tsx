@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import {
     Box,
     Button,
-    Typography,
     CircularProgress,
     Table,
     TableBody,
@@ -12,16 +11,9 @@ import {
     TableRow,
     TablePagination,
     TextField,
-    MenuItem,
-    Select,
-    InputLabel,
-    FormControl,
-    Dialog,
-    DialogContent,
 } from '@mui/material';
-import FeedFormModal from './feeds/feed-modal.tsx';
 import { Feed, fetchObstractFeeds } from '../../services/obstract.ts';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { URLS } from '../../services/urls.ts';
 
 const PAGE_SIZE = 10;
@@ -38,15 +30,11 @@ const FeedsTable: React.FC<FeedsTableProps> = ({
     const [loading, setLoading] = useState<boolean>(false);
     const [page, setPage] = useState<number>(0);
     const [totalPages, setTotalPages] = useState<number>(1);
-    const [openModal, setOpenModal] = useState(false);
-    const [selectedFeed, setSelectedFeed] = useState<Feed | null>(null);
-    const [formData, setFormData] = useState<Partial<Feed>>({});
 
     // Filter and sorting states
     const [filter, setFilter] = useState<string>('');
     const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
     const [sortField, setSortField] = useState<string>('latest_item_pubdate');
-    const navigate = useNavigate()
 
     const loadFeeds = async (pageNumber: number) => {
         setLoading(true);
@@ -59,24 +47,6 @@ const FeedsTable: React.FC<FeedsTableProps> = ({
     useEffect(() => {
         loadFeeds(page);
     }, [page, filter, sortField, sortOrder]);
-
-    const handleModalOpen = (feed?: Feed) => {
-        // setSelectedFeed(feed || null);
-        // setFormData(feed || {});
-        // setOpenModal(true);
-        navigate('add')
-    };
-
-    const handleModalClose = () => {
-        setSelectedFeed(null);
-        setFormData({});
-        setOpenModal(false);
-    };
-
-    const reloadData = () => {
-        setOpenModal(false);
-        loadFeeds(page);
-    };
 
     const handlePageChange = (event: unknown, newPage: number) => {
         setPage(newPage);
@@ -97,9 +67,11 @@ const FeedsTable: React.FC<FeedsTableProps> = ({
     return (
         <Box p={4}>
             {showAdd && <Box sx={{ marginBottom: '2rem' }}>
-                <Button variant="contained" color="primary" onClick={() => handleModalOpen()}>
-                    Add New Feed
-                </Button>
+                <Link to="add">
+                    <Button variant="contained" color="primary">
+                        Add New Feed
+                    </Button>
+                </Link>
                 <Link to={URLS.staffAddSkeletonFeed()}><Button variant='contained' sx={{ marginLeft: '2rem' }}>Add skeleton feed</Button></Link>
             </Box>}
 
@@ -177,15 +149,6 @@ const FeedsTable: React.FC<FeedsTableProps> = ({
                 labelRowsPerPage={""} // Hide the rows per page label
                 style={{ marginTop: '20px', display: 'flex', justifyContent: 'center' }}
             />
-            <Dialog open={openModal} onClose={handleModalClose}>
-                <DialogContent style={{ minWidth: '30vw' }}>
-                    <FeedFormModal
-                        open={openModal}
-                        onClose={handleModalClose}
-                        onAddEntry={reloadData}
-                    />
-                </DialogContent>
-            </Dialog>
         </Box>
     );
 };

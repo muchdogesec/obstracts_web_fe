@@ -3,16 +3,12 @@ import React, { useContext, useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Dialog, DialogTitle, DialogActions, Button, CircularProgress, DialogContent, Typography } from '@mui/material'; // Install @mui/material if you haven't already
 
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { getActiveTeamId, getInvitationId, setActiveTeamId, setApiKey, setAuthToken, setUserData } from "../../services/storage.ts";
-import InvitationsDialog from "./invites-dialog.tsx";
 import { Api } from "../../services/api.ts";
 import { TeamContext } from "../../contexts/team-context.tsx";
 import { URLS } from "../../services/urls.ts";
 
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
-}
 
 const ErrorDialog = ({ open, onClose, errorMessage }) => {
   return (

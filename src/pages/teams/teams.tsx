@@ -1,11 +1,28 @@
 // Teams.tsx
 import React, { useEffect, useState } from "react";
-import { Container, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, CircularProgress, Box, Dialog, DialogTitle, DialogContent, DialogActions, Pagination, TablePagination, TextField, Chip } from "@mui/material";
-import TeamManagement from "./team-management.tsx";
-import { Link, useNavigate } from "react-router-dom";
+import {
+  Typography,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Button,
+  CircularProgress,
+  Box,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Chip,
+  TablePagination,
+  TextField
+} from "@mui/material";
+import { Link } from "react-router-dom";
 import { Api } from "../../services/api.ts";
 import { AdminTeam, ITeam } from "../../services/types.ts";
-import { DialerSip } from "@mui/icons-material";
 import Invitations from "./invitations.tsx";
 import { URLS } from "../../services/urls.ts";
 import { useAlert } from "../../contexts/alert-context.tsx";
@@ -20,8 +37,8 @@ const ConfirmLeaveTeamDialog = ({ open, onClose, team }: {
     try {
       await Api.leaveTeam(teamId)
       onClose(true)
-    } catch(err) {
-      if(err?.response?.status === 400) {
+    } catch (err) {
+      if (err?.response?.status === 400) {
         onClose(false)
         return alert.showAlert(err?.response?.data[0])
       }
@@ -54,15 +71,13 @@ interface TeamListProps {
 
 
 function TeamList({ isAdmin }: TeamListProps) {
-  const [teams, setTeams] = useState<ITeam[] | AdminTeam[]>([]);
+  const [teams, setTeams] = useState<(ITeam & AdminTeam)[]>([]);
   const [loading, setLoading] = useState(true);
-  const [openTeamManagement, setOpenTeamManagement] = useState(false);
   const [selectedTeam, setSelectedTeam] = useState<ITeam | null>(null);
   const [showLeaveTeamDialog, setShowLeaveTeamDialog] = useState(false)
   const [totalResultsCount, setTotalResultsCount] = useState(0);
   const [page, setPage] = useState(0);
   const [search, setSearch] = useState("");
-  const navigate = useNavigate()
 
   async function loadTeams() {
     try {
@@ -80,12 +95,6 @@ function TeamList({ isAdmin }: TeamListProps) {
     loadTeams();
   }, [page, search]);
 
-  const handleOpenTeamManagement = (team: ITeam | null = null) => {
-    // setSelectedTeam(team);
-    // setOpenTeamManagement(true);
-    navigate(URLS.addTeam())
-  };
-
   const getRole = (team: ITeam) => {
     if (team.is_private) return 'Personal space'
     if (team.is_owner) return 'Owner'
@@ -97,10 +106,6 @@ function TeamList({ isAdmin }: TeamListProps) {
     setSelectedTeam(team)
     setShowLeaveTeamDialog(true)
   }
-  const handleCloseTeamManagement = () => {
-    setOpenTeamManagement(false);
-    setSelectedTeam(null);
-  };
 
   const closeLeaveTeamDialog = (reload: boolean) => {
     setShowLeaveTeamDialog(false)
@@ -138,13 +143,15 @@ function TeamList({ isAdmin }: TeamListProps) {
         </>
         )}
         {!isAdmin &&
-          <Button variant="contained" color="primary" onClick={() => handleOpenTeamManagement()}>
-            Add New Team
-          </Button>
+          <Link to={URLS.addTeam()}>
+            <Button variant="contained" color="primary">
+              Add New Team
+            </Button>
+          </Link>
         }
 
 
-        {/* <Box sx={{ display: 'flex', justifyContent: 'right' }}>
+        {isAdmin && <Box sx={{ display: 'flex', justifyContent: 'right' }}>
           <TextField
             sx={{ maxWidth: '200px' }}
             autoFocus
@@ -156,7 +163,7 @@ function TeamList({ isAdmin }: TeamListProps) {
             onChange={(e) => setSearch(e.target.value)}
           />
           <Button onClick={filter}> Filter </Button>
-        </Box> */}
+        </Box>}
         <TableContainer component={Paper} sx={{ mt: 2 }}>
           <Table>
             <TableHead>
@@ -240,27 +247,17 @@ function TeamList({ isAdmin }: TeamListProps) {
 
             </TableBody>
           </Table>
-          {/* <TablePagination
-            rowsPerPageOptions={[]}u
+          {isAdmin && <TablePagination
+            rowsPerPageOptions={[]}
             count={totalResultsCount}
             page={page}
             rowsPerPage={10}
             onPageChange={(ev, value) => setPage(value)}
             color="primary"
             style={{ marginTop: '20px', display: 'flex', justifyContent: 'center' }}
-          /> */}
+          />}
         </TableContainer>
-        <Dialog open={openTeamManagement} onClose={handleCloseTeamManagement} maxWidth={false}>
-          <DialogContent sx={{ minWidth: '50vw' }}>
-            <TeamManagement
-              onClose={handleCloseTeamManagement}
-              team={selectedTeam}
-              onTeamUpdated={loadTeams}
-              isAdmin={true}
-            />
-          </DialogContent>
-        </Dialog>
-        <ConfirmLeaveTeamDialog open={showLeaveTeamDialog} onClose={closeLeaveTeamDialog} team={selectedTeam}></ConfirmLeaveTeamDialog>
+        {selectedTeam && <ConfirmLeaveTeamDialog open={showLeaveTeamDialog} onClose={closeLeaveTeamDialog} team={selectedTeam}></ConfirmLeaveTeamDialog>}
       </Box>
     </ >
   );

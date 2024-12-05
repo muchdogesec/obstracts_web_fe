@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
 import {
     Box,
-    Button,
-    Link,
     Typography,
 } from '@mui/material';
 import FeedsTable from '../feed_table.tsx';

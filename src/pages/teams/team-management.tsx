@@ -51,7 +51,6 @@ function TeamManagement({ onClose, team, onTeamUpdated, isAdmin, disabled }: Tea
       }
     } catch (error) {
       if (error?.response?.status === 400) {
-        console.log(error?.response?.data?.name)
         setTeamNameError(error?.response?.data?.name)
       } else {
 

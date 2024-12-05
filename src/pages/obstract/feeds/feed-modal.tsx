@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
   TextField,
   Button,
   Box,
@@ -45,6 +41,7 @@ const AddEntryDialog: React.FC<AddEntryDialogProps> = ({
     title?: string[],
     description?: string[],
     pretty_url?: string[],
+    non_field_errors?: string[],
   }>({
     url: [],
     profile_id: [],
@@ -110,7 +107,7 @@ const AddEntryDialog: React.FC<AddEntryDialogProps> = ({
       onAddEntry();
     } catch (err) {
       if (err.response && err.response.status === 400) {
-        setErrors(err.response.data)
+        setErrors(err.response.data.details || err.response.data)
       } else {
         throw err
       }
@@ -168,7 +165,6 @@ const AddEntryDialog: React.FC<AddEntryDialogProps> = ({
           fullWidth
           value={formData.title}
           onChange={handleChange}
-          required
         />
         {errors?.title?.map(error => <Typography sx={{ color: 'red' }}>{error}</Typography>)}
       </Box>
@@ -183,7 +179,6 @@ const AddEntryDialog: React.FC<AddEntryDialogProps> = ({
           fullWidth
           value={formData.description}
           onChange={handleChange}
-          required
         />
         {errors?.description?.map(error => <Typography sx={{ color: 'red' }}>{error}</Typography>)}
       </Box>
@@ -198,7 +193,6 @@ const AddEntryDialog: React.FC<AddEntryDialogProps> = ({
           fullWidth
           value={formData.pretty_url}
           onChange={handleChange}
-          required
         />
         {errors?.pretty_url?.map(error => <Typography sx={{ color: 'red' }}>{error}</Typography>)}
       </Box>
@@ -237,6 +231,8 @@ const AddEntryDialog: React.FC<AddEntryDialogProps> = ({
         onChange={handleChange}
         required
       />
+
+      {errors?.non_field_errors?.map(error => <Typography sx={{ color: 'red' }}>{error}</Typography>)}
 
       <Box sx={{ marginTop: '1rem' }}>
         <Button variant='contained' color='error' onClick={onClose}>

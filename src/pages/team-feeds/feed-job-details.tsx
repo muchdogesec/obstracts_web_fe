@@ -1,5 +1,5 @@
-import { Box, Button, Container, List, ListItem, ListItemText, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { Box, Button, Container, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
 import { Feed, IJob } from '../../services/obstract';
 import { Link } from 'react-router-dom';
 import { URLS } from '../../services/urls.ts';
@@ -8,18 +8,11 @@ import { getDateString } from '../../services/utils.ts';
 interface JobDetailsPageProps {
     job?: IJob;
     teamId?: string;
-    feedId?: string;
+    feedId: string;
     feed: Feed;
 }
 
 const JobDetailsComponent: React.FC<JobDetailsPageProps> = ({ job, feedId, teamId, feed }: JobDetailsPageProps) => {
-    const getFeedUrl = () => {
-        if (teamId) {
-            return URLS.teamFeed(teamId, feedId)
-        } else {
-            return URLS.staffObstractFeed(feedId)
-        }
-    }
 
     return <Container>
         <Link to={URLS.staffObstractFeed(feedId)} style={{textDecoration: 'none'}}><Typography variant='h5'>{feed?.obstract_feed_metadata['title']}</Typography></Link>

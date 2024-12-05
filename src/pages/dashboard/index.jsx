@@ -14,16 +14,12 @@ import './index.css';
 const drawerWidth = 240;
 const OBSTRACTS_API_SWAGGER_URL = process.env.REACT_APP_OBSTRACTS_API_SWAGGER_URL
 
-console.log({ OBSTRACTS_API_SWAGGER_URL })
 
 const DashboardLayout = () => {
-  const { activeTeam, setActiveTeam } = useContext(TeamContext);
+  const { activeTeam } = useContext(TeamContext);
   const [activeTeamId, setActiveTeamId] = useState('')
-  const { user, logout, isAuthenticated, isLoading } = useAuth0()
+  const { logout, isAuthenticated, isLoading } = useAuth0()
   const navigate = useNavigate()
-  const handleLogout = () => {
-    logout()
-  };
 
   useEffect(() => {
     setActiveTeamId(activeTeam?.id)
@@ -54,14 +50,13 @@ const DashboardLayout = () => {
           <Toolbar sx={{ background: '#fb8521' }}>
             <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', height: '100%', width: '100%' }}>
               <NavLink to={URLS.teamFeeds(activeTeamId)}>
-                <img style={{ width: '200px', display: 'block' }} src="/obstracts-logo.png" />
+                <img alt='logo' style={{ width: '200px', display: 'block' }} src="/obstracts-logo.png" />
               </NavLink>
             </div>
-
           </Toolbar>
           <Divider />
           <List>
-            {!activeTeam?.is_private && (<>
+            {!activeTeam || !activeTeam?.is_private && (<>
               <ListItem button component={NavLink} to={URLS.teamFeeds(activeTeamId)}>
                 <ListItemIcon><RssFeedIcon /></ListItemIcon>
                 <ListItemText primary="Feeds" />
@@ -96,7 +91,7 @@ const DashboardLayout = () => {
       </Box>
       <Box className='footer'>
         <Typography>
-          Built by the <a href='https://www.dogesec.com/' target='_blank'>DOGESEC</a> team. Copyright {new Date().getFullYear()}.
+          Built by the <a href='https://www.dogesec.com/' target='_blank' rel="noreferrer">DOGESEC</a> team. Copyright {new Date().getFullYear()}.
         </Typography>
       </Box>
     </Box>

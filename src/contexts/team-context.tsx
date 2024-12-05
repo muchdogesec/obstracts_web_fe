@@ -1,12 +1,12 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useState } from 'react';
 import { ITeam } from '../services/types';
 
 export const TeamContext = createContext<{
-    activeTeam?: ITeam, setActiveTeam: (team: ITeam) => void,
+    activeTeam?: ITeam, setActiveTeam: (team?: ITeam) => void,
     reloadTeamListIndex: number, setReloadTeamListIndex: (index: number) => void
 }>({
     activeTeam: undefined,
-    setActiveTeam: (team: ITeam) => null,
+    setActiveTeam: (team?: ITeam) => null,
     reloadTeamListIndex: 0,
     setReloadTeamListIndex: (index: number) => null,
 });

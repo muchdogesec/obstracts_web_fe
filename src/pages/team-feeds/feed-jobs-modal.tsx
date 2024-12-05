@@ -10,13 +10,9 @@ import {
     TableHead,
     TableRow,
     TablePagination,
-    Dialog,
-    DialogTitle,
-    DialogContent,
 } from '@mui/material';
 import { Link, useParams } from 'react-router-dom';
 import { adminFetchFeedJobs, Feed, fetchFeedJobs, fetchObstractFeed, IJob } from '../../services/obstract.ts'; // Update with your actual API call
-import JobDetailsPage from './feed-job-details.tsx';
 
 const PAGE_SIZE = 50;
 
@@ -27,8 +23,6 @@ const JobListPage: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [page, setPage] = useState<number>(0);
     const [totalPages, setTotalPages] = useState<number>(1);
-    const [selectedJob, setSelectedJob] = useState<IJob>()
-    const [openDetailsModal, setOpenDetailsModal] = useState(false)
 
     const loadFeed = async () => {
         if (!feedId) return
@@ -37,12 +31,10 @@ const JobListPage: React.FC = () => {
     }
 
     const loadJobs = async () => {
-        console.log(teamId, feed)
         if (!feed) return
         setLoading(true);
         try {
             const response = teamId ? await fetchFeedJobs(teamId, feed.obstract_feed_metadata.id, page) : await adminFetchFeedJobs(feed.obstract_feed_metadata.id, page);
-            console.log(response)
             setJobs(response.data.jobs);
             setTotalPages(Math.ceil(response.data.total_results_count / PAGE_SIZE));
         } finally {
@@ -59,10 +51,6 @@ const JobListPage: React.FC = () => {
         setPage(newPage);
     };
 
-    const showJobDetails = (job: IJob) => {
-        setSelectedJob(job)
-        setOpenDetailsModal(true)
-    }
     useEffect(() => {
         document.title = 'Job List | Obstracts Web'
     }, [])
@@ -119,12 +107,6 @@ const JobListPage: React.FC = () => {
                 labelRowsPerPage={""} // Hide the rows per page label
                 style={{ marginTop: '20px', display: 'flex', justifyContent: 'center' }}
             />
-            <Dialog open={openDetailsModal} onClose={() => setOpenDetailsModal(false)}>
-                <DialogTitle>{feed?.obstract_feed_metadata.title} Job({selectedJob?.id})</DialogTitle>
-                <DialogContent>
-                    {selectedJob && <JobDetailsPage job={selectedJob}></JobDetailsPage>}
-                </DialogContent>
-            </Dialog>
         </Box>
     );
 };

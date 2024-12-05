@@ -8,8 +8,6 @@ import { ArrowDropDown } from '@mui/icons-material';
 import { useAuth0 } from '@auth0/auth0-react';
 import { URLS } from '../../services/urls.ts';
 
-const REACT_APP_API_BASE_URL = process.env.REACT_APP_API_BASE_URL
-const OBSTRACTS_API_URL = REACT_APP_API_BASE_URL + '/obstracts_api/api/schema/swagger-ui/'
 
 export default function UserPopover({ userEmail }: { userEmail: string }) {
     const { logout } = useAuth0()

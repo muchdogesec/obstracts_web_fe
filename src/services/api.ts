@@ -18,7 +18,6 @@ const apiRequest = async <T>(
     headers: Record<string, string> = {},
     params: Record<string, string | number> = {},
 ) => {
-    console.log(params)
     try {
         const response = await axios<T>({
             method,
@@ -155,8 +154,6 @@ const createApiKey = async (teamId: string, data) => {
 
 const fetchMyInvitations = async () => {
     return apiRequest<Paginated<any[]>>('GET', '/teams/api/user/invitations/').then(response => {
-        console.log(response)
-        console.log(response.data)
         return response.data.results
     });
 };

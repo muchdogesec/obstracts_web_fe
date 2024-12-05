@@ -12,16 +12,11 @@ import {
     TableRow,
     TablePagination,
     TextField,
-    MenuItem,
-    Select,
-    InputLabel,
-    FormControl,
     Checkbox,
 } from '@mui/material';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { TeamFeed, fetchTeamObstractFeeds, subscribeTeamObstractFeeds, unsubscribeTeamObstractFeeds } from '../../services/obstract.ts';
 import { useAlert } from '../../contexts/alert-context.tsx';
-import { Label } from '@mui/icons-material';
 import { URLS } from '../../services/urls.ts';
 import { TeamRouteContext } from '../team-layout.tsx/index.tsx';
 import { TeamContext } from '../../contexts/team-context.tsx';
@@ -38,9 +33,6 @@ const TeamFeeds: React.FC = () => {
     const { teamId } = useContext(TeamRouteContext)
     const { activeTeam } = useContext(TeamContext)
     const [showMyFeeds, setShowMyFeeds] = useState(false)
-    const [openModal, setOpenModal] = useState(false);
-    const [selectedFeed, setSelectedFeed] = useState<TeamFeed | null>(null);
-    const [formData, setFormData] = useState<Partial<TeamFeed>>({});
 
     // Filter and sorting states
     const [filter, setFilter] = useState<string>('');
@@ -55,19 +47,12 @@ const TeamFeeds: React.FC = () => {
     // if (!teamId) return <></>
 
     const loadFeeds = async (pageNumber: number) => {
-        console.log({ teamId })
         if (!teamId) return
         setLoading(true);
         const response = await fetchTeamObstractFeeds(teamId, pageNumber + 1, filter, showMyFeeds, sortField, sortOrder);
         setFeeds(response.data.results);
         setTotalPages(Math.ceil(response.data.count / PAGE_SIZE));
         setLoading(false);
-    };
-
-    const handleModalOpen = (feed?: TeamFeed) => {
-        setSelectedFeed(feed || null);
-        setFormData(feed || {});
-        setOpenModal(true);
     };
 
     const handlePageChange = (event: unknown, newPage: number) => {
@@ -87,6 +72,7 @@ const TeamFeeds: React.FC = () => {
     };
 
     const unsubscribe = async (feed_id: string) => {
+        if(!teamId) return
         try {
             await unsubscribeTeamObstractFeeds(teamId, feed_id)
             loadFeeds(1)
@@ -98,6 +84,7 @@ const TeamFeeds: React.FC = () => {
     }
 
     const subscribe = async (feed_id: string) => {
+        if(!teamId) return
         try {
             await subscribeTeamObstractFeeds(teamId, feed_id)
             loadFeeds(1)

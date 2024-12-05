@@ -1,6 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Input, MenuItem, Select, TextField, Typography } from "@mui/material";
-import { ITeam, Member } from "../../services/types.ts";
+import {
+    Box,
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    TextField,
+    Typography
+} from "@mui/material";
+import { ITeam } from "../../services/types.ts";
 import { Api } from "../../services/api.ts";
 import { URLS } from "../../services/urls.ts";
 import { useNavigate } from "react-router-dom";
@@ -41,7 +50,7 @@ export const ConfirmDeleteDialog = ({ team, open, onClose }: {
                 <Box sx={{ display: 'flex' }}>
                     <TextField
                         label='Team Name'
-                        style={{ flex: 'auto', marginTop: '2rem'}}
+                        style={{ flex: 'auto', marginTop: '2rem' }}
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                     ></TextField>
@@ -51,7 +60,7 @@ export const ConfirmDeleteDialog = ({ team, open, onClose }: {
                 <Button variant="contained" onClick={() => onClose()} color="primary">
                     Close
                 </Button>
-                <LoadingButton isLoading={loading} disabled={name != team.name} variant="contained" onClick={() => deleteTeam()} color="error">
+                <LoadingButton isLoading={loading} disabled={name !== team.name} variant="contained" onClick={() => deleteTeam()} color="error">
                     Delete
                 </LoadingButton>
             </DialogActions>

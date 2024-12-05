@@ -22,7 +22,6 @@ import { URLS } from '../../services/urls.ts';
 const UserManagement = () => {
     const [users, setUsers] = useState<IUser[]>([]);
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
     const [totalResults, setTotalResults] = useState(0);
     const [order, setOrder] = useState<'asc' | 'desc'>('asc');
     const [orderBy, setOrderBy] = useState<keyof IUser>('email');
@@ -45,7 +44,7 @@ const UserManagement = () => {
 
     useEffect(() => {
         loadUsers();
-    }, [page, rowsPerPage, search, order, orderBy]);
+    }, [page, search, order, orderBy]);
 
     const makeStaff = async (user: IUser) => {
         await Api.makeAdmin(user.id);
@@ -69,11 +68,6 @@ const UserManagement = () => {
 
     const handleChangePage = (event: unknown, newPage: number) => {
         setPage(newPage);
-    };
-
-    const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0); // Reset to first page when rows per page changes
     };
 
     const handleSortRequest = (property: keyof IUser) => {

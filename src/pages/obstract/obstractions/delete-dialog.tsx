@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button, Typography, Box, TextField } from '@mui/material';
-import { deleteObstractFeed, deleteObstractPost, Feed, Post } from '../../../services/obstract.ts';
+import { deleteObstractPost, Post } from '../../../services/obstract.ts';
 import { useNavigate } from 'react-router-dom';
 import { useAlert } from '../../../contexts/alert-context.tsx';
 import LoadingButton from '../../../components/loading_button/index.tsx';
@@ -22,12 +22,16 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({ feedId, post, open, onClose
     const confirmDelete = async () => {
         if (!post) return
         try {
+            setLoading(true)
             await deleteObstractPost(feedId, post.id);
             await navigate(URLS.staffObstractFeed(feedId))
+            setLoading(false)
         } catch (err) {
+            setLoading(false)
             if (err?.response?.status === 403) {
                 return alert.showAlert(err?.response?.data?.message)
             }
+            throw err
         }
     };
 
@@ -55,7 +59,7 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({ feedId, post, open, onClose
                 <Button variant="contained" onClick={() => onClose()} color="primary">
                     Close
                 </Button>
-                <LoadingButton isLoading={loading} disabled={name != post.title} variant="contained" onClick={() => confirmDelete()} color="error">
+                <LoadingButton isLoading={loading} disabled={name !== post.title} variant="contained" onClick={() => confirmDelete()} color="error">
                     Delete
                 </LoadingButton>
             </DialogActions>

@@ -4,8 +4,6 @@ import { useParams } from 'react-router-dom';
 import { adminFetchFeedJob, Feed, fetchFeedJob, fetchObstractFeed, IJob } from '../../services/obstract.ts'; // Update with your actual API call
 import JobDetailsComponent from './feed-job-details.tsx';
 
-const PAGE_SIZE = 50;
-
 const JobDetailsPage: React.FC = () => {
     const { teamId, feedId, jobId } = useParams<{ teamId: string; feedId: string, jobId: string }>();
     const [job, setJob] = useState<IJob>();
@@ -24,7 +22,6 @@ const JobDetailsPage: React.FC = () => {
         try {
             const response = teamId ? await fetchFeedJob(teamId, feedId, jobId) : await adminFetchFeedJob(feedId, jobId);
             setJob(response.data);
-            console.log(response.data)
         } finally {
             setLoading(false);
         }
