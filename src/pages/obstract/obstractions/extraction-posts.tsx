@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
     Box,
     Typography,
@@ -10,12 +10,10 @@ import {
     TableHead,
     TableRow,
     Button,
-    Input,
-    TextField,
     TablePagination,
 } from '@mui/material';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { getPostsByExtraction, Post, scoSearch, subscribeTeamObstractFeeds, TeamFeed } from '../../../services/obstract.ts';
+import { getPostsByExtraction, Post, subscribeTeamObstractFeeds, TeamFeed } from '../../../services/obstract.ts';
 import { useAlert } from '../../../contexts/alert-context.tsx';
 import { URLS } from '../../../services/urls.ts';
 import { TeamRouteContext } from '../../team-layout.tsx/index.tsx';
@@ -42,7 +40,6 @@ const ObjectPostsPage: React.FC = () => {
 
     const alert = useAlert()
 
-
     useEffect(() => {
         const query = new URLSearchParams(location.search);
         setValue(query.get('value') || '')
@@ -62,6 +59,7 @@ const ObjectPostsPage: React.FC = () => {
     }, [initialDataLoaded])
 
     const loadReports = async () => {
+        if(!objectId) return
         setLoading(true)
         const res = await getPostsByExtraction(teamId, objectId, page + 1)
         setReportData(res.data.posts)

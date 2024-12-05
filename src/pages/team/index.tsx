@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   Container,
   Typography,
@@ -20,14 +20,10 @@ import {
   DialogActions,
   TextField,
   Grid,
-  IconButton,
   Snackbar,
   Alert,
   Checkbox,
-  Input,
-  Select
 } from "@mui/material";
-import DeleteIcon from '@mui/icons-material/Delete';
 import { Api, Subscription } from "../../services/api.ts";
 import { ITeam, Member } from "../../services/types.ts";
 import LoadingButton from "../../components/loading_button/index.tsx";
@@ -90,7 +86,7 @@ function Team() {
   const [inviteEmailError, setInviteEmailError] = useState("")
   const [loadingSave, setLoadingSave] = useState(false)
   const [isAdmin, setIsAdmin] = useState(false);
-  const [activeTeam, setActiveTeam] = useState<ITeam | undefined>(undefined);
+  const [activeTeam, setActiveTeam] = useState<ITeam | null>(null);
 
   const [openCancelMembership, setOpenCancelMembership] = useState(false);
   const [openCancelInvitation, setOpenCancelInvitation] = useState(false);
@@ -104,7 +100,6 @@ function Team() {
   const [selectedMember, setSelectedMember] = useState<Member>()
   const [openChangeRole, setOpenChangeRole] = useState(false)
   const [opeDeleteTeam, setOpenDeleteTeam] = useState(false)
-  const alert = useAlert()
 
   const navigate = useNavigate()
 
@@ -121,19 +116,20 @@ function Team() {
     getActiveSubscription();
   }, [id])
 
-  useEffect(() => { console.log(user) }, [user])
-
   const handleSubscriptionDetail = async () => {
+    if (!id) return
     const res = await Api.initSubscriptionManagementPortal(id)
     window.location.href = res.data.redirect_url
   };
 
   const getActiveSubscription = async () => {
+    if (!id) return
     const res = await Api.getTeamActiveSubscription(id)
     if (res.data.id)
       setActiveSubscription(res.data)
   }
   const getMembers = async () => {
+    if (!id) return
     try {
       const res = await Api.getMembers(id)
 
@@ -161,6 +157,7 @@ function Team() {
   };
 
   const loadTeam = async () => {
+    if (!id) return
     try {
       const result = await Api.fetchTeamLimits(id)
       setActiveTeam(result.data)
@@ -171,7 +168,6 @@ function Team() {
     }
   }
 
-  const handleOpenInvite = () => setOpenInvite(true);
   const handleCloseInvite = () => {
     setOpenInvite(false);
     setInviteEmail("");
@@ -179,6 +175,7 @@ function Team() {
   };
 
   const handleInviteUser = async () => {
+    if (!id) return
     setLoadingSave(true)
     try {
       await Api.inviteUser(id, inviteEmail, isAdmin);
@@ -206,6 +203,7 @@ function Team() {
   };
 
   const handleCancelMembership = async () => {
+    if (!id) return
     try {
       await Api.cancelMembership(id);
       setSnackbarMessage("Membership canceled successfully");
@@ -220,6 +218,7 @@ function Team() {
   };
 
   const handleCancelInvitation = async () => {
+    if (!id) return
     if (selectedInvitationId === null) return;
     try {
       await Api.cancelInvitation(id, selectedInvitationId);
@@ -273,11 +272,14 @@ function Team() {
   }
 
   const getSubscriptionNextBillingDate = () => {
+    if (activeSubscription?.status === 'canceled') {
+      return ''
+    }
     const subscriptionEndDate = getDateString(activeSubscription?.current_period_end)
     if (!activeSubscription?.cancel_at_period_end) {
       return subscriptionEndDate
     }
-    if (activeSubscription?.status == 'trialing') {
+    if (activeSubscription?.status === 'trialing') {
       return `Your trial ends on ${subscriptionEndDate}. Please update your payment method on file.`
     } else {
       return `Plan cancelled, will end on ${subscriptionEndDate}`
@@ -404,7 +406,7 @@ function Team() {
                 <TableRow>
                   <TableCell>Allowed users in team</TableCell>
                   <TableCell>{activeTeam?.user_limit}</TableCell>
-                  <TableCell>{activeTeam?.members_count + activeTeam?.invitations_count}</TableCell>
+                  <TableCell>{activeTeam && (activeTeam?.members_count + activeTeam?.invitations_count)}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>API Access</TableCell>
@@ -460,7 +462,7 @@ function Team() {
                       <TableCell>
                         <Button variant="contained" onClick={() => initChangeRole(member)}>Change role</Button>
                         <Button sx={{ marginLeft: '2rem' }} variant="contained" color="error" onClick={() => initConfirmRemove(member)}>
-                          {user?.email == member.email ? 'Leave' : 'Remove'}
+                          {user?.email === member.email ? 'Leave' : 'Remove'}
                         </Button>
                       </TableCell>
                     </TableRow>
@@ -533,7 +535,7 @@ function Team() {
         <br />
         <Typography>Invite User</Typography>
         <Typography>Members can subscribe/unsubscribe to feeds, view their posts, and access the API. Admins inherit all member permissions but can also add/remove users from the team and edit the team information (including subscriptions). Owners inherit all Admin permissions and can also delete the team.</Typography>
-        <InviteUserList isOwner={true} teamId={id} onComplete={() => { reloadInvitationList() }}></InviteUserList>
+        {id && <InviteUserList isOwner={true} teamId={id} onComplete={() => { reloadInvitationList() }}></InviteUserList>}
       </Box>
 
       <Box>
@@ -548,9 +550,11 @@ function Team() {
           {snackbarMessage}
         </Alert>
       </Snackbar>
-      {activeTeam && <ConfirmDeleteDialog open={opeDeleteTeam} team={activeTeam} onClose={() => setOpenDeleteTeam(false)}></ConfirmDeleteDialog>}
-      <ConfirmRemoveMemberDialog teamId={id} open={showRemoveMemberDialog} onClose={onRemoveDialogClose} member={activeMember}></ConfirmRemoveMemberDialog>
-      {selectedMember && <ChangeRoleDialog member={selectedMember} open={openChangeRole} onClose={() => setOpenChangeRole(false)} isOwner={true} teamId={activeTeam?.id} onRoleChanged={() => getMembers()}></ChangeRoleDialog>}
+      {id && (<>
+        {activeTeam && <ConfirmDeleteDialog open={opeDeleteTeam} team={activeTeam} onClose={() => setOpenDeleteTeam(false)}></ConfirmDeleteDialog>}
+        {activeMember && <ConfirmRemoveMemberDialog teamId={id} open={showRemoveMemberDialog} onClose={onRemoveDialogClose} member={activeMember}></ConfirmRemoveMemberDialog>}
+        {selectedMember && <ChangeRoleDialog member={selectedMember} open={openChangeRole} onClose={() => setOpenChangeRole(false)} isOwner={true} teamId={id} onRoleChanged={() => getMembers()}></ChangeRoleDialog>}
+      </>)}
     </Container >
   );
 }

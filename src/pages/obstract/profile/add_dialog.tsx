@@ -133,16 +133,6 @@ const AddEntryDialog: React.FC<AddEntryDialogProps> = ({
     await createProfile(data)
   };
 
-  const editEntry = async (id: string, data: any) => {
-    try {
-      await editProfile(id, data);
-    } catch (err) {
-      if (err.response.status === 400) {
-        console.log(err.response.data);
-      }
-    }
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const { ...submitData } = formData

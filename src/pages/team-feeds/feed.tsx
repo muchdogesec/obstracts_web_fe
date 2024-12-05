@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { Box, Button, Container, List, ListItem, ListItemText, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material";
-import { Feed, fetchTeamObstractFeed, Post, unsubscribeTeamObstractFeeds, subscribeTeamObstractFeeds } from '../../services/obstract.ts';
+import { useParams } from "react-router-dom";
+import { Box, Button, Container, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material";
+import { Feed, fetchTeamObstractFeed, unsubscribeTeamObstractFeeds, subscribeTeamObstractFeeds } from '../../services/obstract.ts';
 import PostsTable from '../obstract/post_table.tsx';
 import { TeamRouteContext } from '../team-layout.tsx/index.tsx';
 import { TeamContext } from '../../contexts/team-context.tsx';
@@ -12,24 +12,13 @@ const TeamFeedPage: React.FC = () => {
     const { feedId } = useParams<{ teamId: string, feedId: string }>();
     const [feed, setFeed] = useState<Feed | null>()
     const { activeTeam } = useContext(TeamContext)
-    const [posts, setPosts] = useState<Post[]>([]);
     const [loading, setLoading] = useState<boolean>(false); // Loading state
-    const navigate = useNavigate()
 
 
     const loadFeed = async (teamId: string, feedId: string) => {
         const res = await fetchTeamObstractFeed(teamId, feedId);
         setFeed(res.data);
-        loadPosts(res.data.obstract_feed_metadata['id'], 1)
     }
-
-
-    const loadPosts = async (feed_id: string, pageNumber: number) => {
-        // const res = await fetchObstractPosts(feed_id, pageNumber);
-        // setPosts(res.data.posts);
-        // setTotalPages(Math.ceil(res.data.page_results_count / res.data.page_size)); // Calculate total pages
-    }
-
     const loadData = async (teamId: string, feedId: string) => {
         setLoading(true);
         await loadFeed(teamId, feedId)

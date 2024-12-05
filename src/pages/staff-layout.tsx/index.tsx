@@ -4,7 +4,7 @@ import { Box } from '@mui/material';
 import { useAuth0 } from '@auth0/auth0-react';
 
 const StaffLayout = () => {
-  const {user, isAuthenticated, isLoading} = useAuth0()
+  const {user, isLoading} = useAuth0()
   const navigate = useNavigate()
 
   useEffect(() => {

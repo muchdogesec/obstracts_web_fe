@@ -1,6 +1,6 @@
 import axios from "axios";
 import { getApiKey } from "./storage.ts";
-import objectsResponse from "./objects.json"
+import { cleanData } from "./utils.ts";
 
 const OBSTRACT_API_BASE_URL = process.env.REACT_APP_API_BASE_URL + '/obstracts_api';
 
@@ -31,6 +31,7 @@ export interface Feed {
     profile_id: string;
     polling_schedule_minute: number;
     next_polling_time: string;
+    is_subscribed?: boolean;
     obstract_feed_metadata: {
         id: string;
         count_of_posts: number;
@@ -99,7 +100,7 @@ const apiRequest = async <T>(
     path: string,
     data?: any,
     headers: Record<string, string> = {},
-    params: Record<string, string | number> = {},
+    params: Record<string, string | number | undefined> = {},
 ) => {
     try {
         const response = await axios<T>({
@@ -137,7 +138,7 @@ export const fetchObstractFeed = (id: string) => {
     return apiRequest<Feed>('GET', `/feeds/${id}/`);
 };
 
-export const fetchObstractFeeds = (page_number: number, search: any, sortOrder: any, orderType: string, profileId: string) => {
+export const fetchObstractFeeds = (page_number: number, search: any, sortOrder: any, orderType: string, profileId?: string) => {
     return apiRequest<PaginatedResponse<Feed>>('GET', `/feeds/`, {}, {}, {
         title: search,
         order_by: (orderType === 'asc' ? '' : '-') + sortOrder,
@@ -277,16 +278,22 @@ export const createObstractFeed = (data: {
     profile_id: string,
     url: string,
     include_remote_blogs: boolean
+    is_public: boolean,
+    polling_schedule_minute: number,
+    title: string,
+    description: string,
+    pretty_url: string,
 }) => {
-    return apiRequest<PostsResponse>('POST', `/feeds/`, data);
+    return apiRequest<PostsResponse>('POST', `/feeds/`, cleanData(data));
 };
 
 export const createObstractSkeletonFeed = (data: {
-    profile_id: string,
     url: string,
-    include_remote_blogs: boolean
+    title: string,
+    description: string,
+    pretty_url: string,
 }) => {
-    return apiRequest<PostsResponse>('POST', `/feeds/skeleton/`, data);
+    return apiRequest<PostsResponse>('POST', `/feeds/skeleton/`, cleanData(data));
 };
 
 
@@ -359,7 +366,7 @@ export const fetchObjectReports = (object_id: string) => {
     return apiRequest<any>('GET', `/proxy/object/${object_id}/reports/`);
 }
 
-export const getPostsByExtraction = (team_id: string, object_id: string, page: number) => {
+export const getPostsByExtraction = (team_id: string | undefined, object_id: string, page: number) => {
     if (team_id) {
         return apiRequest<any>('GET', `/teams/${team_id}/objects/${object_id}/`, {}, {}, { page })
     }

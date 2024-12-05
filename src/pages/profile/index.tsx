@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
     Container,
     Typography,
@@ -24,6 +24,7 @@ import Invitations from "../teams/invitations.tsx";
 import ApiKeyManager from "./api-keys.tsx";
 import "./styles.css"
 import { ConfirmDisable2FA } from "./confirm-disable-2fa.tsx";
+import { TeamContext } from "../../contexts/team-context.tsx";
 
 const UserProfile = () => {
     const { user } = useAuth0();
@@ -34,6 +35,7 @@ const UserProfile = () => {
     const [snackbarSeverity, setSnackbarSeverity] = useState<"success" | "error">("success");
     const [showDiable2FAModal, setShowDiable2FAModal] = useState(false)
     const [loading, setLoading] = useState(false)
+    const { setActiveTeam } = useContext(TeamContext);
 
     // Modal state
     const [changeEmailModalOpen, setChangeEmailModalOpen] = useState(false);
@@ -43,10 +45,13 @@ const UserProfile = () => {
     const [totpSecret, setTotpSecret] = useState("");
 
     useEffect(() => {
-        console.log(user)
         setEmail(user?.email || "");
         setIs2FAEnabled(user?.custom_mfa_enabled)
     }, [user]);
+
+    useEffect(() => {
+        setActiveTeam(null)
+    })
 
     const handleUpdateEmail = async () => {
         try {
@@ -154,7 +159,7 @@ const UserProfile = () => {
     }, [])
 
     const handleCloseDisable2FAModal = (disabled: boolean) => {
-        if(disabled) {
+        if (disabled) {
             setIs2FAEnabled(false)
         }
         setShowDiable2FAModal(false)
@@ -188,7 +193,7 @@ const UserProfile = () => {
                         Change Password
                     </Button>
                 </Grid2>
-                <Grid2 container spacing={2}  sx={{ marginTop: '1rem' }}>
+                <Grid2 container spacing={2} sx={{ marginTop: '1rem' }}>
                     {
                         is2FAEnabled ? (<Button variant="contained" color="error" onClick={initDisable2FA}>Turn off 2fa</Button>) : (
                             <Button variant="contained" onClick={initToggle2FA} disabled={loading}>Turn on 2fa</Button>

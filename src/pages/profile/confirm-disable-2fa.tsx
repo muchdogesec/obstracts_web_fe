@@ -1,10 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Input, MenuItem, Select, TextField, Typography } from "@mui/material";
-import { ITeam, Member } from "../../services/types.ts";
+import React, { useEffect, useState } from "react";
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Typography } from "@mui/material";
 import { Api } from "../../services/api.ts";
-import { URLS } from "../../services/urls.ts";
-import { useNavigate } from "react-router-dom";
-import { TeamContext } from "../../contexts/team-context.tsx";
 import LoadingButton from "../../components/loading_button/index.tsx";
 
 export const ConfirmDisable2FA = ({ email, open, onClose }: {
@@ -12,8 +8,6 @@ export const ConfirmDisable2FA = ({ email, open, onClose }: {
 }) => {
     const [inputEmail, setInputEmail] = useState('')
     const [loading, setLoading] = useState(false)
-    const { reloadTeamListIndex, setReloadTeamListIndex } = useContext(TeamContext);
-    const navigate = useNavigate()
 
     const handleDisable2FA = async () => {
         try {

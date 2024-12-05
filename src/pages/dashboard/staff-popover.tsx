@@ -2,9 +2,9 @@ import * as React from 'react';
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
-import { Link, NavLink } from 'react-router-dom';
-import { ArrowDropDown, Settings } from '@mui/icons-material';
+import { List, ListItem, ListItemText } from '@mui/material';
+import { NavLink } from 'react-router-dom';
+import { ArrowDropDown } from '@mui/icons-material';
 import { useAuth0 } from '@auth0/auth0-react';
 import { URLS } from '../../services/urls.ts';
 

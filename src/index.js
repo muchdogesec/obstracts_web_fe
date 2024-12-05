@@ -2,23 +2,23 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Auth0Provider } from "@auth0/auth0-react";
-import "./index.css";
+
+import { AlertProvider } from "./contexts/alert-context.tsx";
+import { TeamProvider } from "./contexts/team-context.tsx";
+
 import reportWebVitals from "./reportWebVitals";
 import Homepage from "./pages/homepage";
 import LoginRedirect from "./pages/login-redirect/index.tsx";
 import Dashboard from "./pages/dashboard";
-import Teams from "./pages/teams/index.tsx";
 import Team from "./pages/team/index.tsx";
 import LogoutRedirect from "./pages/logout-redirect/index.tsx";
 import UserProfile from "./pages/profile/index.tsx";
 import AuthGuard from "./guards/auth.guard.tsx";
-import Invitations from "./pages/teams/invitations.tsx";
 import Logout from "./pages/dashboard/logout/index.jsx";
 import ObstractProfile from "./pages/obstract/profile/index.tsx";
 import FeedsPage from "./pages/obstract/feeds/index.tsx";
 import PostPage from "./pages/obstract/posts/index.tsx";
 import AcceptInvite from "./pages/accept-invite/index.tsx";
-import { AlertProvider } from "./contexts/alert-context.tsx";
 import UserManagement from "./pages/users/index.tsx";
 import ObstractProfileDetail from "./pages/obstract/profile/profile_detail.tsx";
 import TeamFeeds from "./pages/team-feeds/index.tsx";
@@ -32,12 +32,12 @@ import AddNewTeam from "./pages/teams/add-new-team.tsx";
 import ObstractsProfileAdd from "./pages/obstract/profile/add-new-profile.tsx";
 import AddNewFeed from "./pages/obstract/feeds/add-new-feed.tsx";
 import AddNewPost from "./pages/obstract/posts/add-new-post.tsx";
-import PostContentPage from "./pages/obstract/posts/post-content.tsx";
-import { TeamProvider } from "./contexts/team-context.tsx";
 import StaffLayout from "./pages/staff-layout.tsx/index.tsx";
 import ObservableSearchPage from "./pages/obstract/obstractions/extraction-search.tsx";
 import ObjectPostsPage from "./pages/obstract/obstractions/extraction-posts.tsx";
 import AddSkeletonFeed from "./pages/obstract/feeds/add-skeleton-feed.tsx";
+
+import "./index.css";
 
 const AUTH0_DOMAIN = process.env.REACT_APP_AUTH0_DOMAIN
 const AUTH0_CLIENT_ID = process.env.REACT_APP_AUTH0_CLIENT_ID

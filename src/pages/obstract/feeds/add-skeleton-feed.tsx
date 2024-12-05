@@ -3,13 +3,9 @@ import {
   TextField,
   Button,
   Box,
-  FormControlLabel,
-  Switch,
-  Select,
-  MenuItem,
   Typography,
 } from '@mui/material';
-import { createObstractFeed, createObstractSkeletonFeed, fetchObstractProfiles, Profile, reloadObstractFeed } from '../../../services/obstract.ts';
+import { createObstractSkeletonFeed, fetchObstractProfiles, Profile } from '../../../services/obstract.ts';
 import LoadingButton from '../../../components/loading_button/index.tsx';
 import { useNavigate } from 'react-router-dom';
 import { URLS } from '../../../services/urls.ts';
@@ -19,25 +15,19 @@ const AddSkeletonFeed = () => {
   const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState({
-    profile_id: '',
     url: '',
-    include_remote_blogs: false,
-    is_public: false,
-    polling_schedule_minute: 0,
     title: '',
     description: '',
     pretty_url: '',
   });
-  const [profiles, setProfiles] = useState<Profile[]>([]);
   const [errors, setErrors] = useState<{
     url?: string[],
-    profile_id?: string[],
     title?: string[],
     description?: string[],
     pretty_url?: string[],
+    non_field_errors?: string[],
   }>({
     url: [],
-    profile_id: [],
     title: [],
     description: [],
     pretty_url: [],
@@ -48,15 +38,6 @@ const AddSkeletonFeed = () => {
     document.title = 'Add Skeleton Feed | Obstracts Web'
   }, [])
 
-  const loadProfiles = async (pageNumber: number) => {
-    const res = await fetchObstractProfiles(pageNumber);
-    setProfiles(res.data.profiles);
-  };
-
-  useEffect(() => {
-    loadProfiles(1)
-  }, [])
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
@@ -65,35 +46,14 @@ const AddSkeletonFeed = () => {
     }));
   };
 
-  const handleProfileChange = (value: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      profile_id: value
-    }));
-  };
-
-  const cleanData = (data: object) => {
-    const result: Object = {}
-    Object.keys(data).map(key => {
-      if(data[key]) {
-        result[key] = data[key]
-      }
-    })
-    return result
-  }
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true)
     try {
-      const res = await createObstractSkeletonFeed(cleanData(formData));
+      const res = await createObstractSkeletonFeed(formData);
       navigate(URLS.staffObstractFeed(res.data.id))
       setFormData({
-        profile_id: '',
         url: '',
-        include_remote_blogs: false,
-        is_public: false,
-        polling_schedule_minute: 0,
         title: '',
         description: '',
         pretty_url: '',
@@ -143,7 +103,6 @@ const AddSkeletonFeed = () => {
           fullWidth
           value={formData.title}
           onChange={handleChange}
-          required
         />
         {errors?.title?.map(error => <Typography sx={{ color: 'red' }}>{error}</Typography>)}
       </Box>
@@ -158,7 +117,6 @@ const AddSkeletonFeed = () => {
           fullWidth
           value={formData.pretty_url}
           onChange={handleChange}
-          required
         />
         {errors?.pretty_url?.map(error => <Typography sx={{ color: 'red' }}>{error}</Typography>)}
       </Box>
@@ -177,6 +135,8 @@ const AddSkeletonFeed = () => {
         />
         {errors?.description?.map(error => <Typography sx={{ color: 'red' }}>{error}</Typography>)}
       </Box>
+
+      {errors?.non_field_errors?.map(error => <Typography sx={{ color: 'red' }}>{error}</Typography>)}
 
       <Box sx={{ marginTop: '1rem' }}>
         <Button variant='contained' color='error' onClick={() => navigate(-1)}>

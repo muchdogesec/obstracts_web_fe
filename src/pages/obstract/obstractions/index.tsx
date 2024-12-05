@@ -185,14 +185,11 @@ const PostDetailsPage: React.FC = () => {
                 hideFooter: false,
                 showSidebar: true,
                 maxZoom: 50,
-                onClickNode: function (node) {
-                    console.log('node clicked', node);
-                }
+                onClickNode: function (node) {}
             }
         );
         const data = getStixObject()
         graph.loadData(data);
-        console.log('done')
     }
 
     useEffect(loadStixData, [loading])

@@ -1,18 +1,10 @@
 // Invitations.tsx
 import React, { useEffect, useState } from "react";
 import {
-  Table,
-  TableBody,
   TableCell,
-  TableContainer,
-  TableHead,
   TableRow,
-  Paper,
   CircularProgress,
   Typography,
-  Box,
-  IconButton,
-  Tooltip,
   Dialog,
   DialogTitle,
   DialogContent,
