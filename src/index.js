@@ -38,6 +38,7 @@ import ObjectPostsPage from "./pages/obstract/obstractions/extraction-posts.tsx"
 import AddSkeletonFeed from "./pages/obstract/feeds/add-skeleton-feed.tsx";
 
 import "./index.css";
+import LatestPostsPage from "./pages/obstract/latest-posts/index.tsx";
 
 const AUTH0_DOMAIN = process.env.REACT_APP_AUTH0_DOMAIN
 const AUTH0_CLIENT_ID = process.env.REACT_APP_AUTH0_CLIENT_ID
@@ -117,6 +118,10 @@ const router = createBrowserRouter([
             path: "observables/:objectId",
             Component: ObjectPostsPage,
           },
+          {
+            path: "posts",
+            Component: LatestPostsPage,
+          },
         ],
       },
       {
@@ -178,6 +183,10 @@ const router = createBrowserRouter([
           {
             path: "observables/:objectId",
             Component: ObjectPostsPage,
+          },
+          {
+            path: "posts",
+            Component: LatestPostsPage,
           },
           {
             path: "feeds/add-skeleton-feed",

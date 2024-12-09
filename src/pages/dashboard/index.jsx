@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { Toolbar, Typography, Drawer, List, ListItem, ListItemIcon, ListItemText, Divider, Box } from '@mui/material';
-import { DocumentScanner, Groups, Search } from '@mui/icons-material';
+import { DocumentScanner, Group, Groups, ManageHistory, Search } from '@mui/icons-material';
 import RssFeedIcon from '@mui/icons-material/RssFeed';
 import { NavLink } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -65,13 +65,17 @@ const DashboardLayout = () => {
                 <ListItemIcon><Search /></ListItemIcon>
                 <ListItemText primary="Observable Search" />
               </ListItem>
+              <ListItem button component={NavLink} to={URLS.teamLatestPosts(activeTeamId)}>
+                <ListItemIcon><ManageHistory /></ListItemIcon>
+                <ListItemText primary="Latest Posts" />
+              </ListItem>
               <ListItem button component={NavLink} to={OBSTRACTS_API_SWAGGER_URL}>
                 <ListItemIcon><DocumentScanner></DocumentScanner></ListItemIcon>
                 <ListItemText primary="API Documentation" />
               </ListItem>
               {activeTeam?.is_admin && (
                 <ListItem button component={NavLink} to={URLS.teamManagement(activeTeamId)}>
-                  <ListItemIcon><Groups></Groups></ListItemIcon>
+                  <ListItemIcon><Group/></ListItemIcon>
                   <ListItemText primary="Team Management" />
                 </ListItem>
               )}
