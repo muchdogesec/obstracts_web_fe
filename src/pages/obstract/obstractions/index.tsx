@@ -9,9 +9,6 @@ import {
     TableContainer,
     TableHead,
     TableRow,
-    List,
-    ListItem,
-    ListItemText,
     Button,
     Dialog,
     DialogTitle,
@@ -19,9 +16,9 @@ import {
     Tooltip,
 } from '@mui/material';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { adminFetchPostJobs, changePostProfileId, Feed, fetchFeedJobs, fetchObstractFeed, fetchObstractPost, fetchObstractPosts, fetchPostJobs, fetchPostMarkdown, fetchPostObjects, fetchTeamPostObjects, IJob, ObstractsObject, Post } from '../../../services/obstract.ts';
+import ReactMarkdown from 'react-markdown';
+import { adminFetchPostJobs, Feed, fetchObstractFeed, fetchObstractPost, fetchPostMarkdown, fetchPostObjects, fetchTeamPostObjects, IJob, ObstractsObject, Post } from '../../../services/obstract.ts';
 import JobDetailsPage from '../../team-feeds/feed-job-details.tsx';
-import DOMPurify from 'dompurify';
 
 import './styles.css'
 import { URLS } from '../../../services/urls.ts';
@@ -90,6 +87,7 @@ const PostDetailsPage: React.FC = () => {
     const [showReindexDialog, setShowReindexDialog] = useState(false)
     const [showDeleteDialog, setShowDeleteDialog] = useState(false)
     const [showCheckForUpdateModal, setShowCheckForUpdateModal] = useState(false)
+    const [markdown, setMarkdown] = useState("")
     const { user } = useAuth0()
     const navigate = useNavigate()
 
@@ -126,6 +124,7 @@ const PostDetailsPage: React.FC = () => {
         loadFeed()
         loadJobs();
         loadObjects()
+        loadMarkdown()
     }, [feedId, postId])
 
     const fetchAllObjectsApi = async (feedId: string, postId: string, page: number) => {
@@ -239,10 +238,14 @@ const PostDetailsPage: React.FC = () => {
         setShowReindexDialog(true)
     }
 
-    const downloadMarkdown = async () => {
+    const loadMarkdown = async () => {
         if (!feedId || !postId) return
         const response = await fetchPostMarkdown(feedId, postId)
-        const blob = new Blob([response.data], { type: "text/md" });
+        setMarkdown(response.data)
+    }
+
+    const downloadMarkdown = async () => {
+        const blob = new Blob([markdown], { type: "text/md" });
 
         const url = URL.createObjectURL(blob);
         const link = document.createElement("a");
@@ -262,7 +265,7 @@ const PostDetailsPage: React.FC = () => {
 
     const isMitreAttack = (object: ObstractsObject) => {
         const keywords = ['enterprise-attack', 'ics-attack', 'mobile-attack']
-        if(object.x_mitre_domains) {
+        if (object.x_mitre_domains) {
             return object.x_mitre_domains.findIndex(item => keyword.includes(item)) > -1
         }
         return false
@@ -338,8 +341,10 @@ const PostDetailsPage: React.FC = () => {
                     <Button variant='contained' sx={{ textTransform: 'uppercase', marginLeft: '1rem' }}>View on blog</Button>
                 </Link>
             </Box>
-            <div style={{ border: '1px solid #000000cc', padding: '3rem', borderRadius: '5px', maxWidth: '80vw' }}
-                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post?.description ?? '') }} />
+            <div style={{ border: '1px solid #000000cc', padding: '3rem', borderRadius: '5px', maxWidth: '80vw' }}>
+                <ReactMarkdown>{markdown}</ReactMarkdown>
+            </div>
+
             <div>
                 <Box sx={{ display: 'flex', marginTop: '1rem', justifyContent: 'right' }}><Button onClick={downloadMarkdown} variant='contained'>Download Markdown</Button></Box>
                 { }

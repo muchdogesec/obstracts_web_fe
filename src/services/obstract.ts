@@ -348,7 +348,7 @@ export const loadAliases = () => {
 };
 
 export const loadExtractors = () => {
-    return apiRequest<any>('GET', `/proxy/extractors/?page_size=100`).then(res => res.data.extractors);
+    return apiRequest<any>('GET', `/proxy/extractors/?page_size=500`).then(res => res.data.extractors);
 };
 
 export const loadWhitelists = () => {
