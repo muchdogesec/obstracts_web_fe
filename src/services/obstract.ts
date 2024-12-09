@@ -83,7 +83,8 @@ export interface ObstractsObject {
     id: string,
     value: string,
     name: string,
-    additionalProp: Object
+    additionalProp: Object,
+    x_mitre_domains: string[],
 }
 
 interface PostObjectsResponse {
