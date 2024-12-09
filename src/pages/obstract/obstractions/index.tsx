@@ -9,9 +9,6 @@ import {
     TableContainer,
     TableHead,
     TableRow,
-    List,
-    ListItem,
-    ListItemText,
     Button,
     Dialog,
     DialogTitle,
@@ -19,9 +16,9 @@ import {
     Tooltip,
 } from '@mui/material';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { adminFetchPostJobs, changePostProfileId, Feed, fetchFeedJobs, fetchObstractFeed, fetchObstractPost, fetchObstractPosts, fetchPostJobs, fetchPostMarkdown, fetchPostObjects, fetchTeamPostObjects, IJob, ObstractsObject, Post } from '../../../services/obstract.ts';
+import ReactMarkdown from 'react-markdown';
+import { adminFetchPostJobs, Feed, fetchObstractFeed, fetchObstractPost, fetchPostMarkdown, fetchPostObjects, fetchTeamPostObjects, IJob, ObstractsObject, Post } from '../../../services/obstract.ts';
 import JobDetailsPage from '../../team-feeds/feed-job-details.tsx';
-import DOMPurify from 'dompurify';
 
 import './styles.css'
 import { URLS } from '../../../services/urls.ts';
@@ -31,6 +28,7 @@ import { getDateString, getScoValue } from '../../../services/utils.ts';
 import { useAuth0 } from '@auth0/auth0-react';
 import ReindexingDialog from './reindex.tsx';
 import DeleteDialog from './delete-dialog.tsx';
+import CheckForUpdatesDialog from './check-for-update-dialog.tsx'
 
 const PAGE_SIZE = 50;
 
@@ -88,6 +86,8 @@ const PostDetailsPage: React.FC = () => {
     const [reportId, setReportId] = useState('')
     const [showReindexDialog, setShowReindexDialog] = useState(false)
     const [showDeleteDialog, setShowDeleteDialog] = useState(false)
+    const [showCheckForUpdateModal, setShowCheckForUpdateModal] = useState(false)
+    const [markdown, setMarkdown] = useState("")
     const { user } = useAuth0()
     const navigate = useNavigate()
 
@@ -124,6 +124,7 @@ const PostDetailsPage: React.FC = () => {
         loadFeed()
         loadJobs();
         loadObjects()
+        loadMarkdown()
     }, [feedId, postId])
 
     const fetchAllObjectsApi = async (feedId: string, postId: string, page: number) => {
@@ -185,7 +186,7 @@ const PostDetailsPage: React.FC = () => {
                 hideFooter: false,
                 showSidebar: true,
                 maxZoom: 50,
-                onClickNode: function (node) {}
+                onClickNode: function (node) { }
             }
         );
         const data = getStixObject()
@@ -234,14 +235,17 @@ const PostDetailsPage: React.FC = () => {
 
     const checkForUpdate = async () => {
         if (!feedId || !postId) return
-        await changePostProfileId(feedId, postId, feed?.profile_id || '')
         setShowReindexDialog(true)
     }
 
-    const downloadMarkdown = async () => {
+    const loadMarkdown = async () => {
         if (!feedId || !postId) return
         const response = await fetchPostMarkdown(feedId, postId)
-        const blob = new Blob([response.data], { type: "text/md" });
+        setMarkdown(response.data)
+    }
+
+    const downloadMarkdown = async () => {
+        const blob = new Blob([markdown], { type: "text/md" });
 
         const url = URL.createObjectURL(blob);
         const link = document.createElement("a");
@@ -254,6 +258,19 @@ const PostDetailsPage: React.FC = () => {
         URL.revokeObjectURL(url);
     }
 
+    const onConfirmReIndex = () => {
+        setShowReindexDialog(true);
+        setShowCheckForUpdateModal(false);
+    }
+
+    const isMitreAttack = (object: ObstractsObject) => {
+        const keywords = ['enterprise-attack', 'ics-attack', 'mobile-attack']
+        if (object.x_mitre_domains) {
+            return object.x_mitre_domains.findIndex(item => keyword.includes(item)) > -1
+        }
+        return false
+    }
+
     return (
         <Box p={4}>
             <Box>
@@ -263,7 +280,7 @@ const PostDetailsPage: React.FC = () => {
                     </Link>
                     {!teamId && (
                         <>
-                            <Button variant='contained' sx={{ marginLeft: '2rem' }} onClick={checkForUpdate}>Check for updates</Button>
+                            <Button variant='contained' sx={{ marginLeft: '2rem' }} onClick={() => setShowCheckForUpdateModal(true)}>Check for updates</Button>
                             <Button color='error' variant='contained' sx={{ marginLeft: '2rem' }} onClick={() => setShowDeleteDialog(true)}>Delete Post</Button>
                         </>
                     )}
@@ -305,6 +322,16 @@ const PostDetailsPage: React.FC = () => {
                             <TableCell>Added Manually</TableCell>
                             <TableCell>{post?.added_manually ? 'True' : 'False'}</TableCell>
                         </TableRow>
+                        {!teamId && (<>
+                            <TableRow>
+                                <TableCell>Date Added</TableCell>
+                                <TableCell>{getDateString(post?.datetime_added)}</TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell>Date Updated</TableCell>
+                                <TableCell>{getDateString(post?.datetime_updated)}</TableCell>
+                            </TableRow>
+                        </>)}
                     </>)}
                 </TableBody>
             </Table>
@@ -314,8 +341,10 @@ const PostDetailsPage: React.FC = () => {
                     <Button variant='contained' sx={{ textTransform: 'uppercase', marginLeft: '1rem' }}>View on blog</Button>
                 </Link>
             </Box>
-            <div style={{ border: '1px solid #000000cc', padding: '3rem', borderRadius: '5px', maxWidth: '80vw' }}
-                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post?.description ?? '') }} />
+            <div style={{ border: '1px solid #000000cc', padding: '3rem', borderRadius: '5px', maxWidth: '80vw' }}>
+                <ReactMarkdown>{markdown}</ReactMarkdown>
+            </div>
+
             <div>
                 <Box sx={{ display: 'flex', marginTop: '1rem', justifyContent: 'right' }}><Button onClick={downloadMarkdown} variant='contained'>Download Markdown</Button></Box>
                 { }
@@ -367,6 +396,72 @@ const PostDetailsPage: React.FC = () => {
                             </TableBody>
                         </Table>
                     </TableContainer>
+                    <TableContainer sx={{ marginTop: '3rem' }}>
+                        <Typography variant="h5">Extractions (MITRE ATT&CK)</Typography>
+                        <Table>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Type</TableCell>
+                                    <TableCell>ID</TableCell>
+                                    <TableCell>Name</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {objects.filter(object => isMitreAttack(object)).map((object, index) => (
+                                    <TableRow className="ioc-row" key={index}>
+                                        <TableCell>{object.type}</TableCell>
+                                        <TableCell>{object.id}</TableCell>
+                                        <TableCell>{getScoValue(object)}</TableCell>
+                                        <TableCell><Button color="primary" variant="contained" sx={{ textTransform: 'uppercase' }} onClick={() => { navigate(getObservationSearchUrl(object)) }}>View all posts</Button></TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                    <TableContainer sx={{ marginTop: '3rem' }}>
+                        <Typography variant="h5">Extractions (Detections)</Typography>
+                        <Table>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Type</TableCell>
+                                    <TableCell>ID</TableCell>
+                                    <TableCell>Name</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {objects.filter(object => object.type === 'indicator').map((object, index) => (
+                                    <TableRow className="ioc-row" key={index}>
+                                        <TableCell>{object.type}</TableCell>
+                                        <TableCell>{object.id}</TableCell>
+                                        <TableCell>{getScoValue(object)}</TableCell>
+                                        <TableCell><Button color="primary" variant="contained" sx={{ textTransform: 'uppercase' }} onClick={() => { navigate(getObservationSearchUrl(object)) }}>View all posts</Button></TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                    <TableContainer sx={{ marginTop: '3rem' }}>
+                        <Typography variant="h5">Extractions (Vulnerabilities)</Typography>
+                        <Table>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Type</TableCell>
+                                    <TableCell>ID</TableCell>
+                                    <TableCell>Name</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {objects.filter(object => object.type === 'vulnerability').map((object, index) => (
+                                    <TableRow className="ioc-row" key={index}>
+                                        <TableCell>{object.type}</TableCell>
+                                        <TableCell>{object.id}</TableCell>
+                                        <TableCell>{getScoValue(object)}</TableCell>
+                                        <TableCell><Button color="primary" variant="contained" sx={{ textTransform: 'uppercase' }} onClick={() => { navigate(getObservationSearchUrl(object)) }}>View all posts</Button></TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
                 </>
             )}
 
@@ -386,6 +481,15 @@ const PostDetailsPage: React.FC = () => {
 
             <ReindexingDialog onClose={() => setShowReindexDialog(false)} open={showReindexDialog}></ReindexingDialog>
             {post && <DeleteDialog onClose={() => setShowDeleteDialog(false)} open={showDeleteDialog} post={post} feedId={feedId}></DeleteDialog>}
+            {post && feed &&
+                <CheckForUpdatesDialog
+                    onConfirmReIndex={onConfirmReIndex}
+                    onClose={() => setShowCheckForUpdateModal(false)}
+                    open={showCheckForUpdateModal}
+                    post={post}
+                    feed={feed}
+                ></CheckForUpdatesDialog>
+            }
             <Dialog open={openJobModal} onClose={() => setOpenJobModal(false)}>
                 <DialogTitle>{post?.title} Job</DialogTitle>
                 <DialogContent>

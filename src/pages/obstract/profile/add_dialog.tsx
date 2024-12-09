@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
   TextField,
   Button,
   Chip,
@@ -16,6 +11,9 @@ import {
   FormControlLabel,
   Switch,
   Typography,
+  OutlinedInput,
+  Checkbox,
+  ListItemText,
 } from '@mui/material';
 import { createProfile, editProfile, loadAliases, loadExtractors, loadWhitelists } from '../../../services/obstract.ts';
 import LoadingButton from '../../../components/loading_button/index.tsx';
@@ -161,6 +159,20 @@ const AddEntryDialog: React.FC<AddEntryDialogProps> = ({
     setFormData((prev) => ({ ...prev, [arrayName]: newArray }));
   };
 
+  const handleExtractionChange = (value: string | string[]) => {
+    setFormData((prev) => ({
+      ...prev,
+      extractions: typeof value === 'string' ? value.split(',') : value,
+    }));
+  };
+
+  const handleAISettingsChange = (value: string | string[]) => {
+    setFormData((prev) => ({
+      ...prev,
+      ai_settings_extractions: typeof value === 'string' ? value.split(',') : value,
+    }));
+  };
+
   return (
     <Box>
       <Typography variant='h4'>{entryData ? 'Edit Profile' : 'Add Profile'}</Typography>
@@ -196,31 +208,24 @@ const AddEntryDialog: React.FC<AddEntryDialogProps> = ({
             />
           ))}
         </div>
-        <Box display="flex" alignItems="center">
+        <FormControl fullWidth>
+          <InputLabel>Extractions</InputLabel>
           <Select
-            style={{ flex: 'auto' }}
-            name="extractions"
-            value={listObj.extractions}
-            onChange={(e) => handleArrayChangeNew('extractions', e.target.value)}
+            fullWidth
+            multiple
+            value={formData.extractions}
+            onChange={(ev) => handleExtractionChange(ev.target.value)}
+            input={<OutlinedInput label="Extractions" />}
+            renderValue={(selected) => selected.join(', ')}
           >
             {extractions.map((extraction) => (
-              <MenuItem sx={{
-                display:
-                  formData.extractions?.includes(extraction.id) ? 'none' : 'block'
-              }} key={extraction.id} value={extraction.id}>
-                {extraction.id}
+              <MenuItem key={extraction.id} value={extraction.id}>
+                <Checkbox checked={formData.extractions.includes(extraction.id)} />
+                <ListItemText primary={extraction.id} />
               </MenuItem>
             ))}
           </Select>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => handleArrayAdded('extractions')}
-            style={{ marginLeft: '8px' }}
-          >
-            Add
-          </Button>
-        </Box>
+        </FormControl>
         {errors?.extractions?.map(error => <Typography sx={{ color: 'red' }}>{error}</Typography>)}
       </Box>
 
@@ -253,7 +258,7 @@ const AddEntryDialog: React.FC<AddEntryDialogProps> = ({
       {/* Extractions */}
       <Box marginY={2}>
         <div>
-          <strong>AI Extractions  Settings:</strong>
+          <strong>AI Extractions Settings:</strong>
           {formData.ai_settings_extractions.map((option, index) => (
             <Chip
               key={option}
@@ -263,26 +268,24 @@ const AddEntryDialog: React.FC<AddEntryDialogProps> = ({
             />
           ))}
         </div>
-        <Box display="flex" alignItems="center">
+          <FormControl fullWidth>
+          <InputLabel>Extractions</InputLabel>
           <Select
-            style={{ flex: 'auto' }}
-            name="ai_settings_extractions"
-            value={listObj.ai_settings_extractions}
-            onChange={(e) => handleArrayChangeNew('ai_settings_extractions', e.target.value)}
+            fullWidth
+            multiple
+            value={formData.ai_settings_extractions}
+            onChange={(ev) => handleAISettingsChange(ev.target.value)}
+            input={<OutlinedInput label="Extractions" />}
+            renderValue={(selected) => selected.join(', ')}
           >
-            {ai_settings_options.map((extraction) => (
-              <MenuItem key={extraction} value={extraction}>{extraction}</MenuItem>
+            {ai_settings_options.map((option) => (
+              <MenuItem key={option} value={option}>
+                <Checkbox checked={formData.ai_settings_extractions.includes(option)} />
+                <ListItemText primary={option} />
+              </MenuItem>
             ))}
           </Select>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => handleArrayAdded('ai_settings_extractions')}
-            style={{ marginLeft: '8px' }}
-          >
-            Add
-          </Button>
-        </Box>
+        </FormControl>
         {errors?.extractions?.map(error => <Typography sx={{ color: 'red' }}>{error}</Typography>)}
       </Box>
 

@@ -83,7 +83,8 @@ export interface ObstractsObject {
     id: string,
     value: string,
     name: string,
-    additionalProp: Object
+    additionalProp: Object,
+    x_mitre_domains: string[],
 }
 
 interface PostObjectsResponse {
@@ -347,7 +348,7 @@ export const loadAliases = () => {
 };
 
 export const loadExtractors = () => {
-    return apiRequest<any>('GET', `/proxy/extractors/?page_size=100`).then(res => res.data.extractors);
+    return apiRequest<any>('GET', `/proxy/extractors/?page_size=500`).then(res => res.data.extractors);
 };
 
 export const loadWhitelists = () => {
