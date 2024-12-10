@@ -16,7 +16,7 @@ import {
     Tooltip,
 } from '@mui/material';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import ReactMarkdown from 'react-markdown';
+import Markdown from 'react-markdown';
 import { adminFetchPostJobs, Feed, fetchObstractFeed, fetchObstractPost, fetchPostMarkdown, fetchPostObjects, fetchTeamPostObjects, IJob, ObstractsObject, Post } from '../../../services/obstract.ts';
 import JobDetailsPage from '../../team-feeds/feed-job-details.tsx';
 
@@ -342,7 +342,7 @@ const PostDetailsPage: React.FC = () => {
                 </Link>
             </Box>
             <div style={{ border: '1px solid #000000cc', padding: '3rem', borderRadius: '5px', maxWidth: '80vw' }}>
-                <ReactMarkdown>{markdown}</ReactMarkdown>
+                <Markdown>{markdown}</Markdown>
             </div>
 
             <div>

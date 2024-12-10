@@ -17,12 +17,11 @@ import {
     FormControl,
     InputLabel,
 } from '@mui/material';
-import { Link, useLocation, useParams } from 'react-router-dom';
-import { getLatestPosts, Post, subscribeTeamObstractFeeds, TeamFeed } from '../../../services/obstract.ts';
-import { useAlert } from '../../../contexts/alert-context.tsx';
+import { Link } from 'react-router-dom';
+import { getLatestPosts, Post, TeamFeed } from '../../../services/obstract.ts';
 import { URLS } from '../../../services/urls.ts';
 import { TeamRouteContext } from '../../team-layout.tsx/index.tsx';
-import { TeamContext } from '../../../contexts/team-context.tsx';
+import Markdown from 'react-markdown';
 
 interface PostWithFeed extends Post {
     feed: TeamFeed;
@@ -35,27 +34,9 @@ const LatestPostsPage: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [sort, setSort] = useState('pubdate_descending');
     const [title, setTitle] = useState('');
-    const [initialDataLoaded, setInitialDataLoaded] = useState(false)
-    const location = useLocation();
-    const { activeTeam } = useContext(TeamContext)
-    const [disableViewPost, setDisableViewPost] = useState(false)
-    const [page, setPage] = useState<number>(0); // Current page
-    const [pageSize, setPageSize] = useState<number>(10); // Profiles per page
-    const [dataCount, setDataCount] = useState<number>(0); // Total number of pages
-
-    const alert = useAlert()
-
-    useEffect(() => {
-        if (!activeTeam) return
-        if (!activeTeam.has_active_subscription) {
-            setDisableViewPost(true)
-        }
-    }, [activeTeam])
-
-    useEffect(() => {
-        if (initialDataLoaded) loadReports()
-    }, [initialDataLoaded])
-
+    const [page, setPage] = useState<number>(0);
+    const [pageSize, setPageSize] = useState<number>(10);
+    const [dataCount, setDataCount] = useState<number>(0);
     const loadReports = async () => {
         setLoading(true)
         const res = await getLatestPosts(teamId, sort, title, page + 1)
@@ -73,7 +54,7 @@ const LatestPostsPage: React.FC = () => {
 
 
     const handlePageChange = (event: unknown, value: number) => {
-        setPage(value); // Set new page number
+        setPage(value);
     };
 
     return (
@@ -137,7 +118,9 @@ const LatestPostsPage: React.FC = () => {
                                                 {post.title}
                                             </Link>
                                         </TableCell>
-                                        <TableCell>{post.summary}</TableCell>
+                                        <TableCell>
+                                            <Markdown>{post.summary}</Markdown>
+                                        </TableCell>
                                         <TableCell>{new Date(post.datetime_added || '').toLocaleDateString()}</TableCell>
                                         <TableCell>{post.author}</TableCell>
                                         <TableCell>{post.categories}</TableCell>
@@ -155,7 +138,7 @@ const LatestPostsPage: React.FC = () => {
                         onPageChange={handlePageChange}
                         color="primary"
                         rowsPerPageOptions={[]}
-                        labelRowsPerPage={""} // Hide the rows per page label
+                        labelRowsPerPage={""}
                         style={{ marginTop: '20px', display: 'flex', justifyContent: 'center' }}
                     />
                 </>

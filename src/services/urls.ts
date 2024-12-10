@@ -23,5 +23,5 @@ export const URLS = {
     teamObservationSearch: (teamId, type: string, value: string) => `/observables/search?type=${type}&value=${value}&team_id=${teamId}`,
     teamObservationSearchWithoutParams: (teamId: string) => `/observables/search?team_id=${teamId}`,
     teamObservablePosts: (objectId: string, type: string, value: string) => `/observables/${objectId}?type=${type}&value=${value}`,
-    teamLatestPosts: (teamId: string) => `/posts/`,
+    teamLatestPosts: (teamId: string) => `/posts?teamId=${teamId}`,
 }
