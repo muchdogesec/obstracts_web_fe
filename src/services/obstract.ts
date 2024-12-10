@@ -28,6 +28,7 @@ type ProfilesResponse = {
 export interface Feed {
     id: string;
     is_public: boolean;
+    feed_id: string;
     profile_id: string;
     polling_schedule_minute: number;
     next_polling_time: string;
@@ -372,4 +373,14 @@ export const getPostsByExtraction = (team_id: string | undefined, object_id: str
         return apiRequest<any>('GET', `/teams/${team_id}/objects/${object_id}/`, {}, {}, { page })
     }
     return apiRequest<any>('GET', `/objects/${object_id}/`, {}, {}, { page })
+}
+
+export const getLatestPosts = (team_id: string | undefined, sort: string, title: string, page: number) => {
+    const query = {
+        page, title, sort,
+    }
+    if (team_id) {
+        return apiRequest<any>('GET', `/teams/${team_id}/posts/`, {}, {}, query)
+    }
+    return apiRequest<any>('GET', `/posts/`, {}, {}, query)
 }

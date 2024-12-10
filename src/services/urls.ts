@@ -14,6 +14,7 @@ export const URLS = {
     staffObservationSearch: (type: string, value: string) => `/staff/observables/search?type=${type}&value=${value}`,
     staffObservablePosts: (objectId: string, type: string, value: string) => `/staff/observables/${objectId}??type=${type}&value=${value}`,
     staffAddSkeletonFeed: () => `/staff/feeds/add-skeleton-feed`,
+    staffLatestPosts: () => `/staff/posts/`,
 
     teamManagement: (team_id) => `/teams/${team_id}`,
     teamFeeds: (teamId) => `/feeds?team_id=${teamId}`,
@@ -22,4 +23,5 @@ export const URLS = {
     teamObservationSearch: (teamId, type: string, value: string) => `/observables/search?type=${type}&value=${value}&team_id=${teamId}`,
     teamObservationSearchWithoutParams: (teamId: string) => `/observables/search?team_id=${teamId}`,
     teamObservablePosts: (objectId: string, type: string, value: string) => `/observables/${objectId}?type=${type}&value=${value}`,
+    teamLatestPosts: (teamId: string) => `/posts/`,
 }
