@@ -68,6 +68,7 @@ export interface Post {
     content_type: string;
     categories: string[];
     profile_id: string;
+    feed_id: string;
     added_manually: boolean;
 }
 
