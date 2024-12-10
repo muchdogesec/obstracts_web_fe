@@ -26,7 +26,7 @@ import { TeamContext } from '../../../contexts/team-context.tsx';
 
 interface PostWithFeed extends Post {
     feed: TeamFeed;
-    comment: string;
+    summary: string;
 }
 
 const LatestPostsPage: React.FC = () => {
@@ -123,7 +123,7 @@ const LatestPostsPage: React.FC = () => {
                             <TableHead>
                                 <TableRow>
                                     <TableCell>Post Title</TableCell>
-                                    <TableCell>Comment</TableCell>
+                                    <TableCell>Summary</TableCell>
                                     <TableCell>Post Date</TableCell>
                                     <TableCell>Post Author</TableCell>
                                     <TableCell>Post Tags</TableCell>
@@ -137,7 +137,7 @@ const LatestPostsPage: React.FC = () => {
                                                 {post.title}
                                             </Link>
                                         </TableCell>
-                                        <TableCell>{post.comment}</TableCell>
+                                        <TableCell>{post.summary}</TableCell>
                                         <TableCell>{new Date(post.datetime_added || '').toLocaleDateString()}</TableCell>
                                         <TableCell>{post.author}</TableCell>
                                         <TableCell>{post.categories}</TableCell>
