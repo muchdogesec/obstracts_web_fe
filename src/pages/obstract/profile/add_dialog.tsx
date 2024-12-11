@@ -15,7 +15,7 @@ import {
   Checkbox,
   ListItemText,
 } from '@mui/material';
-import { createProfile, editProfile, loadAliases, loadExtractors, loadWhitelists } from '../../../services/obstract.ts';
+import { createProfile, loadAllExtractions } from '../../../services/obstract.ts';
 import LoadingButton from '../../../components/loading_button/index.tsx';
 import { useAlert } from '../../../contexts/alert-context.tsx';
 
@@ -57,7 +57,7 @@ const AddEntryDialog: React.FC<AddEntryDialogProps> = ({
   const [formData, setFormData] = useState<{
     name: string,
     extractions: string[],
-    ai_settings_extractions?: string[],
+    ai_settings_extractions: string[],
     ai_settings_relationships: string,
     ai_summary_provider: string,
     relationship_mode: string,
@@ -97,7 +97,7 @@ const AddEntryDialog: React.FC<AddEntryDialogProps> = ({
   };
 
   useEffect(() => {
-    loadList(loadExtractors, setExtractions, setExtractorIdToNameDict);
+    loadList(loadAllExtractions, setExtractions, setExtractorIdToNameDict);
   }, []);
 
   useEffect(() => {
@@ -110,6 +110,8 @@ const AddEntryDialog: React.FC<AddEntryDialogProps> = ({
       ai_settings_extractions: [],
       extract_text_from_image: true,
       defang: true,
+      ignore_image_refs: true,
+      ignore_link_refs: true,
     });
     setErrors({})
 
