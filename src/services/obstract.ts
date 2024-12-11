@@ -345,12 +345,30 @@ export const changePostProfileId = (feed_id: string, post_id: string, profile_id
     return apiRequest<PostsResponse>('PATCH', `/proxy/feeds/${feed_id}/posts/${post_id}/`, { profile_id });
 };
 
-export const loadAliases = () => {
-    return apiRequest<any>('GET', `/proxy/aliases/?page_size=100`).then(res => res.data.aliases);
+export const loadAliases = (page: number) => {
+    return apiRequest<any>('GET', `/proxy/aliases/?page_size=100`, { page }).then(res => res.data.aliases);
 };
 
-export const loadExtractors = () => {
-    return apiRequest<any>('GET', `/proxy/extractors/?page_size=500`).then(res => res.data.extractors);
+export const loadExtractors = (page: number) => {
+    return apiRequest<any>(
+        'GET',
+        `/proxy/extractors/`,
+        {}, {},
+        { page, page_size: 50 }
+    ).then(res => res.data.extractors);
+};
+
+export const loadAllExtractions = async () => {
+    let hasNext = true
+    let page = 1
+    let alliases = []
+    while (hasNext) {
+        const res = await loadExtractors(page)
+        alliases = [...alliases, ...res]
+        page += 1
+        hasNext = res.length > 0
+    }
+    return alliases
 };
 
 export const loadWhitelists = () => {
