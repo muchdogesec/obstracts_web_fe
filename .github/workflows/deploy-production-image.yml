@@ -42,7 +42,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
             REACT_APP_AUTH0_DOMAIN=auth.dogesec.com
-            REACT_APP_AUTH0_CLIENT_ID=l0NalKex2IMpjNji2lNCa3moPDegDgRM
+            REACT_APP_AUTH0_CLIENT_ID=eUCQ8h0EBuGRae8o1JU5179y9KpNDVTc
             REACT_APP_API_BASE_URL=https://management.obstracts.com/
             REACT_APP_OBSTRACTS_API_SWAGGER_URL=https://api.obstracts.com/schema/swagger-ui/
             REACT_APP_ADMIN_URL=https://management.obstracts.com/admin/
