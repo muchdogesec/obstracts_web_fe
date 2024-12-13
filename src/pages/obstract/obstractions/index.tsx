@@ -266,7 +266,7 @@ const PostDetailsPage: React.FC = () => {
     const isMitreAttack = (object: ObstractsObject) => {
         const keywords = ['enterprise-attack', 'ics-attack', 'mobile-attack']
         if (object.x_mitre_domains) {
-            return object.x_mitre_domains.findIndex(item => keyword.includes(item)) > -1
+            return object.x_mitre_domains.findIndex(item => keywords.includes(item)) > -1
         }
         return false
     }
