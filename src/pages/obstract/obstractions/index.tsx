@@ -362,28 +362,7 @@ const PostDetailsPage: React.FC = () => {
             ) : (
                 <>
                     <TableContainer sx={{ marginTop: '3rem' }}>
-                        <Typography variant="h5">Extractions (TTPs)</Typography>
-                        <Table>
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>Type</TableCell>
-                                    <TableCell>ID</TableCell>
-                                    <TableCell>Name</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {objects.filter(object => isSDOType(object)).map((object, index) => (
-                                    <TableRow key={index}>
-                                        <TableCell>{object.type}</TableCell>
-                                        <TableCell>{object.id}</TableCell>
-                                        <TableCell>{object.name ?? object.value}</TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                    <TableContainer sx={{ marginTop: '3rem' }}>
-                        <Typography variant="h5">Extractions (IOCs)</Typography>
+                        <Typography variant="h5">Observables</Typography>
                         <Table>
                             <TableHead>
                                 <TableRow>
@@ -405,7 +384,7 @@ const PostDetailsPage: React.FC = () => {
                         </Table>
                     </TableContainer>
                     <TableContainer sx={{ marginTop: '3rem' }}>
-                        <Typography variant="h5">Extractions (MITRE ATT&CK)</Typography>
+                        <Typography variant="h5">MITRE ATT&CK</Typography>
                         <Table>
                             <TableHead>
                                 <TableRow>
@@ -416,28 +395,6 @@ const PostDetailsPage: React.FC = () => {
                             </TableHead>
                             <TableBody>
                                 {objects.filter(object => isMitreAttack(object)).map((object, index) => (
-                                    <TableRow className="ioc-row" key={index}>
-                                        <TableCell>{object.type}</TableCell>
-                                        <TableCell>{object.id}</TableCell>
-                                        <TableCell>{getScoValue(object)}</TableCell>
-                                        <TableCell><Button color="primary" variant="contained" sx={{ textTransform: 'uppercase' }} onClick={() => { navigate(getObservationSearchUrl(object)) }}>View all posts</Button></TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                    <TableContainer sx={{ marginTop: '3rem' }}>
-                        <Typography variant="h5">Extractions (Detections)</Typography>
-                        <Table>
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>Type</TableCell>
-                                    <TableCell>ID</TableCell>
-                                    <TableCell>Name</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {objects.filter(object => isIndicator(object)).map((object, index) => (
                                     <TableRow className="ioc-row" key={index}>
                                         <TableCell>{object.type}</TableCell>
                                         <TableCell>{object.id}</TableCell>
@@ -460,6 +417,49 @@ const PostDetailsPage: React.FC = () => {
                             </TableHead>
                             <TableBody>
                                 {objects.filter(object => object.type === 'vulnerability').map((object, index) => (
+                                    <TableRow className="ioc-row" key={index}>
+                                        <TableCell>{object.type}</TableCell>
+                                        <TableCell>{object.id}</TableCell>
+                                        <TableCell>{getScoValue(object)}</TableCell>
+                                        <TableCell><Button color="primary" variant="contained" sx={{ textTransform: 'uppercase' }} onClick={() => { navigate(getObservationSearchUrl(object)) }}>View all posts</Button></TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                    <TableContainer sx={{ marginTop: '3rem' }}>
+                        <Typography variant="h5">TTPs</Typography>
+                        <Table>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Type</TableCell>
+                                    <TableCell>ID</TableCell>
+                                    <TableCell>Name</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {objects.filter(object => isSDOType(object)).map((object, index) => (
+                                    <TableRow key={index}>
+                                        <TableCell>{object.type}</TableCell>
+                                        <TableCell>{object.id}</TableCell>
+                                        <TableCell>{object.name ?? object.value}</TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                    <TableContainer sx={{ marginTop: '3rem' }}>
+                        <Typography variant="h5">Detections</Typography>
+                        <Table>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Type</TableCell>
+                                    <TableCell>ID</TableCell>
+                                    <TableCell>Name</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {objects.filter(object => isIndicator(object)).map((object, index) => (
                                     <TableRow className="ioc-row" key={index}>
                                         <TableCell>{object.type}</TableCell>
                                         <TableCell>{object.id}</TableCell>
