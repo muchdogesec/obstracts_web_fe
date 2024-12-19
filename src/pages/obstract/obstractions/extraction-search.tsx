@@ -68,15 +68,15 @@ const ObservableSearchPage: React.FC = () => {
         loadReports(page + 1)
     }
     useEffect(() => {
-        document.title = 'Observable Search | Obstracts Web'
+        document.title = 'Intel Search | Obstracts Web'
     }, [])
 
     return (
         <Box p={4}>
             <Typography variant="h4" gutterBottom>
-                Observable search
+                Intel Search
             </Typography>
-            <Typography>Search for reports using observable type and ID</Typography>
+            <Typography>Search for intelligence in blog posts.</Typography>
             <Box mb={5} sx={{ display: 'flex' }}>
                 <TextField
                     type="type"

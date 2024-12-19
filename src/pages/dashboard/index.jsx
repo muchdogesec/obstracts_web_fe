@@ -57,20 +57,20 @@ const DashboardLayout = () => {
           <Divider />
           <List>
             {!activeTeam || !activeTeam?.is_private && (<>
+              <ListItem button component={NavLink} to={URLS.teamLatestPosts(activeTeamId)}>
+                <ListItemIcon><DocumentScanner /></ListItemIcon>
+                <ListItemText primary="Latest Posts" />
+              </ListItem>
               <ListItem button component={NavLink} to={URLS.teamFeeds(activeTeamId)}>
                 <ListItemIcon><RssFeedIcon /></ListItemIcon>
                 <ListItemText primary="Feeds" />
               </ListItem>
               <ListItem button component={NavLink} to={URLS.teamObservationSearchWithoutParams(activeTeamId)}>
                 <ListItemIcon><Search /></ListItemIcon>
-                <ListItemText primary="Observable Search" />
-              </ListItem>
-              <ListItem button component={NavLink} to={URLS.teamLatestPosts(activeTeamId)}>
-                <ListItemIcon><ManageHistory /></ListItemIcon>
-                <ListItemText primary="Latest Posts" />
+                <ListItemText primary="Intel Search" />
               </ListItem>
               <ListItem button component={NavLink} to={OBSTRACTS_API_SWAGGER_URL}>
-                <ListItemIcon><DocumentScanner></DocumentScanner></ListItemIcon>
+                <ListItemIcon><Info /></ListItemIcon>
                 <ListItemText primary="API Documentation" />
               </ListItem>
               {activeTeam?.is_admin && (
