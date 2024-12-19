@@ -105,6 +105,7 @@ const LatestPostsPage: React.FC = () => {
                                 <TableRow>
                                     <TableCell>Post Title</TableCell>
                                     <TableCell>Summary</TableCell>
+                                    <TableCell>Feed Title</TableCell>
                                     <TableCell>Post Date</TableCell>
                                     <TableCell>Post Author</TableCell>
                                     <TableCell>Post Tags</TableCell>
@@ -120,6 +121,9 @@ const LatestPostsPage: React.FC = () => {
                                         </TableCell>
                                         <TableCell>
                                             <Markdown>{post.summary}</Markdown>
+                                        </TableCell>
+                                        <TableCell>
+                                            {post.feed_title}
                                         </TableCell>
                                         <TableCell>{new Date(post.datetime_added || '').toLocaleDateString()}</TableCell>
                                         <TableCell>{post.author}</TableCell>
