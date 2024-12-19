@@ -37,7 +37,6 @@ const SDO_TYPES = new Set([
     'campaign',
     'course-of-action',
     'identity',
-    'indicator',
     'infrastructure',
     'intrusion-set',
     'location',
@@ -271,6 +270,15 @@ const PostDetailsPage: React.FC = () => {
         return false
     }
 
+    const isIndicator = (object: ObstractsObject) => {
+        return object.type === 'indicator'
+    }
+
+    const isSDOType = (object: ObstractsObject) => {
+        if (postId && object.value?.includes(postId)) return false
+        return SDO_TYPES.has(object.type) && !isMitreAttack(object)
+    }
+
     return (
         <Box p={4}>
             <Box>
@@ -364,7 +372,7 @@ const PostDetailsPage: React.FC = () => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {objects.filter(object => SDO_TYPES.has(object.type)).map((object, index) => (
+                                {objects.filter(object => isSDOType(object)).map((object, index) => (
                                     <TableRow key={index}>
                                         <TableCell>{object.type}</TableCell>
                                         <TableCell>{object.id}</TableCell>
@@ -429,7 +437,7 @@ const PostDetailsPage: React.FC = () => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {objects.filter(object => object.type === 'indicator').map((object, index) => (
+                                {objects.filter(object => isIndicator(object)).map((object, index) => (
                                     <TableRow className="ioc-row" key={index}>
                                         <TableCell>{object.type}</TableCell>
                                         <TableCell>{object.id}</TableCell>
