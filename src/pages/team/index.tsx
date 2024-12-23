@@ -47,9 +47,9 @@ const ConfirmRemoveMemberDialog = ({ teamId, open, onClose, member }: {
       await Api.removeTeamMember(teamId, member.user_id)
       onClose(true)
     } catch (err) {
-      if (err?.response?.status === 400) {
+      if ([400, 403].includes(err?.response?.status)) {
         onClose(false)
-        return alert.showAlert(err?.response?.data[0])
+        return alert.showAlert(err?.response?.data[0] || err?.response?.data?.detail)
       }
       throw err
     }
@@ -87,6 +87,7 @@ function Team() {
   const [loadingSave, setLoadingSave] = useState(false)
   const [isAdmin, setIsAdmin] = useState(false);
   const [activeTeam, setActiveTeam] = useState<ITeam | null>(null);
+  const [activeUserIsAdmin, setActiveUserIsAdmin] = useState(false)
 
   const [openCancelMembership, setOpenCancelMembership] = useState(false);
   const [openCancelInvitation, setOpenCancelInvitation] = useState(false);
@@ -161,6 +162,7 @@ function Team() {
     try {
       const result = await Api.fetchTeamLimits(id)
       setActiveTeam(result.data)
+      setActiveUserIsAdmin(result.data.is_admin)
     } catch (err) {
       if (err?.response?.status === 403 || err?.response?.status === 404) {
         navigate(URLS.profile())
@@ -365,7 +367,7 @@ function Team() {
             isAdmin={false}
             disabled={disableEdit}
           />
-          {disableEdit && <Button color="success" variant="contained" onClick={() => setDisableEdit(false)}>Edit</Button>}
+          {activeUserIsAdmin && disableEdit && <Button color="success" variant="contained" onClick={() => setDisableEdit(false)}>Edit</Button>}
         </Box>
         <Box mt={4}>
           <Typography variant="h6" gutterBottom>
@@ -426,7 +428,7 @@ function Team() {
               </TableBody>
             </Table>
           </TableContainer>
-          <Button sx={{ marginTop: '1rem' }} onClick={handleSubscriptionDetail} variant="contained">Modify Subscription</Button>
+          {activeUserIsAdmin && <Button sx={{ marginTop: '1rem' }} onClick={handleSubscriptionDetail} variant="contained">Modify Subscription</Button>}
         </Box>
 
 
@@ -460,10 +462,12 @@ function Team() {
                       <TableCell>{member.display_name}</TableCell>
                       <TableCell>{getRole(member)}</TableCell>
                       <TableCell>
-                        <Button variant="contained" onClick={() => initChangeRole(member)}>Change role</Button>
-                        <Button sx={{ marginLeft: '2rem' }} variant="contained" color="error" onClick={() => initConfirmRemove(member)}>
-                          {user?.email === member.email ? 'Leave' : 'Remove'}
-                        </Button>
+                        {activeUserIsAdmin && <Button variant="contained" onClick={() => initChangeRole(member)}>Change role</Button>}
+                        {activeUserIsAdmin || (user?.email === member.email) &&
+                          <Button sx={{ marginLeft: '2rem' }} variant="contained" color="error" onClick={() => initConfirmRemove(member)}>
+                            {user?.email === member.email ? 'Leave' : 'Remove'}
+                          </Button>
+                        }
                       </TableCell>
                     </TableRow>
                   ))
