@@ -83,10 +83,10 @@ const LatestPostsPage: React.FC = () => {
                         placeholder='sort'
                         onChange={(ev) => setSort(ev.target.value)}
                     >
-                        <MenuItem value="pubdate_descending">Publish Date(Descending)</MenuItem>
-                        <MenuItem value="pubdate_ascending">Publish Date(Ascending)</MenuItem>
-                        <MenuItem value="title_descending">Title(Descending)</MenuItem>
-                        <MenuItem value="title_ascending">Title(Ascending)</MenuItem>
+                        <MenuItem value="pubdate_descending">Publish Date (Descending)</MenuItem>
+                        <MenuItem value="pubdate_ascending">Publish Date (Ascending)</MenuItem>
+                        <MenuItem value="title_descending">Title (Descending)</MenuItem>
+                        <MenuItem value="title_ascending">Title (Ascending)</MenuItem>
 
                     </Select>
                 </FormControl>
