@@ -150,10 +150,11 @@ export const fetchObstractFeeds = (page_number: number, search: any, sortOrder: 
     });
 };
 
-export const updateObstractFeeds = (feed_id: string, is_public: boolean, polling_schedule_minute: number) => {
+export const updateObstractFeeds = (feed_id: string, is_public: boolean, polling_schedule_minute: number, profile_id: string) => {
     return apiRequest<PaginatedResponse<Feed>>('PATCH', `/feeds/${feed_id}/`, {
         polling_schedule_minute,
         is_public,
+        profile_id,
     });
 };
 
