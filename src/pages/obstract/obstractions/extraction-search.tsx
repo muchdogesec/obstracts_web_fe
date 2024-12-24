@@ -10,16 +10,18 @@ import {
     TableHead,
     TableRow,
     Button,
-    Input,
     TextField,
     TablePagination,
+    Select,
+    MenuItem,
 } from '@mui/material';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { getPostsByExtraction, ObstractsObject, Post, scoSearch, subscribeTeamObstractFeeds, TeamFeed } from '../../../services/obstract.ts';
+import { ObstractsObject, Post, scoSearch, TeamFeed } from '../../../services/obstract.ts';
 import { useAlert } from '../../../contexts/alert-context.tsx';
 import { URLS } from '../../../services/urls.ts';
 import { TeamRouteContext } from '../../team-layout.tsx/index.tsx';
 import { getScoValue } from '../../../services/utils.ts';
+import { observable_types } from './object-types.js'
 
 const PAGE_SIZE = 50
 
@@ -27,12 +29,14 @@ interface PostWithFeed extends Post {
     feed: TeamFeed
 }
 
+
 const ObservableSearchPage: React.FC = () => {
     const { teamId } = useContext(TeamRouteContext)
     const [reportData, setReportData] = useState<ObstractsObject[]>([])
     const [loading, setLoading] = useState<boolean>(false);
     const [value, setValue] = useState('');
     const [type, setType] = useState('');
+    const [selectedType, setSelectType] = useState<{ field_name: string }>();
     const [pageData, setPageData] = useState({
         resultsCount: 0,
         page: 1,
@@ -78,24 +82,27 @@ const ObservableSearchPage: React.FC = () => {
             </Typography>
             <Typography>Search for intelligence in blog posts.</Typography>
             <Box mb={5} sx={{ display: 'flex' }}>
-                <TextField
-                    type="type"
+                <Select
+                    sx={{ minWidth: '30rem' }}
+                    label="Type"
+                    name="type"
                     value={type}
                     onChange={(ev) => { setType(ev.target.value) }}
-                    placeholder="type"
-                    className="email-input"
-                    label="Type"
-                />
+                >
+                    {observable_types.map((object) => (
+                        <MenuItem onClick={() => setSelectType(object)} key={object.value} value={object.value}>{object.label}</MenuItem>
+                    ))}
+                </Select>
                 <TextField
                     sx={{ marginLeft: '1rem', marginRight: '1rem' }}
                     type="value"
                     value={value}
                     onChange={(ev) => { setValue(ev.target.value) }}
-                    placeholder="Value"
+                    placeholder={selectedType?.field_name || "value"}
                     className="email-input"
-                    label="Value"
+                    label={selectedType?.field_name || "value"}
                 />
-                <Button variant='contained' onClick={() => loadReports()}>filter</Button>
+                <Button variant='contained' onClick={() => loadReports(1)}>filter</Button>
             </Box>
             {loading ? (
                 <CircularProgress style={{ display: 'block', margin: '20px auto' }} />
@@ -107,8 +114,6 @@ const ObservableSearchPage: React.FC = () => {
                         <Table>
                             <TableHead>
                                 <TableRow>
-                                    <TableCell>ID</TableCell>
-                                    <TableCell>Spec Version</TableCell>
                                     <TableCell>Type</TableCell>
                                     <TableCell>Value</TableCell>
                                     <TableCell></TableCell>
@@ -117,8 +122,6 @@ const ObservableSearchPage: React.FC = () => {
                             <TableBody>
                                 {reportData.map((sco) => (
                                     <TableRow key={sco.id}>
-                                        <TableCell>{sco.id}</TableCell>
-                                        <TableCell>{sco.spec_version}</TableCell>
                                         <TableCell>{sco.type}</TableCell>
                                         <TableCell>{getScoValue(sco)}</TableCell>
                                         <TableCell><Link to={teamId ? URLS.teamObservablePosts(sco.id, sco.type, getScoValue(sco)) : URLS.staffObservablePosts(sco.id, sco.type, getScoValue(sco))}>
