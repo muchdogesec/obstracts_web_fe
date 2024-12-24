@@ -40,7 +40,9 @@ function InviteUserLine({ role, email, onRoleChanged, onEmailChanged, onRemove, 
                 <MenuItem key='admin' value='admin'>Admin</MenuItem>
                 {isOwner && <MenuItem key='owner' value='owner'>Owner</MenuItem>}
             </Select>
-            <Button onClick={onRemove}>Remove</Button>
+            <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                <Button variant="contained" color='error' onClick={onRemove}>Remove</Button>
+            </Box>
         </Box>
     );
 }

@@ -371,22 +371,38 @@ function Team() {
           <Typography variant="h6" gutterBottom>
             Subscription
           </Typography>
-          <Box sx={{ display: 'flex' }}>
-            <Typography style={{ fontWeight: 'bold', marginRight: '2rem' }}>Product name:</Typography>
-            <Typography>{activeSubscription?.items[0].price.product_name}</Typography>
-          </Box>
-          <Box sx={{ display: 'flex' }}>
-            <Typography style={{ fontWeight: 'bold', marginRight: '2rem' }}>Cost:</Typography>
-            <Typography>{activeSubscription?.items[0].price.payment_amount}</Typography>
-          </Box>
-          <Box sx={{ display: 'flex' }}>
-            <Typography style={{ fontWeight: 'bold', marginRight: '2rem' }}>Next Billing Date:</Typography>
-            <Typography>{getSubscriptionNextBillingDate()}</Typography>
-          </Box>
-          <Box sx={{ display: 'flex' }}>
-            <Typography style={{ fontWeight: 'bold', marginRight: '2rem' }}>Subscription Status:</Typography>
-            <Typography sx={{ textTransform: 'capitalize' }}>{activeSubscription?.status || 'No subscription'}</Typography>
-          </Box>
+          <TableContainer component={Paper} sx={{ marginTop: '2rem' }}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell sx={{ fontWeight: 'bold' }}>
+                    Key
+                  </TableCell>
+                  <TableCell sx={{ fontWeight: 'bold' }}>
+                    Value
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                <TableRow>
+                  <TableCell style={{ fontWeight: 'bold' }}>Product name:</TableCell>
+                  <TableCell>{activeSubscription?.items[0].price.product_name}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell style={{ fontWeight: 'bold' }}>Cost:</TableCell>
+                  <TableCell>{activeSubscription?.items[0].price.payment_amount}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell style={{ fontWeight: 'bold' }}>Next Billing Date:</TableCell>
+                  <TableCell>{getSubscriptionNextBillingDate()}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell style={{ fontWeight: 'bold' }}>Subscription Status:</TableCell>
+                  <TableCell sx={{ textTransform: 'capitalize' }}>{activeSubscription?.status || 'No subscription'}</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
           <TableContainer component={Paper} sx={{ marginTop: '2rem' }}>
             <Table>
               <TableHead>
