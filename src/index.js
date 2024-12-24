@@ -111,11 +111,11 @@ const router = createBrowserRouter([
             Component: PostDetailsPage,
           },
           {
-            path: "observables/search",
+            path: "intelligence/search",
             Component: ObservableSearchPage,
           },
           {
-            path: "observables/:objectId",
+            path: "intelligence/:objectId",
             Component: ObjectPostsPage,
           },
           {
@@ -177,11 +177,11 @@ const router = createBrowserRouter([
             Component: AdminTeams,
           },
           {
-            path: "observables/search",
+            path: "intelligence/search",
             Component: ObservableSearchPage,
           },
           {
-            path: "observables/:objectId",
+            path: "intelligence/:objectId",
             Component: ObjectPostsPage,
           },
           {

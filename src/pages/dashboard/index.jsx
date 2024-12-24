@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { Toolbar, Typography, Drawer, List, ListItem, ListItemIcon, ListItemText, Divider, Box } from '@mui/material';
-import { DocumentScanner, Group, Groups, ManageHistory, Search } from '@mui/icons-material';
+import { DocumentScanner, Group, Info, Search } from '@mui/icons-material';
 import RssFeedIcon from '@mui/icons-material/RssFeed';
 import { NavLink } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
