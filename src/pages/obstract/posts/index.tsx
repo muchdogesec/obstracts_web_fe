@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Typography, Box, CircularProgress, Pagination, FormControlLabel, Switch, TextField, List, ListItem, ListItemText, Modal, Container, TableHead, TableRow, Tab, TableCell, TableBody, Table } from '@mui/material';
-import { deleteObstractFeed, Feed, fetchObstractFeed, fetchObstractFeeds, fetchObstractPosts, Post, updateObstractFeeds } from '../../../services/obstract.ts';
+import { Button, Typography, Box, CircularProgress, Pagination, FormControlLabel, Switch, TextField, List, ListItem, ListItemText, Modal, Container, TableHead, TableRow, Tab, TableCell, TableBody, Table, Select, MenuItem } from '@mui/material';
+import { deleteObstractFeed, Feed, fetchObstractFeed, fetchObstractFeeds, fetchObstractPosts, fetchObstractProfiles, Post, updateObstractFeeds } from '../../../services/obstract.ts';
 import PostCard from './post-card.tsx';
 import EditPostModal from './edit-modal.tsx';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -13,7 +13,13 @@ import DeleteDialog from './delete-dialog.tsx';
 
 const PostPage: React.FC = () => {
     const { feed_id } = useParams<{ feed_id: string }>(); // `id` corresponds to `:id` in the route
-    const [feed, setFeed] = useState<Feed | null>()
+    const [feed, setFeed] = useState<Feed | null>({
+        profile_id: '',
+        polling_schedule_minute: 0,
+        is_public: false,
+        next_polling_time: '',
+        obstract_feed_metadata: {},
+    } as any)
     const [posts, setPosts] = useState<Post[]>([]);
     const [loading, setLoading] = useState<boolean>(false); // Loading state
     const [page, setPage] = useState<number>(1); // Current page
@@ -25,6 +31,7 @@ const PostPage: React.FC = () => {
     const [loadEditButton, setLoadEditButton] = useState(false);
     const [disableEdit, setDisableEdit] = useState(true);
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+    const [profiles, setProfiles] = useState<Profile[]>([]);
 
     const navigate = useNavigate()
 
@@ -33,6 +40,14 @@ const PostPage: React.FC = () => {
         setFeed(res.data);
     }
 
+    const loadProfiles = async (pageNumber: number) => {
+        const res = await fetchObstractProfiles(pageNumber);
+        setProfiles(res.data.profiles);
+    };
+
+    useEffect(() => {
+        loadProfiles(1)
+    }, [])
     const loadData = async (feed_id: string, pageNumber: number) => {
         setLoading(true);
         await loadFeed(feed_id)
@@ -81,10 +96,15 @@ const PostPage: React.FC = () => {
         setFeed({ ...feed, polling_schedule_minute: ev.target.value })
     }
 
+    const profileChanged = (value) => {
+        if (!feed) return
+        setFeed({ ...feed, profile_id: value })
+    }
+
     const updateFeed = async () => {
         if (!feed) return
         setLoadEditButton(true)
-        await updateObstractFeeds(feed.id, feed.is_public, feed.polling_schedule_minute)
+        await updateObstractFeeds(feed.id, feed.is_public, feed.polling_schedule_minute, feed.profile_id)
         setLoadEditButton(false)
         setDisableEdit(true)
     }
@@ -156,6 +176,7 @@ const PostPage: React.FC = () => {
                     />
                 </Box>
                 <Box>
+                    <Typography>Polling schedule (minutes)</Typography>
                     <TextField
                         disabled={disableEdit}
                         autoFocus
@@ -168,6 +189,23 @@ const PostPage: React.FC = () => {
                         onChange={(ev) => { pollingMinuteChanged(ev) }}
                         required
                     />
+                </Box>
+                <Box sx={{ marginLeft: '1rem' }}>
+                    <Typography>
+                        <strong>Profile</strong><span>(Profile to use for extraction)</span>
+                    </Typography>
+                    <Select
+                        label="Profile"
+                        style={{ flex: 'auto', marginTop: '8px' }}
+                        fullWidth
+                        disabled={disableEdit}
+                        value={feed?.profile_id}
+                        onChange={(e) => profileChanged(e.target.value)}
+                    >
+                        {profiles.map((profile) => (
+                            <MenuItem key={profile.id} value={profile.id}>{profile.name}</MenuItem>
+                        ))}
+                    </Select>
                 </Box>
             </Box>
             {disableEdit ? (

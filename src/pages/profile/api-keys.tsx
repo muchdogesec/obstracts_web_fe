@@ -156,7 +156,7 @@ const ApiKeyManager = () => {
                 </DialogContent>
                 <DialogActions>
                     <Button sx={{textTransform: 'uppercase'}} variant='contained' color='error' onClick={() => setShowCreateDialog(false)}>Cancel</Button>
-                    <Button variant='contained' onClick={() => handleSubmit()}>Create</Button>
+                    <Button disabled={!teamId || !newKeyName} variant='contained' onClick={() => handleSubmit()}>Create</Button>
                 </DialogActions>
             </Dialog>
             <Dialog open={showDeleteDialog} onClose={() => setShowDeleteDialog(false)}>
