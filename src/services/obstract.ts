@@ -150,12 +150,16 @@ export const fetchObstractFeeds = (page_number: number, search: any, sortOrder: 
     });
 };
 
-export const updateObstractFeeds = (feed_id: string, is_public: boolean, polling_schedule_minute: number, profile_id: string) => {
-    return apiRequest<PaginatedResponse<Feed>>('PATCH', `/feeds/${feed_id}/`, {
+export const reloadObstractFeed = (feed_id: string, is_public: boolean, polling_schedule_minute: number, profile_id: string) => {
+    return apiRequest<PaginatedResponse<Feed>>('PATCH', `/feeds/${feed_id}/reload_feed/`, {
         polling_schedule_minute,
         is_public,
         profile_id,
     });
+};
+
+export const updateObstractFeed = (feed_id: string, data: any) => {
+    return apiRequest<PaginatedResponse<Feed>>('PATCH', `/feeds/${feed_id}/`, data);
 };
 
 export const fetchTeamObstractFeeds = (team_id: string, page_number: number, filter: any, showMyFeed: boolean, sortOrder: any, orderType: string) => {
@@ -307,14 +311,6 @@ export const deleteObstractFeed = (feed_id: string) => {
 
 export const deleteObstractPost = (feed_id: string, post_id: string) => {
     return apiRequest<PostsResponse>('DELETE', `/proxy/feeds/${feed_id}/posts/${post_id}/`);
-};
-
-export const reloadObstractFeed = (feed_id: string, data: {
-    profile_id: string,
-    url: string,
-    include_remote_blogs: boolean
-}) => {
-    return apiRequest<PostsResponse>('PATCH', `/feeds/${feed_id}/`, data);
 };
 
 export const createNewPost = (feed_id: string, data: {

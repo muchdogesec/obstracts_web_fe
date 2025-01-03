@@ -8,6 +8,7 @@ export const URLS = {
     staffObstractProfiles: () => '/staff/extraction-profiles',
     staffObstractFeeds: () => '/staff/manage-feeds',
     staffObstractFeed: (feedId: string) => `/staff/feeds/${feedId}`,
+    staffObstractFeedEdit: (feedId: string) => `/staff/feeds/${feedId}/edit`,
     staffObstractPost: (feedId: string, postId: string) => `/staff/feeds/${feedId}/posts/${postId}`,
     staffObstractJobs: (feedId: string) => `/staff/feeds/${feedId}/jobs`,
     staffObstractJob: (feedId: string, jobId: string) => `/staff/feeds/${feedId}/jobs/${jobId}`,

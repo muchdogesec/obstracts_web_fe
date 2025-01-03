@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Typography, Box, CircularProgress, Pagination, FormControlLabel, Switch, TextField, List, ListItem, ListItemText, Modal, Container, TableHead, TableRow, Tab, TableCell, TableBody, Table, Select, MenuItem } from '@mui/material';
-import { deleteObstractFeed, Feed, fetchObstractFeed, fetchObstractFeeds, fetchObstractPosts, fetchObstractProfiles, Post, updateObstractFeeds } from '../../../services/obstract.ts';
-import PostCard from './post-card.tsx';
+import { Button, Typography, Box, FormControlLabel, Switch, TextField, List, ListItem, ListItemText, Modal, Container, TableHead, TableRow, Tab, TableCell, TableBody, Table, Select, MenuItem } from '@mui/material';
+import { Feed, fetchObstractFeed, fetchObstractProfiles, Post, Profile, reloadObstractFeed } from '../../../services/obstract.ts';
 import EditPostModal from './edit-modal.tsx';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import NewPostModal from './new-post-modal.tsx';
@@ -104,13 +103,17 @@ const PostPage: React.FC = () => {
     const updateFeed = async () => {
         if (!feed) return
         setLoadEditButton(true)
-        await updateObstractFeeds(feed.id, feed.is_public, feed.polling_schedule_minute, feed.profile_id)
+        await reloadObstractFeed(feed.id, feed.is_public, feed.polling_schedule_minute, feed.profile_id)
         setLoadEditButton(false)
         setDisableEdit(true)
     }
     const handleDelete = async () => {
         setOpenDeleteDialog(true);
     };
+
+    const editFeed = () => {
+        navigate(URLS.staffObstractFeedEdit(feed?.id || ''))
+    }
 
     return (
         <Container>
@@ -206,6 +209,10 @@ const PostPage: React.FC = () => {
                             <MenuItem key={profile.id} value={profile.id}>{profile.name}</MenuItem>
                         ))}
                     </Select>
+                </Box>
+                <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', marginLeft: '1rem' }}>
+                    <Typography style={{ visibility: 'hidden' }}>a</Typography>
+                    <Button onClick={editFeed} variant='contained'>Edit Feed</Button>
                 </Box>
             </Box>
             {disableEdit ? (
