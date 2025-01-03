@@ -9,17 +9,21 @@ import {
   MenuItem,
   Typography,
 } from '@mui/material';
-import { createObstractFeed, fetchObstractProfiles, Profile, reloadObstractFeed } from '../../../services/obstract.ts';
+import { createObstractFeed, Feed, fetchObstractProfiles, Profile, updateObstractFeed } from '../../../services/obstract.ts';
 import LoadingButton from '../../../components/loading_button/index.tsx';
 
 interface AddEntryDialogProps {
   open: boolean;
+  feed?: Feed,
+  isEdit?: boolean;
   onClose: () => void;
   onAddEntry: () => void;
 }
 
 const AddEntryDialog: React.FC<AddEntryDialogProps> = ({
   open,
+  feed,
+  isEdit,
   onClose,
   onAddEntry,
 }) => {
@@ -62,17 +66,17 @@ const AddEntryDialog: React.FC<AddEntryDialogProps> = ({
   useEffect(() => {
     // Reset form for adding a new entry
     setFormData({
-      profile_id: '',
-      url: '',
-      include_remote_blogs: false,
-      is_public: false,
-      polling_schedule_minute: 0,
-      title: '',
-      description: '',
-      pretty_url: '',
+      profile_id: feed?.profile_id ?? '',
+      url: feed?.obstract_feed_metadata.url ?? '',
+      include_remote_blogs: feed?.obstract_feed_metadata.include_remote_blogs || false,
+      is_public: feed?.is_public ?? false,
+      polling_schedule_minute: feed?.polling_schedule_minute ?? 0,
+      title: feed?.obstract_feed_metadata.title ?? '',
+      description: feed?.obstract_feed_metadata.description ?? '',
+      pretty_url: feed?.obstract_feed_metadata.pretty_url ?? '',
     });
     setErrors({})
-  }, [open]);
+  }, [open, feed]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -88,6 +92,23 @@ const AddEntryDialog: React.FC<AddEntryDialogProps> = ({
       profile_id: value
     }));
   };
+
+  const handleUpdate = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true)
+    try {
+      await updateObstractFeed(feed?.id || '', formData);
+      onAddEntry();
+    } catch (err) {
+      if (err.response && err.response.status === 400) {
+        setErrors(err.response.data.details || err.response.data)
+      } else {
+        throw err
+      }
+    } finally {
+      setLoading(false)
+    }
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -119,11 +140,18 @@ const AddEntryDialog: React.FC<AddEntryDialogProps> = ({
   return (
     <Box>
       <Typography variant="h4" gutterBottom>
-        Add a New Feed
+        {isEdit ? 'Edit a Feed' : 'Add a New Feed'}
       </Typography>
-      <Typography>Add a new feed. Make it public to expose it to all users. You can change a feed from private to public at any time</Typography>
+      <Typography>
+        {isEdit ? <>
+          Feed ID: {feed?.id || ''}
+        </> :
+          <>
+            Add a new feed. Make it public to expose it to all users. You can change a feed from private to public at any time
+          </>}
+      </Typography>
 
-      <Box marginY={2}>
+      {!isEdit && <Box marginY={2}>
         <strong>Profile</strong><span>(Profile to use for extraction)</span>
         <Select
           name="profile"
@@ -138,7 +166,7 @@ const AddEntryDialog: React.FC<AddEntryDialogProps> = ({
           ))}
         </Select>
         {errors?.profile_id?.map(error => <Typography sx={{ color: 'red' }}>{error}</Typography>)}
-      </Box>
+      </Box>}
 
       <Box marginY={2}>
         <strong>URL</strong><span>(Blog URL)</span>
@@ -198,7 +226,7 @@ const AddEntryDialog: React.FC<AddEntryDialogProps> = ({
       </Box>
 
 
-      <FormControlLabel
+      {!isEdit && <FormControlLabel
         control={
           <Switch
             checked={formData.include_remote_blogs}
@@ -208,7 +236,7 @@ const AddEntryDialog: React.FC<AddEntryDialogProps> = ({
           />
         }
         label="Include Remote Blogs (history4feed setting)"
-      />
+      />}
 
       <FormControlLabel
         control={
@@ -238,9 +266,13 @@ const AddEntryDialog: React.FC<AddEntryDialogProps> = ({
         <Button variant='contained' color='error' onClick={onClose}>
           Cancel
         </Button>
-        <LoadingButton isLoading={loading} variant='contained' color='success' sx={{ marginLeft: '1rem' }} onClick={handleSubmit}>
-          Add
-        </LoadingButton>
+        {isEdit ? <LoadingButton isLoading={loading} variant='contained' color='success' sx={{ marginLeft: '1rem' }} onClick={handleUpdate}>
+          Submit
+        </LoadingButton> :
+          <LoadingButton isLoading={loading} variant='contained' color='success' sx={{ marginLeft: '1rem' }} onClick={handleSubmit}>
+            Add
+          </LoadingButton>
+        }
       </Box>
 
     </Box >
