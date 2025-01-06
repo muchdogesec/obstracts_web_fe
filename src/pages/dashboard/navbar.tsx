@@ -62,10 +62,6 @@ const NavBar = () => {
     const changeTeam = (team: ITeam) => {
         setActiveTeam(team)
         setActiveTeamId(team.id)
-        if (team.is_private) {
-            navigate(URLS.profile())
-            return
-        }
         navigate(URLS.teamFeeds(team.id))
     }
 
@@ -94,7 +90,7 @@ const NavBar = () => {
                             value={selectedTeamId}
                         >
                             {teams.map((team) => (
-                                <MenuItem onClick={() => changeTeam(team)} key={team.id} value={team.id}>{team.is_private ? 'Account Settings' : team.name}</MenuItem>
+                                <MenuItem onClick={() => changeTeam(team)} key={team.id} value={team.id}>{team.name}</MenuItem>
                             ))}
                             <MenuItem><Link to={URLS.addTeam()} style={{ textDecoration: 'none', color: 'unset' }}>+ Create a new Team</Link></MenuItem>
                         </Select>

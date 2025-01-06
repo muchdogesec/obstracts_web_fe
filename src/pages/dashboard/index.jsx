@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { Toolbar, Typography, Drawer, List, ListItem, ListItemIcon, ListItemText, Divider, Box } from '@mui/material';
-import { DocumentScanner, Group, Info, Search } from '@mui/icons-material';
+import { DocumentScanner, Group, Info, Search, Support } from '@mui/icons-material';
 import RssFeedIcon from '@mui/icons-material/RssFeed';
 import { NavLink } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -56,7 +56,7 @@ const DashboardLayout = () => {
           </Toolbar>
           <Divider />
           <List>
-            {!activeTeam || !activeTeam?.is_private && (<>
+            {!activeTeam && (<>
               <ListItem button component={NavLink} to={URLS.teamLatestPosts(activeTeamId)}>
                 <ListItemIcon><DocumentScanner /></ListItemIcon>
                 <ListItemText primary="Latest Posts" />
@@ -75,11 +75,15 @@ const DashboardLayout = () => {
               </ListItem>
               {activeTeam?.is_admin && (
                 <ListItem button component={NavLink} to={URLS.teamManagement(activeTeamId)}>
-                  <ListItemIcon><Group/></ListItemIcon>
+                  <ListItemIcon><Group /></ListItemIcon>
                   <ListItemText primary="Team Management" />
                 </ListItem>
               )}
             </>)}
+            <ListItem button component={NavLink} to="https://support.dogesec.com/">
+              <ListItemIcon><Support /></ListItemIcon>
+              <ListItemText primary="Support" />
+            </ListItem>
           </List>
         </Drawer>
 
