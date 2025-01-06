@@ -56,7 +56,7 @@ const DashboardLayout = () => {
           </Toolbar>
           <Divider />
           <List>
-            {!activeTeam && (<>
+            {activeTeam && (<>
               <ListItem button component={NavLink} to={URLS.teamLatestPosts(activeTeamId)}>
                 <ListItemIcon><DocumentScanner /></ListItemIcon>
                 <ListItemText primary="Latest Posts" />
