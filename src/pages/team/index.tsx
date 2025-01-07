@@ -103,6 +103,7 @@ function Team() {
   const [opeDeleteTeam, setOpenDeleteTeam] = useState(false)
 
   const navigate = useNavigate()
+  const alert = useAlert()
 
   useEffect(() => {
     document.title = 'Team Settings | Obstracts Web'
@@ -168,6 +169,12 @@ function Team() {
         navigate(URLS.profile())
       }
     }
+  }
+
+  const handleResendInvitation = async (invitationId: string) => {
+    const res = await Api.resendInvite(id || '', invitationId)
+    alert.showAlert("Invite resent successfully")
+    getInvitedMembers()
   }
 
   const handleCloseInvite = () => {
@@ -510,6 +517,7 @@ function Team() {
                 <TableRow>
                   <TableCell>Email</TableCell>
                   <TableCell>Role</TableCell>
+                  <TableCell>Date Last Invite Sent</TableCell>
                   <TableCell>Actions</TableCell>
                 </TableRow>
               </TableHead>
@@ -528,6 +536,7 @@ function Team() {
                     <TableRow key={invitation.id}>
                       <TableCell>{invitation.email}</TableCell>
                       <TableCell>{invitation.role}</TableCell>
+                      <TableCell>{getDateString(invitation.last_email_date)}</TableCell>
                       <TableCell>
                         <Button
                           color="error"
@@ -537,6 +546,9 @@ function Team() {
                             setOpenCancelInvitation(true);
                           }}
                         >Revoke</Button>
+                        <Button variant='contained' sx={{ marginLeft: '2rem' }} onClick={() => handleResendInvitation(invitation.id)} color="primary">
+                          Resend
+                        </Button>
                       </TableCell>
                     </TableRow>
                   ))
@@ -555,7 +567,9 @@ function Team() {
         <br />
         <Typography>Invite User</Typography>
         <Typography>Members can subscribe/unsubscribe to feeds, view their posts, and access the API. Admins inherit all member permissions but can also add/remove users from the team and edit the team information (including subscriptions). Owners inherit all Admin permissions and can also delete the team.</Typography>
-        {id && <InviteUserList isOwner={true} teamId={id} onComplete={() => { reloadInvitationList() }}></InviteUserList>}
+        {id && <InviteUserList
+          noOfFreeSlots={(activeTeam?.user_limit || 0) - (activeTeam?.members_count || 0) - (activeTeam?.invitations_count || 0)}
+          isOwner={true} teamId={id} onComplete={() => { reloadInvitationList() }}></InviteUserList>}
       </Box>
 
       <Box>

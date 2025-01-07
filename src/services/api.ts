@@ -17,7 +17,7 @@ const apiRequest = async <T>(
     data?: any,
     headers: Record<string, string> = {},
     params: Record<string, string | number> = {},
-    auth=true,
+    auth = true,
 ) => {
     try {
         const authorization = auth ? {
@@ -128,6 +128,10 @@ const fetchTeamLimits = async (id: string) => {
 
 const leaveTeam = async (id: string) => {
     return apiRequest<any>('POST', `/teams/api/teams/${id}/leave-team/`);
+};
+
+const resendInvite = async (teamId: string, memberId: string) => {
+    return apiRequest<any>('POST', `/teams/api/teams/${teamId}/invitations/${memberId}/resend-invite/`, {});
 };
 
 const removeTeamMember = async (id: string, user_id: string) => {
@@ -385,4 +389,5 @@ export const Api = {
     createApiKey,
     bulkInviteUser,
     resendEmailVerificationEmail,
+    resendInvite,
 };
