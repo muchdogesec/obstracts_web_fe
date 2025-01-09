@@ -21,6 +21,7 @@ import FeedFormModal from './feeds/feed-modal.tsx';
 import { Feed, fetchObstractFeeds, fetchObstractPosts, Post } from '../../services/obstract.ts';
 import { Link } from 'react-router-dom';
 import { getDateString } from '../../services/utils.ts';
+import Markdown from 'react-markdown';
 
 const PAGE_SIZE = 10;
 
@@ -68,7 +69,7 @@ const PostsTable: React.FC<FeedsTableProps> = ({
 
     useEffect(() => {
         loadPosts(page);
-    }, [page, filter, sortField, sortOrder]);
+    }, [page, filter, sortField, sortOrder, feedId]);
 
     const handleModalOpen = (feed?: Feed) => {
         setSelectedFeed(feed || null);
@@ -129,7 +130,10 @@ const PostsTable: React.FC<FeedsTableProps> = ({
                         <TableHead>
                             <TableRow>
                                 <TableCell onClick={() => handleSortChange('title')} style={{ cursor: 'pointer' }}>
-                                    Title {sortField === 'title' ? (sortOrder === 'asc' ? '↑' : '↓') : ''}
+                                    Titlea {sortField === 'title' ? (sortOrder === 'asc' ? '↑' : '↓') : ''}
+                                </TableCell>
+                                <TableCell>
+                                    Summary
                                 </TableCell>
                                 <TableCell onClick={() => handleSortChange('pubdate')} style={{ cursor: 'pointer' }}>
                                     Post Date {sortField === 'pubdate' ? (sortOrder === 'asc' ? '↑' : '↓') : ''}
@@ -153,6 +157,9 @@ const PostsTable: React.FC<FeedsTableProps> = ({
                                                 </Link>
                                             )
                                         }
+                                    </TableCell>
+                                    <TableCell>
+                                        <Markdown>{post.summary}</Markdown>
                                     </TableCell>
                                     <TableCell>{getDateString(post.pubdate)}</TableCell>
                                     <TableCell>{post.author}</TableCell>

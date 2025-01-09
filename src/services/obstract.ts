@@ -70,6 +70,7 @@ export interface Post {
     profile_id: string;
     feed_id: string;
     added_manually: boolean;
+    summary: string;
 }
 
 interface PostsResponse {
@@ -235,12 +236,11 @@ interface RetrievedUrl {
 }
 
 export const adminFetchFeedJob = (feedId: string, jobId: string) => {
-    return apiRequest<IJob>('GET', `/proxy/feeds/${feedId}/jobs/${jobId}/`, {}, {}, {
-    });
+    return apiRequest<IJob>('GET', `/proxy/jobs/${jobId}/`, {}, {}, {});
 };
 
 export const fetchFeedJob = (teamId: string, feedId: string, jobId: string) => {
-    return apiRequest<IJob>('GET', `/proxy/feeds/${feedId}/jobs/${jobId}/`, {}, {}, {
+    return apiRequest<IJob>('GET', `/proxy/jobs/${jobId}/`, {}, {}, {
     });
 };
 
@@ -271,7 +271,7 @@ export const adminFetchPostJobs = (feed_id: string, post_id: string,) => {
 };
 
 export const fetchObstractPosts = (feed_id: string, page: number, sort: string, title: string) => {
-    return apiRequest<PostsResponse>('GET', `/proxy/open/feeds/${feed_id}/posts/?page=${page + 1}&page_size=10&sort=${sort}&title=${title}`);
+    return apiRequest<PostsResponse>('GET', `/proxy/open/posts/?page=${page + 1}&page_size=10&sort=${sort}&title=${title}&feed_id=${feed_id}`);
 };
 
 export const scoSearch = (types: string, value: string, page: number) => {
@@ -313,15 +313,18 @@ export const deleteObstractPost = (feed_id: string, post_id: string) => {
     return apiRequest<PostsResponse>('DELETE', `/proxy/feeds/${feed_id}/posts/${post_id}/`);
 };
 
-export const createNewPost = (feed_id: string, data: {
+
+export const createNewPost = (feed_id: string, profile_id: string, data: {
     title: string,
     link: string,
     pubdate: Date,
     author: string,
     categories: string[],
-    profile_id: string,
 }) => {
-    return apiRequest<PostsResponse>('POST', `/proxy/feeds/${feed_id}/posts/`, data);
+    return apiRequest<PostsResponse>('POST', `/proxy/feeds/${feed_id}/posts/`, {
+        profile_id,
+        posts: [data],
+    });
 };
 
 export const fetchPostMarkdown = (feed_id: string, post_id: string) => {

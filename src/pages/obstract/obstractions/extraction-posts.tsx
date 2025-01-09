@@ -18,6 +18,7 @@ import { useAlert } from '../../../contexts/alert-context.tsx';
 import { URLS } from '../../../services/urls.ts';
 import { TeamRouteContext } from '../../team-layout.tsx/index.tsx';
 import { TeamContext } from '../../../contexts/team-context.tsx';
+import Markdown from 'react-markdown';
 
 interface PostWithFeed extends Post {
     feed: TeamFeed
@@ -59,7 +60,7 @@ const ObjectPostsPage: React.FC = () => {
     }, [initialDataLoaded])
 
     const loadReports = async () => {
-        if(!objectId) return
+        if (!objectId) return
         setLoading(true)
         const res = await getPostsByExtraction(teamId, objectId, page + 1)
         setReportData(res.data.posts)
@@ -107,10 +108,11 @@ const ObjectPostsPage: React.FC = () => {
                             <TableHead>
                                 <TableRow>
                                     <TableCell>Post Title</TableCell>
+                                    <TableCell>Summary</TableCell>
+                                    <TableCell>Feed Title</TableCell>
                                     <TableCell>Post Date</TableCell>
                                     <TableCell>Post Author</TableCell>
                                     <TableCell>Post Tags</TableCell>
-                                    <TableCell>Feed Name</TableCell>
                                     <TableCell></TableCell>
                                 </TableRow>
                             </TableHead>
@@ -124,10 +126,13 @@ const ObjectPostsPage: React.FC = () => {
                                                 </Link>
                                             )}
                                         </TableCell>
+                                        <TableCell>
+                                            <Markdown>{post.summary}</Markdown>
+                                        </TableCell>
+                                        <TableCell>{post.feed?.obstract_feed_metadata.title}</TableCell>
                                         <TableCell>{new Date(post.datetime_added || '').toLocaleDateString()}</TableCell>
                                         <TableCell>{post.author}</TableCell>
                                         <TableCell>{post.categories}</TableCell>
-                                        <TableCell>{post.feed?.obstract_feed_metadata.title}</TableCell>
                                         <TableCell>{!post.feed?.is_subscribed &&
                                             <Button disabled={disableViewPost} variant='contained' onClick={() => subscribe(post.feed?.id)}>Subscribe to feed</Button>
                                         }</TableCell>

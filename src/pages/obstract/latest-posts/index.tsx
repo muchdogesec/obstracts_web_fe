@@ -24,7 +24,8 @@ import { TeamRouteContext } from '../../team-layout.tsx/index.tsx';
 import Markdown from 'react-markdown';
 
 interface PostWithFeed extends Post {
-    feed: TeamFeed;
+    feed_id: string;
+    feed_title: string;
     summary: string;
 }
 

@@ -55,7 +55,7 @@ const NewPostModal: React.FC<NewPostModalProps> = ({ open, onClose, feedId, onPo
     const handleSubmit = async () => {
         if (title && link && pubdate && author) {
             try {
-                await createNewPost(feedId, { title, link, pubdate: pubdate, author, categories, profile_id: profileId });
+                await createNewPost(feedId, profileId, { title, link, pubdate: pubdate, author, categories, });
                 onPostCreated(); // Refresh feed data
                 onClose(); // Close modal
             } catch (err) {
@@ -112,7 +112,7 @@ const NewPostModal: React.FC<NewPostModalProps> = ({ open, onClose, feedId, onPo
                     fullWidth
                     margin="normal"
                     value={pubdate ? pubdate.toISOString().substring(0, 16) : ''}
-                    onChange={(e) => setPubdate(new Date(e.target.value))}
+                    onChange={(e) => setPubdate(e.target.value ? new Date(e.target.value) : null)}
                 />
                 {errors?.pubdate?.map(error => <Typography sx={{ color: 'red' }}>{error}</Typography>)}
             </Box>

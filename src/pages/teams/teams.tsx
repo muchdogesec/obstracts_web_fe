@@ -222,16 +222,14 @@ function TeamList({ isAdmin }: TeamListProps) {
 
 
                       {!isAdmin && (
-                        (team.is_private) ? (<></>) : (
-                          <Button
-                            variant="contained"
-                            color="error"
-                            sx={{ ml: 1 }}
-                            onClick={() => handleOpenLeaveTeamModal(team)}
-                          >
-                            Leave
-                          </Button>
-                        )
+                        <Button
+                          variant="contained"
+                          color="error"
+                          sx={{ ml: 1 }}
+                          onClick={() => handleOpenLeaveTeamModal(team)}
+                        >
+                          Leave
+                        </Button>
                       )
                       }
                     </TableCell>
