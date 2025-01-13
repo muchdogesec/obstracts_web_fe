@@ -130,67 +130,67 @@ export const observable_types = [
         "field_name": "Value"
     },
     {
-        "label": "TTP(attack-pattern)",
+        "label": "TTP (attack-pattern)",
         "value": "attack-pattern",
         "field_name": "Value"
     },
     {
-        "label": "TTP(campaign)",
+        "label": "TTP (campaign)",
         "value": "campaign",
         "field_name": "Value"
     },
     {
-        "label": "TTP(course-of-action)",
+        "label": "TTP (course-of-action)",
         "value": "course-of-action",
         "field_name": "Value"
     },
     {
-        "label": "TTP(identity)",
+        "label": "TTP (identity)",
         "value": "identity",
         "field_name": "Value"
     },
     {
-        "label": "TTP(infrastructure)",
+        "label": "TTP (infrastructure)",
         "value": "infrastructure",
         "field_name": "Value"
     },
     {
-        "label": "TTP(intrusion-set)",
+        "label": "TTP (intrusion-set)",
         "value": "intrusion-set",
         "field_name": "Value"
     },
     {
-        "label": "TTP(location)",
+        "label": "TTP (location)",
         "value": "location",
         "field_name": "Value"
     },
     {
-        "label": "TTP(malware)",
+        "label": "TTP (malware)",
         "value": "malware",
         "field_name": "Value"
     },
     {
-        "label": "TTP(note)",
+        "label": "TTP (note)",
         "value": "note",
         "field_name": "Value"
     },
     {
-        "label": "TTP(report)",
+        "label": "TTP (report)",
         "value": "report",
         "field_name": "Value"
     },
     {
-        "label": "TTP(threat-actor)",
+        "label": "TTP (threat-actor)",
         "value": "threat-actor",
         "field_name": "Value"
     },
     {
-        "label": "TTP(tool)",
+        "label": "TTP (tool)",
         "value": "tool",
         "field_name": "Value"
     },
     {
-        "label": "TTP(weakness)",
+        "label": "TTP (weakness)",
         "value": "weakness",
         "field_name": "Value"
     },

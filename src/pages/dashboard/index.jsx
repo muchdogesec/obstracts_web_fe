@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { Toolbar, Typography, Drawer, List, ListItem, ListItemIcon, ListItemText, Divider, Box } from '@mui/material';
-import { DocumentScanner, Group, Info, Search, Support } from '@mui/icons-material';
+import { DocumentScanner, Group, Api, Search, SupportAgent, AccessTime, RssFeed } from '@mui/icons-material';
 import RssFeedIcon from '@mui/icons-material/RssFeed';
 import { NavLink } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -58,11 +58,11 @@ const DashboardLayout = () => {
           <List>
             {activeTeam && (<>
               <ListItem button component={NavLink} to={URLS.teamLatestPosts(activeTeamId)}>
-                <ListItemIcon><DocumentScanner /></ListItemIcon>
+                <ListItemIcon><AccessTime /></ListItemIcon>
                 <ListItemText primary="Latest Posts" />
               </ListItem>
               <ListItem button component={NavLink} to={URLS.teamFeeds(activeTeamId)}>
-                <ListItemIcon><RssFeedIcon /></ListItemIcon>
+                <ListItemIcon><RssFeed /></ListItemIcon>
                 <ListItemText primary="Feeds" />
               </ListItem>
               <ListItem button component={NavLink} to={URLS.teamObservationSearchWithoutParams(activeTeamId)}>
@@ -70,12 +70,12 @@ const DashboardLayout = () => {
                 <ListItemText primary="Intel Search" />
               </ListItem>
               <ListItem button component={NavLink} to={OBSTRACTS_API_SWAGGER_URL}>
-                <ListItemIcon><Info /></ListItemIcon>
-                <ListItemText primary="API Documentation" />
+                <ListItemIcon><Api /></ListItemIcon>
+                <ListItemText primary="API Docs" />
               </ListItem>
               <ListItem target='_blank' component={NavLink} to={TAXII_SWAGGER_URL}>
-                <ListItemIcon><DocumentScanner></DocumentScanner></ListItemIcon>
-                <ListItemText primary="TAXII API documentation" />
+                <ListItemIcon><Api /></ListItemIcon>
+                <ListItemText primary="TAXII API Docs" />
               </ListItem>
               {activeTeam?.is_admin && (
                 <ListItem button component={NavLink} to={URLS.teamManagement(activeTeamId)}>
@@ -84,8 +84,8 @@ const DashboardLayout = () => {
                 </ListItem>
               )}
             </>)}
-            <ListItem button target='_blank' component={NavLink} to="https://support.dogesec.com/">
-              <ListItemIcon><Support /></ListItemIcon>
+            <ListItem button target='_blank' component={NavLink} target="_blank" to="https://support.dogesec.com/">
+              <ListItemIcon><SupportAgent /></ListItemIcon>
               <ListItemText primary="Support" />
             </ListItem>
           </List>
