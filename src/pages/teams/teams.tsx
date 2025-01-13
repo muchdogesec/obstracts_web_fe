@@ -128,16 +128,16 @@ function TeamList({ isAdmin }: TeamListProps) {
       <Box my={4}>
         {isAdmin ? (
           <Typography variant="h4" gutterBottom>
-            Teams
+            Your Teams
           </Typography>
         ) : (<>
           <Typography variant="h5" gutterBottom>
-            Teams
+            Your Teams
           </Typography>
           <Typography className="description">
-            <p>You can create one or more teams below. You must create at least one team to add a feed.</p>
-            <p>Most users only require one team for their organisation.</p>
-            <p>Each team you create has a subscription which limits the number of blog feeds you can subscribe to, and how many users can be added to the team to view the content.</p>
+            <p>You can create one or more teams below.</p>
+            <p>Most users only require one team that represents their organisation.</p>
+            <p>Each team you create has a subscription which controls the features the users in the teams can access.</p>
           </Typography>
         </>
         )}
