@@ -301,7 +301,6 @@ function Team() {
 
       <Box my={4}>
 
-        <Box sx={{ display: 'flex' }}>
           <Typography sx={{ flex: 'auto' }} variant="h4" gutterBottom>
             Team Management
           </Typography>
@@ -313,9 +312,7 @@ function Team() {
           <Typography className="description">
             <p>Your team ID, name, and description is only visible to members of this team and those that are invited to join the team.</p>
           </Typography>
-
-        </Box>
-
+          
         <Grid container spacing={2}>
         </Grid>
         <Dialog open={openInvite} onClose={handleCloseInvite}>
