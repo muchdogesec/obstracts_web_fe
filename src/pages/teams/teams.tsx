@@ -221,17 +221,14 @@ function TeamList({ isAdmin }: TeamListProps) {
                       </Link>
 
 
-                      {!isAdmin && (
+                      <Link to={URLS.teamManagement(team.id)}>
                         <Button
                           variant="contained"
-                          color="error"
                           sx={{ ml: 1 }}
-                          onClick={() => handleOpenLeaveTeamModal(team)}
                         >
-                          Leave
+                          Manage
                         </Button>
-                      )
-                      }
+                      </Link>
                     </TableCell>
                   </TableRow>
                 ))

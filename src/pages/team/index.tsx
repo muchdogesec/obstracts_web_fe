@@ -88,6 +88,7 @@ function Team() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [activeTeam, setActiveTeam] = useState<ITeam | null>(null);
   const [activeUserIsAdmin, setActiveUserIsAdmin] = useState(false)
+  const [canRemoveOwner, setCanRemoveOwner] = useState(false)
 
   const [openCancelMembership, setOpenCancelMembership] = useState(false);
   const [openCancelInvitation, setOpenCancelInvitation] = useState(false);
@@ -134,7 +135,7 @@ function Team() {
     if (!id) return
     try {
       const res = await Api.getMembers(id)
-
+      setCanRemoveOwner(res.data.filter(member => member.role === 'owner').length > 1)
       setMembers(res.data);
     } catch (error) {
       setSnackbarMessage("Failed to fetch members");
@@ -486,7 +487,7 @@ function Team() {
                       <TableCell>{getRole(member)}</TableCell>
                       <TableCell>
                         {activeUserIsAdmin && <Button variant="contained" onClick={() => initChangeRole(member)}>Change role</Button>}
-                        {activeUserIsAdmin || (user?.email === member.email) &&
+                        {(activeUserIsAdmin || (user?.email === member.email)) && (member?.role !== 'owner' || canRemoveOwner) &&
                           <Button sx={{ marginLeft: '2rem' }} variant="contained" color="error" onClick={() => initConfirmRemove(member)}>
                             {user?.email === member.email ? 'Leave' : 'Remove'}
                           </Button>
