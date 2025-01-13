@@ -46,6 +46,7 @@ jobs:
             REACT_APP_API_BASE_URL=https://management.obstracts.staging.signalscorps.com/
             REACT_APP_OBSTRACTS_API_SWAGGER_URL=https://api.obstracts.staging.signalscorps.com/schema/swagger-ui/
             REACT_APP_ADMIN_URL=https://management.obstracts.staging.signalscorps.com/admin/
+            REACT_APP_TAXII_SWAGGER_URL=http://taxii.obstracts.staging.signalscorps.com/schema/swagger-ui/
       - name: Generate artifact attestation
         uses: actions/attest-build-provenance@v1
         with:

@@ -13,7 +13,7 @@ import './index.css';
 
 const drawerWidth = 240;
 const OBSTRACTS_API_SWAGGER_URL = process.env.REACT_APP_OBSTRACTS_API_SWAGGER_URL
-
+const TAXII_SWAGGER_URL = process.env.REACT_APP_TAXII_SWAGGER_URL
 
 const DashboardLayout = () => {
   const { activeTeam } = useContext(TeamContext);
@@ -73,6 +73,10 @@ const DashboardLayout = () => {
                 <ListItemIcon><Info /></ListItemIcon>
                 <ListItemText primary="API Documentation" />
               </ListItem>
+              <ListItem target='_blank' component={NavLink} to={TAXII_SWAGGER_URL}>
+                <ListItemIcon><DocumentScanner></DocumentScanner></ListItemIcon>
+                <ListItemText primary="TAXII API documentation" />
+              </ListItem>
               {activeTeam?.is_admin && (
                 <ListItem button component={NavLink} to={URLS.teamManagement(activeTeamId)}>
                   <ListItemIcon><Group /></ListItemIcon>
@@ -80,7 +84,7 @@ const DashboardLayout = () => {
                 </ListItem>
               )}
             </>)}
-            <ListItem button component={NavLink} to="https://support.dogesec.com/">
+            <ListItem button target='_blank' component={NavLink} to="https://support.dogesec.com/">
               <ListItemIcon><Support /></ListItemIcon>
               <ListItemText primary="Support" />
             </ListItem>
