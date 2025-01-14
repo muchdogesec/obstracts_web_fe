@@ -191,7 +191,7 @@ function TeamList({ isAdmin }: TeamListProps) {
               ) : (
                 teams.map((team, index) => (
                   <TableRow key={team.id} sx={{ backgroundColor: limitExceeded(team) ? 'pink' : 'transparent' }}>
-                    <TableCell>{team.name}</TableCell>
+                    <TableCell><Link to={URLS.teamFeeds(team.id)}>{team.name}</Link></TableCell>
                     <TableCell>{team.description}</TableCell>
                     {!isAdmin && <TableCell>{getRole(team)}</TableCell>}
                     {isAdmin && <TableCell>{team.is_private ? 'Personal' : 'User Created'}</TableCell>}
@@ -213,22 +213,6 @@ function TeamList({ isAdmin }: TeamListProps) {
                         </Link>
                       </>
                       ) : (<div></div>)}
-
-                      <Link to={URLS.teamFeeds(team.id)}>
-                        <Button variant="contained" color="secondary" sx={{ ml: 1 }}>
-                          Feeds
-                        </Button>
-                      </Link>
-
-
-                      <Link to={URLS.teamManagement(team.id)}>
-                        <Button
-                          variant="contained"
-                          sx={{ ml: 1 }}
-                        >
-                          Manage
-                        </Button>
-                      </Link>
                     </TableCell>
                   </TableRow>
                 ))
