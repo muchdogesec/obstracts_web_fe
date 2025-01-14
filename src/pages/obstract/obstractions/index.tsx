@@ -275,7 +275,8 @@ const PostDetailsPage: React.FC = () => {
     }
 
     const isSDOType = (object: ObstractsObject) => {
-        if (postId && object.value?.includes(postId)) return false
+        if (postId && object.id?.includes(postId)) return false
+        if(object.id === 'identity--a1f2e3ed-6241-5f05-ac2e-3394213b8e08') return false
         return SDO_TYPES.has(object.type) && !isMitreAttack(object)
     }
 
