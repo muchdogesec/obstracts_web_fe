@@ -9,6 +9,8 @@ import { URLS } from '../../../services/urls.ts';
 import LoadingButton from '../../../components/loading_button/index.tsx';
 import { getDateString } from '../../../services/utils.ts';
 import DeleteDialog from './delete-dialog.tsx';
+import ReindexFeedDialog from './reindex-feed.tsx';
+import ReindexingDialog from '../obstractions/reindex.tsx';
 
 const PostPage: React.FC = () => {
     const { feed_id } = useParams<{ feed_id: string }>(); // `id` corresponds to `:id` in the route
@@ -31,6 +33,10 @@ const PostPage: React.FC = () => {
     const [disableEdit, setDisableEdit] = useState(true);
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
     const [profiles, setProfiles] = useState<Profile[]>([]);
+    const [showReindexDialog, setShowReindexDialog] = useState(false)
+    const [showReindexProcessingDialog, setShowReindexProcessingDialog] = useState(false)
+    const [reIndexJobId, setReIndexJobId] = useState('')
+
 
     const navigate = useNavigate()
 
@@ -115,6 +121,12 @@ const PostPage: React.FC = () => {
         navigate(URLS.staffObstractFeedEdit(feed?.id || ''))
     }
 
+    const onConfirmReIndex = (jobId: string) => {
+        setReIndexJobId(jobId);
+        setShowReindexProcessingDialog(true);
+        setShowReindexDialog(false);
+    }
+
     return (
         <Container>
             <Box>
@@ -123,6 +135,7 @@ const PostPage: React.FC = () => {
                         {feed?.obstract_feed_metadata.title}
                         <Button sx={{ marginLeft: '3rem', textTransform: 'uppercase' }} variant='contained' color="error" onClick={handleDelete}>Delete Feed</Button>
                         <Button sx={{ marginLeft: '3rem', textTransform: 'uppercase' }} variant='contained' color="success" onClick={() => navigate('add-post')}>Add Post</Button>
+                        <Button variant='contained' sx={{ marginLeft: '2rem' }} onClick={() => setShowReindexDialog(true)}>Reindex feed</Button>
                     </Typography>
                 </Box>
                 <Box>
@@ -155,71 +168,29 @@ const PostPage: React.FC = () => {
                         <TableCell>Next Update Date</TableCell>
                         <TableCell>{getDateString(feed?.next_polling_time)}</TableCell>
                     </TableRow>
+                    <TableRow>
+                        <TableCell>Is public</TableCell>
+                        <TableCell>{feed?.is_public ? 'True': 'False'}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell>Polling schedule (minutes)</TableCell>
+                        <TableCell>{getDateString(feed?.next_polling_time)}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell>Profile</TableCell>
+                        <TableCell>{profiles?.find(profile => profile.id === feed?.profile_id)?.name}</TableCell>
+                    </TableRow>
                 </TableBody>
             </Table>
 
-            <Link to={URLS.staffObstractJobs(feed_id)}>
-                <Button variant='contained' sx={{ textTransform: 'uppercase' }}>Feed jobs</Button>
-            </Link>
-
-            <Box sx={{ display: 'flex', marginTop: '2rem' }}>
-                <Box>
-                    <Typography>Is public?</Typography>
-                    <FormControlLabel
-
-                        control={
-                            <Switch
-                                disabled={disableEdit}
-                                checked={feed?.is_public}
-                                color="primary"
-                                onChange={(ev) => isPublicChanged(ev)}
-                            />
-                        }
-                        label="Is public"
-                    />
-                </Box>
-                <Box>
-                    <Typography>Polling schedule (minutes)</Typography>
-                    <TextField
-                        disabled={disableEdit}
-                        autoFocus
-                        margin="dense"
-                        name="name"
-                        label="Polling schedule (minutes)"
-                        type="number"
-                        fullWidth
-                        value={feed?.polling_schedule_minute}
-                        onChange={(ev) => { pollingMinuteChanged(ev) }}
-                        required
-                    />
-                </Box>
+            <Box sx={{ display: 'flex' }}>
+                <Button onClick={editFeed} variant='contained'>Edit Feed</Button>
                 <Box sx={{ marginLeft: '1rem' }}>
-                    <Typography>
-                        <strong>Profile</strong><span>(Profile to use for extraction)</span>
-                    </Typography>
-                    <Select
-                        label="Profile"
-                        style={{ flex: 'auto', marginTop: '8px' }}
-                        fullWidth
-                        disabled={disableEdit}
-                        value={feed?.profile_id}
-                        onChange={(e) => profileChanged(e.target.value)}
-                    >
-                        {profiles.map((profile) => (
-                            <MenuItem key={profile.id} value={profile.id}>{profile.name}</MenuItem>
-                        ))}
-                    </Select>
-                </Box>
-                <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', marginLeft: '1rem' }}>
-                    <Typography style={{ visibility: 'hidden' }}>a</Typography>
-                    <Button onClick={editFeed} variant='contained'>Edit Feed</Button>
+                    <Link to={URLS.staffObstractJobs(feed_id)}>
+                        <Button variant='contained' sx={{ textTransform: 'uppercase' }}>Feed jobs</Button>
+                    </Link>
                 </Box>
             </Box>
-            {disableEdit ? (
-                <Button variant='contained' color='primary' onClick={() => setDisableEdit(false)}>Edit Settings</Button>
-            ) : (
-                <LoadingButton isLoading={loadEditButton} variant='contained' color='success' onClick={() => updateFeed()}>Save</LoadingButton>
-            )}
 
             <Typography variant='h5' sx={{ marginTop: '3rem' }}>Posts in this feed</Typography>
             {/* Show loading spinner while data is being fetched */}
@@ -238,6 +209,15 @@ const PostPage: React.FC = () => {
                 onSave={handleOnSave}
                 feed_id={feed_id}
             />
+            {feed &&
+                <ReindexFeedDialog
+                    onConfirmReIndex={onConfirmReIndex}
+                    onClose={() => setShowReindexDialog(false)}
+                    open={showReindexDialog}
+                    feed={feed}
+                ></ReindexFeedDialog>
+            }
+            <ReindexingDialog onClose={() => setShowReindexProcessingDialog(false)} open={showReindexProcessingDialog} jobId={reIndexJobId}></ReindexingDialog>
             <Modal open={openNewPostModal} onClose={() => setOpenNewPostModal(false)}>
                 <NewPostModal
                     open={openNewPostModal}

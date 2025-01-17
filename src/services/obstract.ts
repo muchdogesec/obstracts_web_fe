@@ -342,7 +342,11 @@ export const fetchTeamPostObjects = async (team_id: string, feed_id: string, pos
 };
 
 export const changePostProfileId = (feed_id: string, post_id: string, profile_id: string) => {
-    return apiRequest<PostsResponse>('PATCH', `/proxy/feeds/${feed_id}/posts/${post_id}/`, { profile_id });
+    return apiRequest<IJob>('PATCH', `/proxy/feeds/${feed_id}/posts/${post_id}/reindex/`, { profile_id });
+};
+
+export const reIndexFeed = (feed_id: string, profile_id: string) => {
+    return apiRequest<IJob>('PATCH', `/proxy/feeds/${feed_id}/posts/reindex/`, { profile_id });
 };
 
 export const loadAliases = (page: number) => {

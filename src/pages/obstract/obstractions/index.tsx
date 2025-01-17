@@ -85,6 +85,7 @@ const PostDetailsPage: React.FC = () => {
     const [reportId, setReportId] = useState('')
     const [showReindexDialog, setShowReindexDialog] = useState(false)
     const [showDeleteDialog, setShowDeleteDialog] = useState(false)
+    const [reIndexJobId, setReIndexJobId] = useState('')
     const [showCheckForUpdateModal, setShowCheckForUpdateModal] = useState(false)
     const [markdown, setMarkdown] = useState("")
     const { user } = useAuth0()
@@ -257,7 +258,8 @@ const PostDetailsPage: React.FC = () => {
         URL.revokeObjectURL(url);
     }
 
-    const onConfirmReIndex = () => {
+    const onConfirmReIndex = (jobId: string) => {
+        setReIndexJobId(jobId);
         setShowReindexDialog(true);
         setShowCheckForUpdateModal(false);
     }
@@ -276,7 +278,7 @@ const PostDetailsPage: React.FC = () => {
 
     const isSDOType = (object: ObstractsObject) => {
         if (postId && object.id?.includes(postId)) return false
-        if(object.id === 'identity--a1f2e3ed-6241-5f05-ac2e-3394213b8e08') return false
+        if (object.id === 'identity--a1f2e3ed-6241-5f05-ac2e-3394213b8e08') return false
         return SDO_TYPES.has(object.type) && !isMitreAttack(object)
     }
 
@@ -358,6 +360,31 @@ const PostDetailsPage: React.FC = () => {
                 <Box sx={{ display: 'flex', marginTop: '1rem', justifyContent: 'right' }}><Button onClick={downloadMarkdown} variant='contained'>Download Markdown</Button></Box>
                 { }
             </div>
+
+            <TableContainer sx={{ marginTop: '3rem' }}>
+                <Typography variant="h5">Report</Typography>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Type</TableCell>
+                            <TableCell>ID</TableCell>
+                            <TableCell>Name</TableCell>
+                            <TableCell></TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {objects.filter(object => object.type === 'report').slice(0,1).map((object, index) => (
+                            <TableRow className="ioc-row" key={index}>
+                                <TableCell>{object.type}</TableCell>
+                                <TableCell>{object.id}</TableCell>
+                                <TableCell>{getScoValue(object)}</TableCell>
+                                <TableCell><Button color="primary" variant="contained" sx={{ textTransform: 'uppercase' }} onClick={() => { navigate(getObservationSearchUrl(object)) }}>View all posts</Button></TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+
             {loading ? (
                 <CircularProgress style={{ display: 'block', margin: '20px auto' }} />
             ) : (
@@ -370,6 +397,7 @@ const PostDetailsPage: React.FC = () => {
                                     <TableCell>Type</TableCell>
                                     <TableCell>ID</TableCell>
                                     <TableCell>Name</TableCell>
+                                    <TableCell></TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -392,6 +420,7 @@ const PostDetailsPage: React.FC = () => {
                                     <TableCell>Type</TableCell>
                                     <TableCell>ID</TableCell>
                                     <TableCell>Name</TableCell>
+                                    <TableCell></TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -414,6 +443,7 @@ const PostDetailsPage: React.FC = () => {
                                     <TableCell>Type</TableCell>
                                     <TableCell>ID</TableCell>
                                     <TableCell>Name</TableCell>
+                                    <TableCell></TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -436,6 +466,7 @@ const PostDetailsPage: React.FC = () => {
                                     <TableCell>Type</TableCell>
                                     <TableCell>ID</TableCell>
                                     <TableCell>Name</TableCell>
+                                    <TableCell></TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -457,6 +488,7 @@ const PostDetailsPage: React.FC = () => {
                                     <TableCell>Type</TableCell>
                                     <TableCell>ID</TableCell>
                                     <TableCell>Name</TableCell>
+                                    <TableCell></TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -488,7 +520,7 @@ const PostDetailsPage: React.FC = () => {
                 </Box>
             </Box>
 
-            <ReindexingDialog onClose={() => setShowReindexDialog(false)} open={showReindexDialog}></ReindexingDialog>
+            <ReindexingDialog onClose={() => setShowReindexDialog(false)} open={showReindexDialog} jobId={reIndexJobId}></ReindexingDialog>
             {post && <DeleteDialog onClose={() => setShowDeleteDialog(false)} open={showDeleteDialog} post={post} feedId={feedId}></DeleteDialog>}
             {post && feed &&
                 <CheckForUpdatesDialog
