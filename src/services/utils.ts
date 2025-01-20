@@ -16,3 +16,9 @@ export const cleanData = (data: object) => {
     })
     return result
 }
+
+export const updateURLWithParams = (params) => {
+    const queryString = new URLSearchParams(params).toString();
+    const newURL = `${window.location.pathname}?${queryString}`;
+    window.history.pushState(null, "", newURL);
+};

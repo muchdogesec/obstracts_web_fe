@@ -13,8 +13,9 @@ import {
     TextField,
 } from '@mui/material';
 import { Feed, fetchObstractFeeds } from '../../services/obstract.ts';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { URLS } from '../../services/urls.ts';
+import { updateURLWithParams } from '../../services/utils.ts';
 
 const PAGE_SIZE = 10;
 
@@ -35,8 +36,11 @@ const FeedsTable: React.FC<FeedsTableProps> = ({
     const [filter, setFilter] = useState<string>('');
     const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
     const [sortField, setSortField] = useState<string>('latest_item_pubdate');
+    const [initialDataLoaded, setInitialDataLoaded] = useState(false)
+    const location = useLocation();
 
     const loadFeeds = async (pageNumber: number) => {
+        if(!initialDataLoaded) return
         setLoading(true);
         const response = await fetchObstractFeeds(pageNumber + 1, filter, sortField, sortOrder, profileId);
         setFeeds(response.data.results);
@@ -63,6 +67,23 @@ const FeedsTable: React.FC<FeedsTableProps> = ({
         setSortOrder(newOrder);
         setPage(0); // Reset to first page on sort change
     };
+
+    useEffect(() => {
+        updateURLWithParams({
+            sortOrder, page, filter, sortField
+        })
+    }, [sortOrder, page, filter, sortField])
+
+    useEffect(() => {
+        const query = new URLSearchParams(location.search);
+        setSortOrder(query.get('sortOrder') === 'asc' ? 'asc' : 'desc')
+        setPage(Number(query.get('page') || 0))
+        setFilter(query.get('filter') || '')
+        setSortField(query.get('sortField') || 'latest_item_pubdate')
+        setInitialDataLoaded(true)
+    }, [location])
+
+    useEffect(() => { loadFeeds(page) }, [initialDataLoaded])
 
     return (
         <Box p={4}>

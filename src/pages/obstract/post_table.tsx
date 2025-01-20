@@ -19,8 +19,8 @@ import {
 } from '@mui/material';
 import FeedFormModal from './feeds/feed-modal.tsx';
 import { Feed, fetchObstractFeeds, fetchObstractPosts, Post } from '../../services/obstract.ts';
-import { Link } from 'react-router-dom';
-import { getDateString } from '../../services/utils.ts';
+import { Link, useLocation } from 'react-router-dom';
+import { getDateString, updateURLWithParams } from '../../services/utils.ts';
 import Markdown from 'react-markdown';
 
 const PAGE_SIZE = 10;
@@ -47,8 +47,29 @@ const PostsTable: React.FC<FeedsTableProps> = ({
     const [filter, setFilter] = useState<string>('');
     const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
     const [sortField, setSortField] = useState<string>('pubdate');
+    const [initialDataLoaded, setInitialDataLoaded] = useState(false)
+    const location = useLocation();
+
+    useEffect(() => {
+        updateURLWithParams({
+            sortOrder, page, filter, sortField
+        })
+    }, [sortOrder, page, filter, sortField])
+
+    useEffect(() => {
+        const query = new URLSearchParams(location.search);
+        setSortOrder(query.get('sortOrder') === 'asc' ? 'asc' : 'desc')
+        setPage(Number(query.get('page') || 0))
+        setFilter(query.get('filter') || '')
+        setSortField(query.get('sortField') || 'pubdate')
+        setInitialDataLoaded(true)
+    }, [location])
+
+    useEffect(() => { loadPosts(page) }, [initialDataLoaded])
+
 
     const loadPosts = async (pageNumber: number) => {
+        if(!initialDataLoaded) return
         if (!feedId) return
         setLoading(true);
         const sortDict = {
