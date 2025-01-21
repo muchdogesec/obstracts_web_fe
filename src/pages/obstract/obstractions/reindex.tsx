@@ -6,11 +6,12 @@ import {
     DialogContentText,
     DialogTitle,
     Button,
+    Typography,
 } from '@mui/material';
 import { URLS } from '../../../services/urls.ts';
 import { useNavigate } from 'react-router-dom';
 
-const ReindexingDialog = ({ open, onClose }: { open: boolean, onClose: () => void }) => {
+const ReindexingDialog = ({ open, onClose, jobId }: { open: boolean, onClose: () => void, jobId: string }) => {
     const naviagete = useNavigate()
 
     const handleClose = () => {
@@ -24,6 +25,7 @@ const ReindexingDialog = ({ open, onClose }: { open: boolean, onClose: () => voi
             <DialogContent>
                 <DialogContentText>
                     Please wait while the reindexing is in progress. This might take several minutes.
+                    <Typography>You can track this request using job ID: {jobId}</Typography>
                 </DialogContentText>
             </DialogContent>
             <DialogActions>

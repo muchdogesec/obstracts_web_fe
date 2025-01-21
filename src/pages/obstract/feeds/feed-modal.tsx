@@ -93,8 +93,31 @@ const AddEntryDialog: React.FC<AddEntryDialogProps> = ({
     }));
   };
 
+  const isValidURL = (url) => {
+    const regex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([\/\w .-]*)*\/?$/;
+    return regex.test(url);
+  }
+
+  const validateData = (data) => {
+    let isValid = true
+    const errors = {
+      url: [''],
+      pretty_url: [''],
+    }
+    if (!isValidURL(formData.url)) {
+      errors["url"] = ["Invalid URL"]
+      isValid = false
+    }
+    if (!isValidURL(formData.pretty_url)) {
+      errors["pretty_url"] = ["Invalid URL"]
+      isValid = false
+    }
+    setErrors(errors)
+    return isValid
+  }
   const handleUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!validateData(formData)) return
     setLoading(true)
     try {
       await updateObstractFeed(feed?.id || '', formData);
@@ -112,6 +135,7 @@ const AddEntryDialog: React.FC<AddEntryDialogProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!validateData(formData)) return
     setLoading(true)
     try {
       await createObstractFeed(formData); // Add new entry
@@ -143,9 +167,22 @@ const AddEntryDialog: React.FC<AddEntryDialogProps> = ({
         {isEdit ? 'Edit a Feed' : 'Add a New Feed'}
       </Typography>
       <Typography>
-        {isEdit ? <>
-          Feed ID: {feed?.id || ''}
-        </> :
+        {isEdit ?
+          <Box marginY={2}>
+            <strong>Feed ID</strong><span></span>
+            <TextField
+              margin="dense"
+              name="id"
+              label="ID"
+              type="text"
+              fullWidth
+              value={feed?.id}
+              onChange={handleChange}
+              disabled
+            />
+            {errors?.url?.map(error => <Typography sx={{ color: 'red' }}>{error}</Typography>)}
+          </Box>
+          :
           <>
             Add a new feed. Make it public to expose it to all users. You can change a feed from private to public at any time
           </>}
@@ -179,6 +216,7 @@ const AddEntryDialog: React.FC<AddEntryDialogProps> = ({
           value={formData.url}
           onChange={handleChange}
           required
+          disabled
         />
         {errors?.url?.map(error => <Typography sx={{ color: 'red' }}>{error}</Typography>)}
       </Box>
@@ -259,6 +297,23 @@ const AddEntryDialog: React.FC<AddEntryDialogProps> = ({
         onChange={handleChange}
         required
       />
+
+      {isEdit && <Box marginY={2}>
+        <strong>Profile</strong><span>(Profile to use for extraction)</span>
+        <Select
+          name="profile"
+          label="Profile"
+          style={{ flex: 'auto' }}
+          fullWidth
+          value={formData.profile_id}
+          onChange={(e) => handleProfileChange(e.target.value)}
+        >
+          {profiles.map((profile) => (
+            <MenuItem key={profile.id} value={profile.id}>{profile.name}</MenuItem>
+          ))}
+        </Select>
+        {errors?.profile_id?.map(error => <Typography sx={{ color: 'red' }}>{error}</Typography>)}
+      </Box>}
 
       {errors?.non_field_errors?.map(error => <Typography sx={{ color: 'red' }}>{error}</Typography>)}
 

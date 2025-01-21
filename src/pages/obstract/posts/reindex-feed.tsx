@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button, Typography, Box, TextField, Select, MenuItem } from '@mui/material';
-import { changePostProfileId, Feed, fetchObstractProfiles, Post, Profile } from '../../../services/obstract.ts';
+import { Feed, fetchObstractProfiles, Post, Profile, reIndexFeed } from '../../../services/obstract.ts';
 import { useAlert } from '../../../contexts/alert-context.tsx';
 import LoadingButton from '../../../components/loading_button/index.tsx';
 
-interface CheckForUpdatesDialogProps {
+interface ReindexFeedDialogProps {
     open: boolean;
     onClose: () => void;
     onConfirmReIndex: (string) => void;
-    post: Post;
     feed: Feed;
 }
 
-const CheckForUpdatesDialog: React.FC<CheckForUpdatesDialogProps> = ({ feed, post, open, onClose, onConfirmReIndex }: CheckForUpdatesDialogProps) => {
+const ReindexFeedDialog: React.FC<ReindexFeedDialogProps> = ({ feed, open, onClose, onConfirmReIndex }: ReindexFeedDialogProps) => {
     const [loading, setLoading] = useState(false)
     const [profileId, setProfileId] = useState(feed.profile_id)
     const [profiles, setProfiles] = useState<Profile[]>([]);
@@ -32,10 +31,10 @@ const CheckForUpdatesDialog: React.FC<CheckForUpdatesDialogProps> = ({ feed, pos
     }, [])
 
     const confirmReIndex = async () => {
-        if (!post) return
+        if (!feed) return
         try {
             setLoading(true)
-            const res = await changePostProfileId(feed.id, post.id, profileId)
+            const res = await reIndexFeed(feed.id, profileId)
             onConfirmReIndex(res.data.id)
             setLoading(false)
         } catch (err) {
@@ -83,4 +82,4 @@ const CheckForUpdatesDialog: React.FC<CheckForUpdatesDialogProps> = ({ feed, pos
     );
 };
 
-export default CheckForUpdatesDialog;
+export default ReindexFeedDialog;
