@@ -9,6 +9,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { URLS } from '../../services/urls.ts';
 
 const OBSTRACTS_ADMIN_URL = process.env.REACT_APP_ADMIN_URL || '/admin'
+const OBSTRACTS_ADMIN_SWAGGER_URL = process.env.REACT_APP_OBSTRACTS_ADMIN_SWAGGER_URL || '/admin/swagger'
 
 export default function StaffPopover() {
     const { logout } = useAuth0()
@@ -57,6 +58,11 @@ export default function StaffPopover() {
                     <ListItem>
                         <a href={OBSTRACTS_ADMIN_URL} style={{ textDecoration: 'none' }}>
                             <ListItemText primary="Access Django Staff Area" />
+                        </a>
+                    </ListItem>
+                    <ListItem>
+                        <a href={OBSTRACTS_ADMIN_SWAGGER_URL} style={{ textDecoration: 'none' }}>
+                            <ListItemText primary="Access Admin Swagger" />
                         </a>
                     </ListItem>
                 </List>
