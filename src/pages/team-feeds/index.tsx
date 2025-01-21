@@ -14,12 +14,13 @@ import {
     TextField,
     Checkbox,
 } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { TeamFeed, fetchTeamObstractFeeds, subscribeTeamObstractFeeds, unsubscribeTeamObstractFeeds } from '../../services/obstract.ts';
 import { useAlert } from '../../contexts/alert-context.tsx';
 import { URLS } from '../../services/urls.ts';
 import { TeamRouteContext } from '../team-layout.tsx/index.tsx';
 import { TeamContext } from '../../contexts/team-context.tsx';
+import { updateURLWithParams } from '../../services/utils.ts';
 
 const PAGE_SIZE = 10;
 const REACT_APP_SUGGEST_NEW_FEED_FORM_URL = process.env.REACT_APP_SUGGEST_NEW_FEED_FORM_URL
@@ -38,8 +39,27 @@ const TeamFeeds: React.FC = () => {
     const [filter, setFilter] = useState<string>('');
     const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
     const [sortField, setSortField] = useState<string>('latest_item_pubdate');
+    const [initialDataLoaded, setInitialDataLoaded] = useState(false)
+    const location = useLocation();
     const alert = useAlert()
 
+    useEffect(() => {
+        updateURLWithParams({
+            showMyFeeds, sortOrder, page, filter, sortField
+        })
+    }, [showMyFeeds, sortOrder, page, filter, sortField])
+
+    useEffect(() => {
+        const query = new URLSearchParams(location.search);
+        setShowMyFeeds(query.get('setShowMyFeeds') === 'false' ? false : true)
+        setSortOrder(query.get('sortOrder') === 'asc' ? 'asc' : 'desc')
+        setPage(Number(query.get('page') || 0))
+        setFilter(query.get('filter') || '')
+        setSortField(query.get('sortField') || 'latest_item_pubdate')
+        setInitialDataLoaded(true)
+    }, [location])
+
+    useEffect(() => {loadFeeds(page)}, [initialDataLoaded])
 
     useEffect(() => {
         loadFeeds(page);
@@ -47,6 +67,7 @@ const TeamFeeds: React.FC = () => {
     // if (!teamId) return <></>
 
     const loadFeeds = async (pageNumber: number) => {
+        if(!initialDataLoaded) return
         if (!teamId) return
         setLoading(true);
         const response = await fetchTeamObstractFeeds(teamId, pageNumber + 1, filter, showMyFeeds, sortField, sortOrder);
@@ -72,7 +93,7 @@ const TeamFeeds: React.FC = () => {
     };
 
     const unsubscribe = async (feed_id: string) => {
-        if(!teamId) return
+        if (!teamId) return
         try {
             await unsubscribeTeamObstractFeeds(teamId, feed_id)
             loadFeeds(1)
@@ -84,7 +105,7 @@ const TeamFeeds: React.FC = () => {
     }
 
     const subscribe = async (feed_id: string) => {
-        if(!teamId) return
+        if (!teamId) return
         try {
             await subscribeTeamObstractFeeds(teamId, feed_id)
             loadFeeds(1)
@@ -123,7 +144,7 @@ const TeamFeeds: React.FC = () => {
                     onChange={handleFilterChange}
                     style={{ marginRight: '16px', width: '300px' }}
                 />
-                <Checkbox value={showMyFeeds} onChange={(ev) => handleShowMyFeedOnlyFilterChanged(ev.target.value)}></Checkbox>
+                <Checkbox checked={showMyFeeds} value={showMyFeeds} onChange={(ev) => handleShowMyFeedOnlyFilterChanged(ev.target.value)}></Checkbox>
                 <Typography>Show only feeds I'm subscribed to</Typography>
             </Box>
 

@@ -20,7 +20,7 @@ import { ObstractsObject, Post, scoSearch, TeamFeed } from '../../../services/ob
 import { useAlert } from '../../../contexts/alert-context.tsx';
 import { URLS } from '../../../services/urls.ts';
 import { TeamRouteContext } from '../../team-layout.tsx/index.tsx';
-import { getScoValue } from '../../../services/utils.ts';
+import { getScoValue, updateURLWithParams } from '../../../services/utils.ts';
 import { observable_types } from './object-types.js'
 
 const PAGE_SIZE = 50
@@ -54,10 +54,17 @@ const ObservableSearchPage: React.FC = () => {
     }, [location])
 
     useEffect(() => {
-        if (initialDataLoaded) loadReports(1)
+        loadReports(1)
     }, [initialDataLoaded])
 
+    useEffect(() => {
+        updateURLWithParams({
+            type, value, teamId
+        })
+    }, [type, value])
+
     const loadReports = async (page: number) => {
+        if(!initialDataLoaded) return
         setLoading(true)
         const res = await scoSearch(type, value, page)
         setReportData(res.data.objects)

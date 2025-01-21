@@ -17,11 +17,12 @@ import {
     FormControl,
     InputLabel,
 } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { getLatestPosts, Post, TeamFeed } from '../../../services/obstract.ts';
 import { URLS } from '../../../services/urls.ts';
 import { TeamRouteContext } from '../../team-layout.tsx/index.tsx';
 import Markdown from 'react-markdown';
+import { updateURLWithParams } from '../../../services/utils.ts';
 
 interface PostWithFeed extends Post {
     feed_id: string;
@@ -38,7 +39,27 @@ const LatestPostsPage: React.FC = () => {
     const [page, setPage] = useState<number>(0);
     const [pageSize, setPageSize] = useState<number>(10);
     const [dataCount, setDataCount] = useState<number>(0);
+    const [initialDataLoaded, setInitialDataLoaded] = useState(false)
+    const location = useLocation();
+
+    useEffect(() => {
+        updateURLWithParams({
+            sort, page, title, teamId
+        })
+    }, [sort, page, title, teamId])
+
+    useEffect(() => {
+        const query = new URLSearchParams(location.search);
+        setPage(Number(query.get('page') || 0))
+        setSort(query.get('sort') || 'pubdate_descending')
+        setTitle(query.get('title') || '')
+        setInitialDataLoaded(true)
+    }, [location])
+
+    useEffect(() => { loadReports() }, [initialDataLoaded])
+
     const loadReports = async () => {
+        if(!initialDataLoaded) return
         setLoading(true)
         const res = await getLatestPosts(teamId, sort, title, page + 1)
         setPosts(res.data.posts)
