@@ -19,13 +19,11 @@ import ObstractProfile from "./pages/obstract/profile/index.tsx";
 import FeedsPage from "./pages/obstract/feeds/index.tsx";
 import PostPage from "./pages/obstract/posts/index.tsx";
 import AcceptInvite from "./pages/accept-invite/index.tsx";
-import UserManagement from "./pages/users/index.tsx";
 import ObstractProfileDetail from "./pages/obstract/profile/profile_detail.tsx";
 import TeamFeeds from "./pages/team-feeds/index.tsx";
 import TeamFeedPage from "./pages/team-feeds/feed.tsx";
 import JobListPage from "./pages/team-feeds/feed-jobs-modal.tsx";
 import PostDetailsPage from "./pages/obstract/obstractions/index.tsx";
-import AdminTeams from "./pages/admin-team/index.tsx";
 import TeamLayout from "./pages/team-layout.tsx/index.tsx";
 import JobDetailsPage from "./pages/team-feeds/job-detail-page.tsx";
 import AddNewTeam from "./pages/teams/add-new-team.tsx";
@@ -172,14 +170,6 @@ const router = createBrowserRouter([
           {
             path: "feeds/:feedId/edit",
             Component: EditFeed,
-          },
-          {
-            path: "manage-users",
-            Component: UserManagement,
-          },
-          {
-            path: "manage-teams",
-            Component: AdminTeams,
           },
           {
             path: "intelligence/search",
