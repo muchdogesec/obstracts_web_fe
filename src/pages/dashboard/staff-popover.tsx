@@ -48,12 +48,6 @@ export default function StaffPopover() {
                     <ListItem component={NavLink} to={URLS.staffObstractFeeds()}>
                         <ListItemText primary="Add / Manage Feeds" />
                     </ListItem>
-                    <ListItem component={NavLink} to={URLS.staffUserList()}>
-                        <ListItemText primary="Manage Users" />
-                    </ListItem>
-                    <ListItem component={NavLink} to={URLS.staffTeamList()}>
-                        <ListItemText primary="Manage Teams" />
-                    </ListItem>
                     <ListItem>
                         <a href={OBSTRACTS_ADMIN_URL} style={{ textDecoration: 'none' }}>
                             <ListItemText primary="Access Django Staff Area" />
