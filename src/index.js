@@ -38,6 +38,7 @@ import AddSkeletonFeed from "./pages/obstract/feeds/add-skeleton-feed.tsx";
 import "./index.css";
 import LatestPostsPage from "./pages/obstract/latest-posts/index.tsx";
 import EditFeed from "./pages/obstract/feeds/edit-feed.tsx";
+import NotFound from "./pages/404/index.tsx";
 
 const AUTH0_DOMAIN = process.env.REACT_APP_AUTH0_DOMAIN
 const AUTH0_CLIENT_ID = process.env.REACT_APP_AUTH0_CLIENT_ID
@@ -188,7 +189,11 @@ const router = createBrowserRouter([
             Component: AddSkeletonFeed,
           },
         ]
-      }
+      },
+      {
+        path: "*",
+        Component: NotFound,
+      },
     ],
   },
   {

@@ -9,9 +9,9 @@ import {
     Typography,
 } from '@mui/material';
 import { URLS } from '../../../services/urls.ts';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-const ReindexingDialog = ({ open, onClose, jobId }: { open: boolean, onClose: () => void, jobId: string }) => {
+const ReindexingDialog = ({ open, onClose, jobId, feedId }: { feedId: string, open: boolean, onClose: () => void, jobId: string }) => {
     const naviagete = useNavigate()
 
     const handleClose = () => {
@@ -29,9 +29,14 @@ const ReindexingDialog = ({ open, onClose, jobId }: { open: boolean, onClose: ()
                 </DialogContentText>
             </DialogContent>
             <DialogActions>
-                <Button variant='contained' onClick={handleClose} color="primary">
+                <Button color='error' variant='contained' onClick={handleClose}>
                     Return to feed list
                 </Button>
+                <Link to={URLS.staffObstractJob(feedId, jobId)}>
+                    <Button variant='contained' onClick={handleClose} color="primary">
+                        Go to job
+                    </Button>
+                </Link>
             </DialogActions>
         </Dialog>
     );

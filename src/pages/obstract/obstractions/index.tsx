@@ -16,7 +16,7 @@ import {
     Tooltip,
 } from '@mui/material';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import Markdown from 'react-markdown';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { adminFetchPostJobs, Feed, fetchObstractFeed, fetchObstractPost, fetchPostMarkdown, fetchPostObjects, fetchTeamPostObjects, IJob, ObstractsObject, Post } from '../../../services/obstract.ts';
 import JobDetailsPage from '../../team-feeds/feed-job-details.tsx';
 
@@ -230,7 +230,6 @@ const PostDetailsPage: React.FC = () => {
         document.body.removeChild(link);
 
         URL.revokeObjectURL(url);
-
     };
 
     const checkForUpdate = async () => {
@@ -353,7 +352,9 @@ const PostDetailsPage: React.FC = () => {
                 </Link>
             </Box>
             <div style={{ border: '1px solid #000000cc', padding: '3rem', borderRadius: '5px', maxWidth: '80vw' }}>
-                <Markdown>{markdown}</Markdown>
+                <SyntaxHighlighter language="markdown">
+                    {markdown}
+                </SyntaxHighlighter>
             </div>
 
             <div>
@@ -373,7 +374,7 @@ const PostDetailsPage: React.FC = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {objects.filter(object => object.type === 'report').slice(0,1).map((object, index) => (
+                        {objects.filter(object => object.type === 'report').slice(0, 1).map((object, index) => (
                             <TableRow className="ioc-row" key={index}>
                                 <TableCell>{object.type}</TableCell>
                                 <TableCell>{object.id}</TableCell>
@@ -520,7 +521,7 @@ const PostDetailsPage: React.FC = () => {
                 </Box>
             </Box>
 
-            <ReindexingDialog onClose={() => setShowReindexDialog(false)} open={showReindexDialog} jobId={reIndexJobId}></ReindexingDialog>
+            <ReindexingDialog feedId={feedId} onClose={() => setShowReindexDialog(false)} open={showReindexDialog} jobId={reIndexJobId}></ReindexingDialog>
             {post && <DeleteDialog onClose={() => setShowDeleteDialog(false)} open={showDeleteDialog} post={post} feedId={feedId}></DeleteDialog>}
             {post && feed &&
                 <CheckForUpdatesDialog

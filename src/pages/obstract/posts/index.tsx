@@ -174,7 +174,7 @@ const PostPage: React.FC = () => {
                     </TableRow>
                     <TableRow>
                         <TableCell>Polling schedule (minutes)</TableCell>
-                        <TableCell>{getDateString(feed?.next_polling_time)}</TableCell>
+                        <TableCell>{feed?.polling_schedule_minute}</TableCell>
                     </TableRow>
                     <TableRow>
                         <TableCell>Profile</TableCell>
@@ -217,7 +217,7 @@ const PostPage: React.FC = () => {
                     feed={feed}
                 ></ReindexFeedDialog>
             }
-            <ReindexingDialog onClose={() => setShowReindexProcessingDialog(false)} open={showReindexProcessingDialog} jobId={reIndexJobId}></ReindexingDialog>
+            <ReindexingDialog feedId={feed_id} onClose={() => setShowReindexProcessingDialog(false)} open={showReindexProcessingDialog} jobId={reIndexJobId}></ReindexingDialog>
             <Modal open={openNewPostModal} onClose={() => setOpenNewPostModal(false)}>
                 <NewPostModal
                     open={openNewPostModal}
